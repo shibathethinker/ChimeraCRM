@@ -1,0 +1,37 @@
+F:\Study\VisualStudio\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\obj\Debug\ResolveAssemblyReference.cache
+F:\Study\VisualStudio\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\BackEndObjects.dll.config
+F:\Study\VisualStudio\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\BackEndObjects.XML
+F:\Study\VisualStudio\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\BackEndObjects.dll
+F:\Study\VisualStudio\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\BackEndObjects.pdb
+F:\Study\VisualStudio\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\CustomExceptions.dll
+F:\Study\VisualStudio\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\DBConn.dll
+F:\Study\VisualStudio\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\CustomExceptions.pdb
+F:\Study\VisualStudio\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\DBConn.pdb
+F:\Study\VisualStudio\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\DBConn.xml
+F:\Study\VisualStudio\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\obj\Debug\BackEndObjects.dll
+F:\Study\VisualStudio\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\obj\Debug\BackEndObjects.pdb
+C:\Users\shibasis\Documents\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\BackEndObjects.dll.config
+C:\Users\shibasis\Documents\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\BackEndObjects.XML
+C:\Users\shibasis\Documents\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\BackEndObjects.dll
+C:\Users\shibasis\Documents\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\BackEndObjects.pdb
+C:\Users\shibasis\Documents\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\CustomExceptions.dll
+C:\Users\shibasis\Documents\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\DBConn.dll
+C:\Users\shibasis\Documents\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\CustomExceptions.pdb
+C:\Users\shibasis\Documents\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\DBConn.pdb
+C:\Users\shibasis\Documents\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\DBConn.xml
+C:\Users\shibasis\Documents\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\obj\Debug\BackEndObjects.csprojResolveAssemblyReference.cache
+C:\Users\shibasis\Documents\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\obj\Debug\BackEndObjects.dll
+C:\Users\shibasis\Documents\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\obj\Debug\BackEndObjects.pdb
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\BackEndObjects.dll.config
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\BackEndObjects.XML
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\BackEndObjects.dll
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\BackEndObjects.pdb
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\CustomExceptions.dll
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\DBConn.dll
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\Oracle.DataAccess.dll
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\CustomExceptions.pdb
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\DBConn.pdb
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\bin\Debug\DBConn.xml
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\obj\Debug\BackEndObjects.csprojResolveAssemblyReference.cache
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\obj\Debug\BackEndObjects.dll
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\BackEndObjects\BackEndObjects\obj\Debug\BackEndObjects.pdb

@@ -1,0 +1,3241 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BackEndObjects</name>
+    </assembly>
+    <members>
+        <member name="T:BackEndObjects.ApprovalHistory">
+            <summary>
+            This class is representative of  'Approval_History' table
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.ApprovalHistory.getAllApprovalHistorybyContextIdDB(System.String,System.String)">
+            <summary>
+            For a given context id this method returns all approval history objects from the db
+            the second parameter can be "ASC"/"DESC" which signals to return the list in ascending/descending order of time
+            </summary>
+            <param name="cId"></param>
+            <param name="order"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ApprovalHistory.insertApprovalHistoryDB(BackEndObjects.ApprovalHistory)">
+            <summary>
+            Inserts the approvalHistory object into DB
+            </summary>
+            <param name="apprObj"></param>
+        </member>
+        <member name="T:BackEndObjects.AddressDetails">
+            <summary>
+            This class is specifically introduced to address the need of having address objects related to MainBusiness Entity.
+            This is nearly a clone of the 'SubBusinessEntity' class - but mainly provided for a logical separation.
+            This class is representative of the backend object '[Shop_User_Addr_Details]'.
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.AddressDetails.DUMMY_CHAIN_ID">
+            <summary>
+            This constant to be used when entering the address data for a 'non-chain' entity.
+            If the sub entity id is equal to 'Address.DUMMY_CHAIN_ID' then it signifies a 'non-sub/non-chain' address record.
+            So use this constant to set the chain id in situations where the address being entered is of a main business/individual entity.
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.AddressDetails.getSubEntityId">
+            <summary>
+            If the sub entity id is equal to 'Address.DUMMY_CHAIN_ID' then it signifies a 'non-sub/non-chain' address record.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.AddressDetails.setSubEntityId(System.String)">
+            <summary>
+             If the sub entity id is equal to 'Address.DUMMY_CHAIN_ID' then it signifies a 'non-sub/non-chain' address record.
+             So use this constant to set the chain id in situations where the address being entered is of a main business/individual entity.
+            </summary>
+            <param name="sId"></param>
+        </member>
+        <member name="M:BackEndObjects.AddressDetails.insertAddressEntityDB(System.Collections.ArrayList)">
+            <summary>
+            inserts the passed address entity object into the database table 'Shop_User_Addr_Details'
+            there is a chance of foreign key violation error if the passed 'locality_id' and/or the 'currency_id' does
+            not exist in the parent database tables
+            While inserting address details of Main Business Entity id only the following paramteres need to be setup -
+            1. Locality Id
+            2. Main ent id
+            3. Sub Ent id (DUMMY)
+            4. Base Curr Id
+            5. Address line1
+            </summary>
+            <param name="subEnt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.AddressDetails.updateAddressEntityDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the subBusinessEntity id.
+            For updating the address details of the main business entity, pass the chain id value as empty string
+            the third parameter contains the type of operation
+            a delete operation will NOT have a  cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.AddressDetails.getMainBusinessforSubBusinessbyIdDB(System.String)">
+            <summary>
+            for a given chain Id, it will return the respective parent object from the table 'Shop_User_Details'
+            this method only returns the following details of the MainBusinessEntity object -
+            entityId
+            entityName
+            phNo
+            emailId
+            webSite
+            desc
+            owner name
+            </summary>
+            <param name="chId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.AddressDetails.getAddressforMainBusinessEntitybyIdDB(System.String)">
+            <summary>
+            For a given main business entity id this method returns the respective address object from database.
+            </summary>
+            <param name="mId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.Specifications">
+            <summary>
+            representative of the database table 'Feature_Specification_Map'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Specifications.getSpecificationbyIdDB(System.String)">
+            <summary>
+            for a given specification id return the respective specification object from database
+            </summary>
+            <param name="specId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Specifications.getSpecificationDetailbyIdDB(System.String)">
+            <summary>
+            This is a static version of the method getSpecificationbyIdDB
+            </summary>
+            <param name="specId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.CategoryFeatureMap">
+            <summary>
+            This class represents a map between the product category and the feature.
+            This class is representative of the back end object 'Category_Feature_Map'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.DeptDetails.getAllDeptDetailsForEntIdDB(System.String)">
+            <summary>
+            For a given business entity id this method returns a dictionary of DeptDetails objects
+            the key is the dept id
+            </summary>
+            <param name="entId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DeptDetails.getAllUsersForDeptIdAndEntIdDB(System.String,System.String)">
+            <summary>
+            For a given entity id and dept id this method  returns a dictionary of userDetails object where the key is the user id
+            </summary>
+            <param name="entId"></param>
+            <param name="deptId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.Features">
+            <summary>
+            representative of the database feature objects 'Feature_Details',Feature_Specification_Map
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Features.getAllFeaturesAssociatedWithSpecDB">
+            <summary>
+            Retrieves all the features from DB along with the associated specification objects.
+            NOTE THAT, this method only retrieved a feature if there is an associated spec object for it in the DB
+            the key is a feature id, where as the respective value is the respective feature object
+            each of  the feature object (in the value of the dictionary)  has an arraylist of specification objects attached
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Features.getAllFeatureswoSpecDB">
+            <summary>
+            returns all Feature object from the database - even if the feature is not having an associated specification defined
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Features.getSpecforFeatureDB(System.String)">
+            <summary>
+            The key of the returned dictionary is the specification id
+            the respective value for the key is a specification object
+            there can be multiple such key,value pair of specifications returned for the mentioned feature id
+            </summary>
+            <param name="ftId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Features.insertSpecforFeatureDB(System.String,System.Collections.ArrayList)">
+            <summary>
+            for a given featureId, insert all the specification details into database table 'feature_specification_map' ONLY
+            the second parameter is ArrayList of specification objects which needs to be inserted into database
+            </summary>
+            <param name="ftId"></param>
+            <param name="specs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Features.updateSpecforFeatureDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            For a given feature id, delete/update respective entries from the table 'feature_specification_map' ONLY
+            the first paramter is a dictionary of column name,target value
+            the second parameter is a dictionary of column name, condition
+            the third parameter is the operation update/delete
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Features.getFeaturebyIdDB(System.String)">
+            <summary>
+            for a given feature id return the respective Feature object along with the associated specification objects from database
+            do not use this method if there is no need to retrieve related specification objects as well 
+            in that case use the lighter version of this method 'getFeaturebyIdwoSpecDB'
+            </summary>
+            <param name="fId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Features.getFeaturebyIdwoSpecDB(System.String)">
+            <summary>
+            lighter version of the method 'getFeaturebyIdDB' 
+            returns the feature object from the database for a given feature id without the associated specification objects
+            </summary>
+            <param name="fId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Features.insertFeatureDB(BackEndObjects.Features)">
+            <summary>
+            inserts the passed feature object into database.
+            </summary>
+            <param name="ft"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.ProductCategory">
+            <summary>
+            Representative of the database table ProductCategoryHierarchy
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.ProductCategory.getFeature">
+            <summary>
+            Returns an arraylist of 'Feature' objects
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ProductCategory.getFeatureList">
+            <summary>
+            Returns an arraylist of 'CategoryFeatureMap' objects
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ProductCategory.getAllParentCategory">
+            <summary>
+            This method returns all product/service category details for which there is no parent category;
+            i.e, it returns a list of all top level product/service category.This method is particularly useful for scenarios where it is required to
+            list the main catogories online.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ProductCategory.getProductCategoryDB(System.String)">
+            <summary>
+            this method returns the respective ProductCategory details from the table 'product_category_hierarchy' for any given category id
+            </summary>
+            <param name="catId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ProductCategory.getAllChildCategoryDB(System.String)">
+            <summary>
+            for any particular parent product category, this method will return all respective childern categories
+            the return dictionary will be child category id,the child category object
+            </summary>
+            <param name="catId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ProductCategory.getParentCategoryDB(System.String)">
+            <summary>
+            for any given child category id, this method returns the respective parent category object from the database
+            </summary>
+            <param name="catId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ProductCategory.getRootLevelParentCategoryDB(System.String)">
+            <summary>
+            For a given product category id, this method determines the root level parent category object.
+            </summary>
+            <param name="catId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ProductCategory.insertFeaturesforCategory(System.Collections.ArrayList)">
+            <summary>
+            This method inserts a list of 'CategoryFeatureMap' objects into database.
+            </summary>
+            <param name="feat"></param>
+            <param name="catId"></param>
+        </member>
+        <member name="M:BackEndObjects.ProductCategory.insertProductCategoryDB(System.Collections.ArrayList)">
+            <summary>
+            thie method will insert all the product category objects passed to it into database table 'Product_Category_Hierarchy' table ONLY
+            </summary>
+            <param name="prodCat"></param>
+        </member>
+        <member name="M:BackEndObjects.ProductCategory.updateProductCategoryDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            this method updates/deletes values from Product_Category_Hierarchy table  - IN CASE OF DELETE, there will be cascading to child table based on the conditions mentioned on the second parameter
+            the target values are specified in the first parameter
+            the third parameter mentions whether it's an update/delete
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ProductCategory.getFeaturebyIdforCategory(System.String)">
+            <summary>
+            In case the matching Feature object is not found a null will be returned
+            </summary>
+            <param name="featId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ProductCategory.updateFeaturesforProductCategoryDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            For a given category id, delete/update respective entries from the table 'Category_Feature_Map' table ONLY
+            the first paramter is a dictionary of column name,target value
+            the second parameter is a dictionary of column name, condition
+            the third parameter is the operation (update/delete)
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ProductCategory.getFeatureforCategoryDB(System.String)">
+            <summary>
+            The key of the returned dictionary is the feature id
+            the respective value for the key is a feature object
+            there can be multiple such key,value pair of feature returned for the mentioned feature id.
+            Along with the feature object the associated specification objects are also retrieved by this method.
+            If you need only the feature ids associated with a product category use the method getFeatureIdListforCategoryDB()
+            </summary>
+            <param name="catId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ProductCategory.getFeatureIdListforCategoryDB(System.String)">
+            <summary>
+            for a given category id this method returns all associated feature ids from DB table 'CategoryFeatureMap'
+            </summary>
+            <param name="catId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ProductCategory.getProductCategorybyIdDB(System.String)">
+            <summary>
+            for a given product category id return the respective category object from database
+            do not use this method if there is no need to retrieve related feature objects as well 
+            in that case use the lighter version of this method 'getProductCategorybyIdwoFeaturesDB'
+            </summary>
+            <param name="pcId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ProductCategory.getProductCategorybyIdwoFeaturesDB(System.String)">
+            <summary>
+            lighter version of the method 'getProductCategorybyIdwoFeaturesDB'
+            returns the product category object from the database for a given category id without the associated feature objects
+            </summary>
+            <param name="pcId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.Localities">
+            <summary>
+            Representative of the database table 'City_Locality_Map'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Localities.getAllLocalitiesDB">
+            <summary>
+            this method extracts all the details from the database table 'City_Locality_Map' 
+            the 'key' of the returned dictionary is the locality id, whereas the 'value' is the locality object
+            A dictionary will provde near constant search performance
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Localities.getLocalitiesforCityDB(System.String)">
+            <summary>
+            for any given cityId, return all the associated Locality objects
+            the 'key' of the returned dictionary is the locality id
+            </summary>
+            <param name="cityId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Localities.insertLocalityforCityDB(System.Collections.ArrayList,System.String)">
+            <summary>
+            for a given 'city id' insert multiple records into the database table 'City_Locality_Map'
+            Before invoking this function make sure respective city_id is available in the table 'City_State_Map'
+            otherwise it will throw a constrain violation error
+            </summary>
+            <param name="lcList"></param>
+            <param name="cityId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Localities.updateLocalityforCityDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the cityid
+            the third parameter contains the type of operation
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Localities.getLocalitybyIdDB(System.String)">
+            <summary>
+            for a given locality id return the respective locality object from database
+            </summary>
+            <param name="lId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.City">
+            <summary>
+            Representative of the backend table 'City_State_Map'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.City.getAllCitiesDB">
+            <summary>
+            this method returns all the city entries in the database along with their associated localities
+            As it returns all the associated localities, this is a heavywight method and should ONLY be used if necessary
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.City.getAllCitieswoLocalitiesDB">
+            <summary>
+            this is a lightweight version of the method 'getAllCitiesDB' 
+            the returned objects are lightweight and the value is returned faster as it does not need to 
+            send the associated Localalities
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.City.insertCityforStateDB(System.String,System.Collections.ArrayList)">
+            <summary>
+            for a given stateId, insert the associated entries into the table 'city_state_map' ONLY
+            </summary>
+            <param name="stId"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.City.getCitiesforStateDB(System.String)">
+            <summary>
+            This is a heavyweight method as it returns all associated localities for a City as well.
+            The key is the city_id.
+            If not required use the light weight version.
+            </summary>
+            <param name="stId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.City.getCitiesforStatewoLocalitiesDB(System.String)">
+            <summary>
+            This is a light weight version of the method 'getCitiesforStateDB'.
+            Returns all city details for a given state without the associated localities.
+            Key of the dictionary is the respective city id.
+            </summary>
+            <param name="stId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.City.updateCityforStateDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the stateId
+            the third parameter contains the type of operation
+            a delete operation will have a cascading effect on the table 'City_Locality_Map'
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.City.getCitybyIdDB(System.String)">
+            <summary>
+            for a given city id, return the respective city object from the database
+            this is a heavy weight method - returns all the associated Localities to a city
+            use it when absolutely necessary
+            </summary>
+            <param name="cId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.City.getCitybyIdwoLocalitiesDB(System.String)">
+            <summary>
+            a light weight version of the method 'getCitybyIdDB' - returns all related details of a given
+            city id without the associated Localities
+            </summary>
+            <param name="cId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.State">
+            <summary>
+            Representative of the database table 'State_Province_Details'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.State.getAllStatesDB">
+            <summary>
+            use this method only when all details of the states including the associates city details  is required
+            this is a heavy weight method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.State.getAllStateswoCitiesDB">
+            <summary>
+            this method is a light weight version of the method 'getAllStatesDB'
+            it does not return the associatd citiies to a state
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.State.getStatesforCountryDB(System.String)">
+            <summary>
+            for a given country id, returns all the associated state details.
+            Along with states it returns all associated cities as well.
+            This is a heavyweight method.
+            </summary>
+            <param name="cId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.State.getStatesforCountrywoCitiesDB(System.String)">
+            <summary>
+            for a given country id, returns all the associated state details.
+            Along with states it DOES NOT return all associated cities as well.
+            This is a lightweight version of the method 'getStatesforCountryDB'
+            </summary>
+            <param name="cId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.State.insertStateforCountryDB(System.String,System.Collections.ArrayList)">
+            <summary>
+            for a given country id, insert records for states into the table 'state_province_details' ONLY
+            </summary>
+            <param name="cId"></param>
+            <param name="stList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.State.updateStateforCountryDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the country id
+            the third parameter contains the type of operation
+            a delete operation will have a cascading effect on the table 'City_State_Map'
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.State.getStatebyIdDB(System.String)">
+            <summary>
+            for a given state id, return the respective city object from the database
+            this is a heavy weight method - returns all the associated Cities to a city
+            use it when absolutely necessary
+            </summary>
+            <param name="sId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.State.getStatebyIdwoCitiesDB(System.String)">
+            <summary>
+            a light weight version of the method 'getStatebyIdDB' - returns all related details of a given state id without the associated Cities
+            </summary>
+            <param name="sId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.Country">
+            <summary>
+            Representative of the database table 'Country_Details'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Country.getCurrencyforCountryDB(System.String)">
+            <summary>
+            returns the respective currencies for a particular country
+            the 'key' of the returned dictionary is the currency id and the 'value' is a currency object
+            </summary>
+            <param name="cId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Country.getCountrybyIdwoStatesDB(System.String)">
+            <summary>
+            a light weight version of the method 'getCountrybyIdDB' - returns all related details of a given country id without the associated States
+            </summary>
+            <param name="cId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Country.getAllCountryDB">
+            <summary>
+            use this method only when all details of the country including the associates state details  is required
+            this is a VERY heavy weight method as each associated state object might have numerous city/locality details associated with it
+            if not required absolutely.. it is highly recommended to use the lighweight version 'getAllCountrywoStatesDB'
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Country.getAllCountrywoStatesDB">
+            <summary>
+            this method is a light weight version of the method 'getAllCountryDB' this method
+            does not return associated State details of a country
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Country.getCountrybyIdDB(System.String)">
+            <summary>
+            for a given country id, return the respective country object from the database along with the currency details
+            this is a heavy weight method - returns all the associated States to a Country
+            use it when absolutely necessary
+            </summary>
+            <param name="cId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Country.insertCountryDB(BackEndObjects.Country)">
+            <summary>
+            inserts a country object to the database table 'Country_Details' only
+            </summary>
+            <param name="cObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Country.updateCountryDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the country id 
+            the third parameter contains the type of operation
+            a delete operation will have a  cascading effect on any table 'State_Province_Details'
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.Currency">
+            <summary>
+            Representative of the database table 'Currency_Details'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Currency.getAllCurrencyNamesDB">
+            <summary>
+            This method returns an arraylist containing only the names of all the currencies
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Currency.getAllCurrencyDetailsDB">
+            <summary>
+            Get all currency objects from database.The key is the respective currency id.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Currency.insertCurrencyforCountryDB(System.String,System.Collections.ArrayList)">
+            <summary>
+            this method inserts in table 'Currency_Details' ONLY the currency-country details
+            </summary>
+            <param name="cId"></param>
+            <param name="curr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Currency.updateCurrencyforCountryDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the country id OR
+            the currency id
+            the third parameter contains the type of operation
+            a delete operation will have a NO cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.subBusinessEntity">
+            <summary>
+            one registered shop/business can have multiple stores 
+            each of these stores can be represented by this class
+            the respective main business can be represented by the class 'MainBusinessEntity'
+            this class is representative of the database table 'Shop_User_Addr_Details'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.subBusinessEntity.getSubBusinessEntitybyIdDB(System.String)">
+            <summary>
+            for a given subBusinessEntity id, returns the respective object from the database
+            this id is used as a 'Chain_Id' in the database table 'Shop_User_Addr_Details'
+            </summary>
+            <param name="sId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.subBusinessEntity.insertSubBusinessEntityDB(System.Collections.ArrayList)">
+            <summary>
+            inserts the passed subbusinessentity object into the database table 'Shop_User_Addr_Details'
+            there is a chance of foreign key violation error if the passed 'locality_id' and/or the 'currency_id' does
+            not exist in the parent database tables
+            </summary>
+            <param name="subEnt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.subBusinessEntity.updateSubBusinessEntityDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the subBusinessEntity id
+            the third parameter contains the type of operation
+            a delete operation will NOT have a  cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.subBusinessEntity.getMainBusinessforSubBusinessbyIdDB(System.String)">
+            <summary>
+            for a given chain Id, it will return the respective parent object from the table 'Shop_User_Details'
+            this method only returns the following details of the MainBusinessEntity object -
+            entityId
+            entityName
+            phNo
+            emailId
+            webSite
+            desc
+            owner name
+            </summary>
+            <param name="chId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.userDetails">
+            <summary>
+            this class is mainly representative of the databae table 'Userid_Pass_User_Map'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.userDetails.getUserDetailsbyIdDB(System.String)">
+            <summary>
+            for a given userId returns the respective userDetails object from database table 'Userid_Pass_User_Map'
+            except the password
+            </summary>
+            <param name="uId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.userDetails.getUserDetailsbyIdDB(System.String,System.String)">
+            <summary>
+            for a given userId and entity id returns the respective userDetails object from database table 'Userid_Pass_User_Map'
+            with the password
+            </summary>
+            <param name="uId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.userDetails.authenticateUserDB(System.String,System.String)">
+            <summary>
+            used for authentication of a user 
+            </summary>
+            <param name="uId"></param>
+            <param name="pass"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.userDetails.updateUserDetailsDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the user id 
+            the third parameter contains the type of operation
+            a delete operation will have a NO cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.userDetails.insertUserDetailsDB(BackEndObjects.userDetails)">
+            <summary>
+            inserts the userDetails object into the database
+            </summary>
+            <param name="uD"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.userDetails.getAllReportingUserDB(System.String,System.String)">
+            <summary>
+            For a given entity id and user id, this method returns all reporting users details
+            </summary>
+            <param name="entId"></param>
+            <param name="uId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.userDetails.getAllDirectReportingUserDB(System.String,System.String)">
+            <summary>
+            Returns only those user details which are directly reporting to the given user id and not indirectly
+            </summary>
+            <param name="entId"></param>
+            <param name="uId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.businessDescription">
+            <summary>
+            this class is representative of the databae object 'Usr_Shop_Desc'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.businessDescription.insertBusinessDescriptionDB(System.Collections.ArrayList)">
+            <summary>
+            an arraylist of description object can be passed to this method
+            which will be inserted into database
+            </summary>
+            <param name="bussDesc"></param>
+        </member>
+        <member name="M:BackEndObjects.businessDescription.getBusinessDescriptionbyIdDB(System.String)">
+            <summary>
+            for a given description id, this method returns the respective object from databast table 'Usr_Shop_Desc'
+            </summary>
+            <param name="bdId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.businessDescription.getAllBusinessDescriptionDB">
+            <summary>
+            This method returns all objects from databast table 'Usr_Shop_Desc'.
+            The key is the respective description id.
+            </summary>
+            <param name="bdId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.businessDescription.updateBusinessDescriptionDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            description id is mandatory to be passed
+            a delete operation will NOT have a cascading effect on the dependent tables (e.g Shop_User_Details)
+            it is highly recommended not to delete any record from this table, rather use the update option
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.Image">
+            <summary>
+            each image record in the database table 'Shop_Pic_Map' is represented by an object of this class
+            Multiple images related to an entity like logo/product images can be represented by an object of this type.
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Image.setImgPath(System.String)">
+            <summary>
+            This path is the server location
+            </summary>
+            <param name="pth"></param>
+        </member>
+        <member name="M:BackEndObjects.Image.setImgPath">
+            <summary>
+            This method generates the image path.
+            It is mandatory to have the image id and entity id set to the object before this method is called.
+            Also,set the file
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Image.getImgPath">
+            <summary>
+            returns the image's server path
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Image.setImgType(System.String)">
+            <summary>
+            The type of image should be selected from the public variables declared in this class named as 'PICTURE_IMG_TYPE'.
+            </summary>
+            <param name="imgType"></param>
+        </member>
+        <member name="M:BackEndObjects.Image.getFileStream">
+            <summary>
+            Returns the file upload control object associated with this.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Image.setFileStream(System.Web.UI.WebControls.FileUpload)">
+            <summary>
+            Sets the file upload control object associated with this.
+            </summary>
+            <param name="fUpl"></param>
+        </member>
+        <member name="M:BackEndObjects.Image.getImagebyidDB(System.String)">
+            <summary>
+            pass the image id and it will return the respective imgae object
+            </summary>
+            <param name="imgId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Image.getImagebyTypeandEntId(System.String,System.String)">
+            <summary>
+            For a given image type and entity id this method returns an ArrayList of Image objects.
+            The entity id can not be empty.
+            </summary>
+            <param name="imgType"></param>
+            <param name="entId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Image.generateImagePath(System.String)">
+            <summary>
+            Pass a folder name and this method will create the folder under the fileStoreRoot .
+            If the method is not able to create the sub folder then the return String will be empty.
+            </summary>
+            <param name="folderName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Image.insertImageforEntityDB(System.String,System.Collections.ArrayList)">
+            <summary>
+            for a given main business entity id, inserts the multiple image objects into the database
+            </summary>
+            <param name="mId"></param>
+            <param name="img"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Image.updateImageforEntityDB(System.String,System.String,System.String)">
+            <summary>
+            for a given business entity id and image id performs the respective update/delete operation
+            the first parameter is the entity id
+            the second parameter is the image id
+            the fourth parameter is the operation
+            NOTE THAT: currently this method only supports a delete opration.
+            </summary>
+            <param name="mId"></param>
+            <param name="pId"></param>
+            <param name="img"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.DocFormat">
+            <summary>
+            This class is representative of the backend object 'Docformat'.
+            Each object of this class represents one record of this class
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.DocFormat.DOCFORMAT_DOC_TYPE_INVOICE_SECTION_TYPE_TNC">
+            <summary>
+            Denotes the section type 'Terms and Conditions' for the document type 'Invoice'.
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.DocFormat.DOCFORMAT_DOC_TYPE_PURCHASE_ORDER_SECTION_TYPE_TNC">
+            <summary>
+            Denotes the section type 'Terms and Conditions' for the document type 'Purchase Order'.
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.DocFormat.DOCFORMAT_DOC_TYPE_SALES_ORDER_SECTION_TYPE_TNC">
+            <summary>
+             Denotes the section type 'Terms and Conditions' for the document type 'Sales Order'.
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.DocFormat.DOCFORMAT_DOC_TYPE_INVOICE_SECTION_TYPE_TAX">
+            <summary>
+            Denotes the tax section for the invoice
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.DocFormat.insertDocFormatDB(System.Collections.ArrayList)">
+            <summary>
+            inserts the passed ArrayList of DocFormat objects into database
+            </summary>
+            <param name="dfObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DocFormat.getDocFormatforEntityIdandDocTypeDB(System.String,System.String)">
+            <summary>
+            This method returns a list of DocFormat objects for a given entity id and doc type
+            </summary>
+            <param name="entId"></param>
+            <param name="docType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.MainBusinessEntity">
+            <summary>
+            this class is mainly representative of the database object 'Shop_User_Details'
+            it also has associated properties which point to other tables
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.MainBusinessEntity.getImages">
+            <summary>
+            This method should be used with proper consideration as this involves returning ArrayList of Blobs
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.MainBusinessEntity.setImages(System.Collections.Generic.Dictionary{System.String,BackEndObjects.Image})">
+            <summary>
+            This method should be used with proper consideration as this involves setting ArrayList of Blobs
+            </summary>
+            <param name="img"></param>
+        </member>
+        <member name="M:BackEndObjects.MainBusinessEntity.getAddressDetails">
+            <summary>
+            return the associated address object for the main business entity.
+            Note that, this class does not contain any database related method to get the address details from DB.
+            For that use method of the class 'AddressDetails'.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.MainBusinessEntity.setAddressDetails(BackEndObjects.AddressDetails)">
+            <summary>
+            Sets the address details property of the main business entity object.
+            The value of subEntityId must be set to 'AddressDetails.DUMMY_CHAIN_ID'.
+            </summary>
+            <param name="addrObjParam"></param>
+        </member>
+        <member name="M:BackEndObjects.MainBusinessEntity.getMainBusinessEntitybyIdwithLessDetailsDB(System.String)">
+            <summary>
+            lighter version of the method, 'getMainBusinessEntitybyIdDB' - does not return all of the associated details
+            it returns the following details - entityId, entityName,indChain,phNo,emailId,webSite,desc,ownerName
+            </summary>
+            <param name="eId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.MainBusinessEntity.getMainBusinessEntityListbyNameWithAddrDetailsDB(System.String)">
+            <summary>
+            Returns an ArrayList of MainBusinessEntity objects from database whose name contains the passed String.
+            Each returned object also contains the associated Address Details object
+            The returned objects does not include the support email body details
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.MainBusinessEntity.getMainBusinessEntityListbyNameWithAddrDetailsDB(System.String,System.String)">
+            <summary>
+            Returns an ArrayList of MainBusinessEntity objects from database whose name contains the passed String.
+            Each returned object also contains the associated Address Details object
+            The second parameter defines the entity id which should not be passed back.
+            Typically this is to prevent to return the Details of the calling main business entity details
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.MainBusinessEntity.getAllImagesbyEntityIdDB(System.String)">
+            <summary>
+            for a main business entity id, returns all the associated image objects from database table 'Shop_Pic_Map'
+            </summary>
+            <param name="eId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.MainBusinessEntity.getSubEntitiesforMainEntitybyIdDB(System.String)">
+            <summary>
+            for a given main business entity id returns all the associated sub entities
+            </summary>
+            <param name="mId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.MainBusinessEntity.getUserDetailsforMainEntitybyIdDB(System.String)">
+            <summary>
+            for a given main business entity id, returns all associated user objects from the database
+            </summary>
+            <param name="mId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.MainBusinessEntity.getProductDetailsforMainEntitybyIdDB(System.String)">
+            <summary>
+            for a given main business entity id, returns all related product/service objects from database
+            </summary>
+            <param name="mId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.MainBusinessEntity.getMainBusinessEntitybyIdDB(System.String)">
+            <summary>
+            for a given business entity id, returns the entity object with all associated details
+            this is a heavyweight method- use it when absolutely necessary
+            </summary>
+            <param name="eId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.MainBusinessEntity.insertMainBusinessEntityWOimg_prd_user_subDB(BackEndObjects.MainBusinessEntity)">
+            <summary>
+            inserts the details into database table 'Shop_User_Details' only
+            does not insert any object related to image/sub entity/produc/user 
+            </summary>
+            <param name="mEnt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.MainBusinessEntity.updateMainBusinessEntityWOimg_prd_user_subDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update the details into database table 'Shop_User_Details' only
+            entity id is the required parameter in the where clause
+            does not update any object related to image/sub entity/produc/user
+            a delete operation will  have a  cascading effect on child tables
+            it is highly recommended not to delete any record from this table, rather use the update option as a delete will completely remove all entries related to a business 
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.MainBusinessEntity.insertProductDetailsforEntityDB(System.String,System.Collections.ArrayList)">
+            <summary>
+            inserts the related product/service details of a given entity id into the database table 'Shop_Main_Prdcts'
+            </summary>
+            <param name="mId"></param>
+            <param name="catIds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.MainBusinessEntity.updateProductDetailsforEntityDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            for a given entity id, update the respective product/service details in the database table 'Shop_Main_Prdcts'
+            there will be no cascading effect for a delete operation
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.EntityAccessListRecord">
+            <summary>
+            This class is representative of the backend object 'cmp_access_list'.
+            Each object of this class represents one record of the table 'cmp_access_list'.
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.EntityAccessListRecord.ENTITY_ACCESS_LIST_RECORD_ACCESS_ADMIN_PREF_PAGE_VIEW">
+            <summary>
+            Controls access to admin pref page
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.EntityAccessListRecord.insertEntityAccessListRecordObjDB(BackEndObjects.EntityAccessListRecord)">
+            <summary>
+            This method inserts a access list record object into the database
+            </summary>
+            <param name="alRObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.EntityAccessListRecord.insertEntityAccessListRecordObjectsDB(System.Collections.ArrayList)">
+            <summary>
+            insert a list of 'EntityAccessListRecord' objects
+            </summary>
+            <param name="alRObjList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.EntityAccessListRecord.getAccessDetailsForGroupOrUserbyEntIdandGroupDB(System.String,System.String)">
+            <summary>
+            For a given entity id and group/user id this method returns an ArrayList containing access contexts strings.
+            </summary>
+            <param name="entId"></param>
+            <param name="groupId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.EntityAccessListRecord.getCompleteAccessListbyEntId(System.String)">
+            <summary>
+            For a given entity id this method returns a dictionary containing AD group /user as a key and all related access context strings as an ArrayList value.
+            </summary>
+            <param name="entId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.ShopChildProdsInventory">
+            <summary>
+            This class is representative of the backend object 'Shop_Child_Prdcts_Inventory'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.ShopChildProdsInventory.insertShopChildProdsInventoryDB(BackEndObjects.ShopChildProdsInventory)">
+            <summary>
+            This method inserts the passed object into the database.
+            </summary>
+            <param name="chldPrdObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ShopChildProdsInventory.getShopChildProdObjbyEntIdandProdNameDB(System.String,System.String)">
+            <summary>
+            For a given entity id and product name this method returns the 'ShopChildProdsInventory' object from database
+            </summary>
+            <param name="entId"></param>
+            <param name="prodNm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ShopChildProdsInventory.getAllShopChildProdObjsbyEntId(System.String)">
+            <summary>
+            For a given entity id this method return the dictionary containing all the 'ShopChildProdsInventory' objects associated with that entity.
+            The key is the product name and the value is of type 'ShopChildProdsInventory'
+            </summary>
+            <param name="entId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ShopChildProdsInventory.getAllShopChildProdObjsbyEntIdandProdCatId(System.String,System.String)">
+            <summary>
+            For a given entity id and product category id this method returns a dictionary containing objects of 'ShopChildProdsInventory'.
+            The key is product name and the value is object of type 'ShopChildProdsInventory'.
+            </summary>
+            <param name="entId"></param>
+            <param name="prodCatId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.ShopChildProdsSpecs">
+            <summary>
+            This class is representative of the backend object 'Shop_Child_Prdcts_Spec'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.ShopChildProdsSpecs.setImgPathInFileStore(System.String)">
+            <summary>
+            This method needs to be passed the main business entity id. This method will create a folder structure using that entity id and this objects
+            requirement id.
+            Product Name must be set to this object before this method is called.
+            Also, this method will generate a image id for the image and prepond the image name (as stored with the filestream property) with the id
+            </summary>
+            <param name="entId"></param>
+        </member>
+        <member name="M:BackEndObjects.ShopChildProdsSpecs.generateImagePath(System.String)">
+            <summary>
+            Provided a folder path (can have multi-level path also separated by "\\" this method will create the entire
+            folder structure.
+            </summary>
+            <param name="folderName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ShopChildProdsSpecs.insertShopChildProdsSpecsListDB(System.Collections.ArrayList)">
+            <summary>
+            Passed an ArrayList of objects of type 'ShopChildProdsSpecs' this method inserts these into the DB
+            </summary>
+            <param name="specList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.ShopChildProdsSpecs.getShopChildProdsSpecObjbyEntIdandProdNameDB(System.String,System.String)">
+            <summary>
+            For a given entity id and product name this method returns all associated specification objects from the database.
+            This method return a dictionary with the feature id as the key and 'ShopChildProdsSpecs' object as the value.
+            </summary>
+            <param name="entId"></param>
+            <param name="prodNm"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.Policy">
+            <summary>
+            this class mainly represents two backend tables - 'Policy_Details' and 'Policy_Documents'
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Policy.polDoc">
+            <summary>
+            this is an arraylist of byte streams
+            each member is a byte stream containing a policy related document
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Policy.getPolDocbyId(System.String)">
+            <summary>
+            pass the doc id as the parameter and if the id existis as a key in the 'polDoc' property of the respective object
+            the respective document byte stream will be returned
+            </summary>
+            <param name="docId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Policy.getPolicyDocsforPolicyNoDB(System.String)">
+            <summary>
+            for a given policy number returns the associated doc_id and document byte streams in a dictionary
+            </summary>
+            <param name="polNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Policy.getPolicybyIdDB(System.String)">
+            <summary>
+            this is a heavy weight method as it returns the associated policy documents as well
+            if the documents are not required to be retrieved, use the lightweight version of this method - 'getPolicybyIdwoDocDB'
+            </summary>
+            <param name="polNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Policy.getPolicybyIdwoDocDB(System.String)">
+            <summary>
+            a lightweight version of the method 'getPolicybyIdDB'
+            does not return the associated policy documents
+            </summary>
+            <param name="pNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Policy.insertPolicyDocsforPolDB(System.String,System.Collections.Generic.Dictionary{System.String,System.Byte[]})">
+            <summary>
+            inserts into database 'Policy_Documents' the documents related to a policy
+            the second parameter is a dictionary of {'doc_id','document content'}
+            </summary>
+            <param name="docs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Policy.insertPolicyDetailsDB(BackEndObjects.Policy)">
+            <summary>
+            inserts the policy details into the two database tables 'Policy_Details' and 'Policy_Documents'
+            </summary>
+            <param name="polNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Policy.updatePolicyDetailswoDocsDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            updates the policy details except the document details
+            for updating the document related details use the other update method 'updatePolicyDocsbyPolicyIdDB'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Policy.updatePolicyDocsbyPolicyIdDB(System.String,System.String,System.Byte[],System.String)">
+            <summary>
+            update the document content for a given policy number and doc id
+            </summary>
+            <param name="polNo"></param>
+            <param name="docId"></param>
+            <param name="content"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.Requirement_Spec">
+            <summary>
+            for any given requirement, this class maps the related specifications to that requirement,
+            this class is representative of the database table 'Requirement_Specification_Map'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Requirement_Spec.setImgPathInFileStore(System.String)">
+            <summary>
+            This method needs to be passed the main business entity id. This method will create a folder structure using that entity id and this objects
+            requirement id.
+            Requirement id must be set to this object before this method is called.
+            Also, this method will generate a image id for the image and prepond the image name (as stored with the filestream property) with the id
+            </summary>
+            <param name="entId"></param>
+        </member>
+        <member name="M:BackEndObjects.Requirement_Spec.generateImagePath(System.String)">
+            <summary>
+            Provided a folder path (can have multi-level path also separated by "\\" this method will create the entire
+            folder structure.
+            </summary>
+            <param name="folderName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Requirement_Spec.getRequirementSpecsforReqbyIdDB(System.String)">
+            <summary>
+            for a given requirement id, returns all the associated specifications  from database
+            </summary>
+            <param name="reqId"></param>
+        </member>
+        <member name="M:BackEndObjects.Requirement_Spec.insertRequirementSpecsDB(BackEndObjects.Requirement_Spec)">
+            <summary>
+            insert the requirement spec object to the database 
+            </summary>
+            <param name="rSpec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Requirement_Spec.updateRequirementSpecsDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the requirement specification database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the requirement id or product category id
+            the third parameter contains the type of operation
+            a delete operation will  have no  cascading effect on any other tables
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.Requirement">
+            <summary>
+            this class represents the requirements of the users,
+            this class represents the database table 'Requirement_Details'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Requirement.setReqId(System.String)">
+            <summary>
+            This method also makes sure that the requirement id of all the associated requirement specs are same
+            </summary>
+            <param name="rId"></param>
+        </member>
+        <member name="M:BackEndObjects.Requirement.setReqProdSrvQnty(System.Collections.ArrayList)">
+            <summary>
+            Sets the associated product service quantity list objects for a requirement
+            </summary>
+            <param name="rPrdSrvList"></param>
+        </member>
+        <member name="M:BackEndObjects.Requirement.getRequirementbyIdwoSpecsDB(System.String)">
+            <summary>
+            for a given requirement id, return the respective requirement details excluding the specifications
+            this is a lightweight method - use it when there is not need to extract the related specifications
+            </summary>
+            <param name="reqId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Requirement.getRequirementbyIdDB(System.String)">
+            <summary>
+            for a given requirement id, return the respective requirement details including the specifications
+            this is a heavyweight method, if the related specifications are not required use the light-weight version 'getRequirementbyIdwoSpecsDB'
+            </summary>
+            <param name="reqId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Requirement.getAllRequirementsbyEntityIdDB(System.String)">
+            <summary>
+            for a given business entity id, this method returns all the requirements from the database in an ArrayList.
+            Each element of this arraylist is an object of type 'Requirement' (without the specification objects)
+            </summary>
+            <param name="entId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Requirement.insertRequirementDB(BackEndObjects.Requirement)">
+            <summary>
+            this method inserts all the details of a requirement into database
+            if the associated requirement specs are also attached to the parameter object those details will also be inserted into table 'Requirement_Specification_Map'.
+            if the associated requirement product service quantiy objects are also attached to the parameter, those details will also be inserted in the backed table 'REQ_Product_Service_Qnty'.
+            </summary>
+            <param name="req"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Requirement.updateRequirementDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'Requirement_Details'  database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the requirement id
+            the third parameter contains the type of operation
+            
+            a delete operation will  have a cascading effect on the dependent table 'Requirement_Specification_Map'
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.RequirementProdServQnty">
+            <summary>
+            This class is representative of the backend object 'REQ_Product_Service_Qnty'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.RequirementProdServQnty.insertRequirementProductServiceQuantityDetailsDB(BackEndObjects.RequirementProdServQnty)">
+            <summary>
+            This method inserts the passed 'RequirementProdServQnty' object into database.
+            The passed object must have the req id and prod category id attached to it.
+            </summary>
+            <param name="reqPrdSrvQntyObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RequirementProdServQnty.getRequirementProductServiceQuantityforReqIdDB(System.String)">
+            <summary>
+            For a given Requirement id this method returns an arraylist of 'RequirementProdServQnty' objects.
+            </summary>
+            <param name="reqId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RequirementProdServQnty.updateRequirementProductServiceQuantityDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the RequirementProdServQnty  database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the Requirement id
+            the third parameter contains the type of operation
+            a delete operation will  have no  cascading effect on any other tables
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.Invoice">
+            <summary>
+            this class represents the backend database table 'Invoice_Details'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Invoice.getInvoicebyIdDB(System.String)">
+            <summary>
+            returns the respective invoice object from database for the passed invoice id parameter
+            </summary>
+            <param name="invNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Invoice.getInvoicebyNoDB(System.String)">
+            <summary>
+            returns the respective invoice object from database for the passed invoice number parameter
+            </summary>
+            <param name="invId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Invoice.getInvoicebyRfIdDB(System.String)">
+            <summary>
+            get the invoice details by rfq Id
+            </summary>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Invoice.getAllInvoicesbyRfIdDB(System.String)">
+            <summary>
+            In cases where there can be multiple invoices attached to a particular RFQ id, this method should be used
+            </summary>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Invoice.getAllInvoicesbyEntId(System.String)">
+            <summary>
+            For a given entity id, this method returns all the invoices which were sent to it and  which were approved by the sending organization
+            </summary>
+            <param name="entId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Invoice.getAllInvoicesbyRespEntId(System.String)">
+            <summary>
+            For a given response entity id this method returns an ArrayList of invoice object that is created by the response entity id
+            </summary>
+            <param name="respEntId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Invoice.getAllInvoicesbyApproverIdAndRespEntIdDB(System.String,System.String)">
+            <summary>
+            For a given approver id and response entity id this method returns all Invoice objects which are pending approval with the user
+            </summary>
+            <param name="appId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Invoice.insertInvoiceforRFQIdDB(System.String,System.Collections.ArrayList)">
+            <summary>
+            inserts multiple associates invoice objects into database table for a given rfqid
+            the first parameter is the rfqid
+            the second parameter is arraylist of invoice objects
+            </summary>
+            <param name="invObjs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Invoice.insertInvoiceDB(BackEndObjects.Invoice)">
+            <summary>
+            inserts a single invoice object into the database
+            </summary>
+            <param name="invObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Invoice.updateInvoiceDetailsDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the requirement invoice database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the invoice id
+            the third parameter contains the type of operation
+            a delete operation will  have no  cascading effect on any other tables
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.InvoiceComponents">
+            <summary>
+            This class is representative of the backend object 'Invoice_Components'.
+            Each object of this class represents record of type 'Invoice_Components'.
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.InvoiceComponents.getInvoiceComponentByInvIdandSecType(System.String,System.String)">
+            <summary>
+            For a given invoice id and section type this method returna all the different Invoice Components with different sefction type name
+            </summary>
+            <param name="invId"></param>
+            <param name="secType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.InvoiceComponents.insertInvoiceComponentDB(BackEndObjects.InvoiceComponents)">
+            <summary>
+            inserts a single invoice component object into the database
+            </summary>
+            <param name="invObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.InvoiceComponents.insertInvoiceComponentListDB(System.Collections.ArrayList)">
+            <summary>
+            Inserts an Array List of InvoiceComponents objects into backend DB
+            </summary>
+            <param name="invCompList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.InvoiceComponents.updateInvoiceComponentDetailsDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            note that the where clause must contain the invoice id
+            the third parameter contains the type of operation
+            a delete operation will  have no  cascading effect on any other tables
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.Communications">
+            <summary>
+            this class is representative of the backend database object 'Communication_Details'
+            This is used for representing both communication and notes details
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Communications.COMMUNICATIONS_CONTEXT_TYPE_COMM">
+            <summary>
+            This defines cumminication type as usual communication
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Communications.COMMUNICATIONS_CONTEXT_TYPE_NOTE">
+            <summary>
+            This defines communicatons type as note
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Communications.getCommunicationbyIdDB(System.String)">
+            <summary>
+            for a given communication id return the respective database object from the table 'Communication_Details'
+            </summary>
+            <param name="commId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Communications.getAllCommunicationsforContextIdAndContextTypeAndSourceIdDB(System.String,System.String,System.String)">
+            <summary>
+            returns all associated communication objects related to a particular context id
+            this is a heavyweight method - if not required absolutely use the lightweight version 'getCommunicationbyIdDB'
+            </summary>
+            <param name="contxtId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Communications.getAllCommunicationsforContextIdBetweenSourceAndDestDB(System.String,System.String,System.String)">
+            <summary>
+            For a given context id, source and destination entity id this returns a sorted dictionary sorted on the create date of the communication.
+            This type of communiation is NOT for notes
+            </summary>
+            <param name="contxtId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Communications.insertCommunicationDB(BackEndObjects.Communications)">
+            <summary>
+            insert the communication object into database
+            </summary>
+            <param name="comm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Communications.updateCommunicationDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the communications database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the communication id 
+            the third parameter contains the type of operation
+            a delete operation will  have no  cascading effect on any other tables
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Communications.setDocPathInFileStore(System.String)">
+            <summary>
+            This method needs to be passed the main business entity id. This method will create a folder structure using that entity id and this objects
+            context id.
+            context id must be set to this object before this method is called.
+            Also, this method will generate a image id for the image/dpc and prepond the image name (as stored with the filestream property) with the id
+            </summary>
+            <param name="entId"></param>
+        </member>
+        <member name="M:BackEndObjects.Communications.generateImagePath(System.String)">
+            <summary>
+            Provided a folder path (can have multi-level path also separated by "\\" this method will create the entire
+            folder structure.
+            </summary>
+            <param name="folderName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.Payment">
+            <summary>
+            this class is representative of the database object 'Payment_Details'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Payment.getPaymentDetailsforInvoiceDB(System.String)">
+            <summary>
+            for a given invoice id, returns all associated payment objects from the database
+            the return dictionary 'key' is the payment id String and the 'value' is the respective payment object
+            </summary>
+            <param name="invId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Payment.getPaymentDetailsforInvoiceIdandTranIdDB(System.String,System.String)">
+            <summary>
+            for a given invoice id and transaction id, returns the associated payment object from the database
+            the return dictionary 'key' is the payment id String and the 'value' is the respective payment object
+            </summary>
+            <param name="invId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Payment.getPaymentDetailsforRFQDB(System.String)">
+            <summary>
+            for a given invoice id, returns all associated payment objects from the database
+            the return dictionary 'key' is the payment id String and the 'value' is the respective payment object
+            </summary>
+            <param name="rId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Payment.getPaymentDetailsbyIdDB(System.String)">
+            <summary>
+            for a given payment id return the respective payment object from database
+            </summary>
+            <param name="pmntId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Payment.insertPaymentDetailsDB(BackEndObjects.Payment)">
+            <summary>
+            inserts the payment object into database
+            </summary>
+            <param name="pmnt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Payment.updatePaymentDetailsDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the communications database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the payment id 
+            the third parameter contains the type of operation
+            a delete operation will  have no  cascading effect on any other tables
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.DefectDetails">
+            <summary>
+            this class is representative of the backend object 'Defect_Details'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.DefectDetails.setDocPathInFileStore(System.String)">
+            <summary>
+            This method needs to be passed the main business entity id. This method will create a folder structure using that entity id and this objects
+            Defect id.
+            Defect id must be set to this object before this method is called.
+            Also, this method will generate a image id for the image/dpc and prepond the image name (as stored with the filestream property) with the id
+            </summary>
+            <param name="entId"></param>
+        </member>
+        <member name="M:BackEndObjects.DefectDetails.generateImagePath(System.String)">
+            <summary>
+            Provided a folder path (can have multi-level path also separated by "\\" this method will create the entire
+            folder structure.
+            </summary>
+            <param name="folderName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectDetails.getDefectDetailsbyidDB(System.String)">
+            <summary>
+            for a given defect id return the associated defect object from database
+            </summary>
+            <param name="dfctId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectDetails.getAllDefectDetailsforCustomerIdDB(System.String)">
+            <summary>
+            for a given customer id returns all the associated defect objects from the database
+            the 'key' of the returned dictionary is the defect id and the 'value' is respective defect details object
+            </summary>
+            <param name="custId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectDetails.getDefectDetailsforCustomerIdandDefectIdDB(System.String,System.String)">
+            <summary>
+            for a given customer id and defect id returns the respective defect object from the database
+            </summary>
+            <param name="custId"></param>
+            <param name="dfctId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectDetails.getAllDefectDetailsforSupplierIdDB(System.String)">
+            <summary>
+            for a given supplier id returns all the associated defect objects from the database
+            the 'key' of the returned dictionary is the defect id and the 'value' is respective defect details object
+            </summary>
+            <param name="supId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectDetails.getAllOpenDefectDetailsforSupplierIdAndAssignedToUserDB(System.String,System.String)">
+            <summary>
+            For a given supplier ent id and user id this method returns all the defect objects which are not resolved
+            </summary>
+            <param name="supId"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectDetails.getDefectDetailsforSupplierIdandDefectIdDB(System.String,System.String)">
+            <summary>
+            for a given supplier id and defect id returns the respective defect object from the database
+            </summary>
+            <param name="supId"></param>
+            <param name="dfctId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectDetails.getAllDefectDetailsforRFQIdDB(System.String)">
+            <summary>
+            for a given RFQ id returns all the associated defect objects from the database
+            the 'key' of the returned dictionary is the defect id and the 'value' is respective defect details object
+            </summary>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectDetails.getAllDefectDetailsforInvoiceIdDB(System.String)">
+            <summary>
+            for a given invoice id returns all the associated defect objects from the database
+            the 'key' of the returned dictionary is the defect id and the 'value' is respective defect details object
+            </summary>
+            <param name="invId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectDetails.insertDefectDetails(BackEndObjects.DefectDetails)">
+            <summary>
+            inserts the passed defect object into the database
+            </summary>
+            <param name="dfct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectDetails.updateDefectDetails(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the defect database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the defect id 
+            the third parameter contains the type of operation
+            a delete operation will  have no  cascading effect on any other tables
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectDetails.updateorInsertDefectDocDB(BackEndObjects.DefectDetails)">
+            <summary>
+            This method was introduced to handle scenario when it is required to update the  document .
+            If a new file needs to be uploaded/inserted that must be attached to the passed object as a FileUpload
+            This method will remove the image at the existing server path; If no image alreadt exists it will create the path and put the image/document in server path
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.DefectSLA">
+            <summary>
+            Tis cass is representative of the backend object 'Defects_SLA'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.DefectSLA.getDefectSLADetailsbyentIdDB(System.String,System.String)">
+            <summary>
+            The first parameter is the entity id.
+            The second parameter denotes whether its a defect or service request.
+            </summary>
+            <param name="entId"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.RFQProdServQnty">
+            <summary>
+            this class is representative of the database object 'RFQ_Product_Service_Qnty'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.RFQProdServQnty.insertRFQProductServiceQuantityDetailsDB(BackEndObjects.RFQProdServQnty)">
+            <summary>
+            This method inserts the passed 'RFQProdServQnty' object into database.
+            The passed object must have the rfq id and prod category id attached to it.
+            </summary>
+            <param name="rfPrdSrvQntyObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQProdServQnty.getRFQProductServiceQuantityforRFIdDB(System.String)">
+            <summary>
+            For a given RFQ id this method returns an arraylist of 'RFQProdServQnty' objects.
+            </summary>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQProdServQnty.getRFQProductServiceQuantityforRFIdandCatIdDB(System.String,System.String)">
+            <summary>
+            For a given RFQ id and Product category id this method returns a 'RFQProdServQnty' object.
+            </summary>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQProdServQnty.updateRFQProductServiceQuantityDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the RFQProdServQnty  database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the RFQ id
+            the third parameter contains the type of operation
+            a delete operation will  have no  cascading effect on any other tables
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.RFQProductServiceDetails">
+            <summary>
+            this class is representative of the database object 'RFQ_Product_Service_Map'
+            All associated product/service details for a RFQ is represented through this class
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.RFQProductServiceDetails.getQuantity">
+            <summary>
+            The quantity property is not used on this object because RFQ Prod service qnty class provides to and from qunty
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQProductServiceDetails.setQuantity(System.Single)">
+            <summary>
+            The quantity property is not used on this object because RFQ Prod service qnty class provides to and from qunty
+            </summary>
+            <param name="qunty"></param>
+        </member>
+        <member name="M:BackEndObjects.RFQProductServiceDetails.setImgPathInFileStore(System.String)">
+            <summary>
+            This method needs to be passed the main business entity id. This method will create a folder structure using that entity id and this objects
+            requirement id.
+            RFQ id must be set to this object before this method is called.
+            Also, this method will generate a image id for the image and prepond the image name (as stored with the filestream property) with the id
+            </summary>
+            <param name="entId"></param>
+        </member>
+        <member name="M:BackEndObjects.RFQProductServiceDetails.generateImagePath(System.String)">
+            <summary>
+            Provided a folder path (can have multi-level path also separated by "\\" this method will create the entire
+            folder structure.
+            </summary>
+            <param name="folderName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQProductServiceDetails.getAllProductServiceDetailsbyRFQIdDB(System.String)">
+            <summary>
+            for a given RFQ Id returns all objects from the database
+            Each element of the arraylist is  'RFQProductServiceDetails' object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQProductServiceDetails.getAllProductServiceDetailsbyRFQandProductIdDB(System.String,System.String)">
+            <summary>
+            for a given RFQ Id and Product/Service category id returns all objects from the database
+            the 'key' of the returned dictionary is the 'Feature Id'  - the 'value' is the respective 'RFQProductServiceDetails' object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQProductServiceDetails.getProductServiceDetailsbyRFQandProductandFeatureIdDB(System.String,System.String,System.String)">
+            <summary>
+            for a given RFQ Id, Product/Service category id and Feature id returns the respective 'RFQProductServiceDetails' object from database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQProductServiceDetails.insertRFQProductServiceDetails(BackEndObjects.RFQProductServiceDetails)">
+            <summary>
+            inserts the passed 'RFQProductServiceDetails' into the database 
+            </summary>
+            <param name="rfPrdDet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQProductServiceDetails.updateRFQProductServiceDetails(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the RFQ specification database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the RFQ id,Product Category id and Feature id 
+            the third parameter contains the type of operation
+            a delete operation will  have no  cascading effect on any other tables
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.RFQDetails">
+            <summary>
+            this class is representative of the database object 'RFQ_Details'
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.RFQDetails.CREATION_MODE_MANUAL">
+            <summary>
+            Whenver a user tries to create a Lead manually fro the sales screen, creation mode should be 'Manual'; and 
+            whenever  a user creates an RFQ from purchase screen, this should become 'Auto'.
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.RFQDetails.CREATION_MODE_AUTO">
+            <summary>
+            This creation mode defines that this RFQ is automatically converted to a Lead by the system, and thus specify that the Lead is not
+            a manually creatd one. Whenver a user tries to create a Lead manually fro the sales screen, creation mode should be 'Manual'; and whenever
+            a user creates an RFQ from purchase screen, this should become 'Auto'.
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.RFQDetails.reqId">
+            <summary>
+            this is the requirement id which which this RFQ is associated
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.RFQDetails.RFQProdServList">
+            <summary>
+            This is the list of 'RFQProductServiceDetails' objects associated with the RFQ.
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.RFQDetails.setRFQId(System.String)">
+            <summary>
+            This method along with setting the RFQId to this RFQDetails object also sets the same RFQId to all the associated 'RFQProductServiceDetails' objects
+            </summary>
+            <param name="rfId"></param>
+        </member>
+        <member name="M:BackEndObjects.RFQDetails.getCreatedEntity">
+            <summary>
+            This is the entity id which created this RFQDetails/Lead record.
+            For automatically created Lead entry/RFQDetails records, this value is same as getEntityId().
+            For Manually created lead entry/RFQDetails records, this value is different than getEntity() - in this case, this is entity/organization
+            id who manually created the lead entry.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQDetails.setCreatedEntity(System.String)">
+            <summary>
+            This is the entity id which created this RFQDetails/Lead record.
+            For automatically created Lead entry/RFQDetails records, this value is same as getEntityId().
+            For Manually created lead entry/RFQDetails records, this value is different than getEntity() - in this case, this is entity/organization
+            id who manually created the lead entry.
+            </summary>
+            <param name="entId"></param>
+        </member>
+        <member name="M:BackEndObjects.RFQDetails.setNDADocPathInFileStore(System.String)">
+            <summary>
+            This method needs to be passed the main business entity id. This method will create a folder structure using that entity id and this objects
+            RFQ id.
+            RFQ id must be set to this object before this method is called.
+            Also, this method will generate a image id for the image and prepond the image name (as stored with the filestream property) with the id
+            </summary>
+            <param name="entId"></param>
+        </member>
+        <member name="M:BackEndObjects.RFQDetails.generateImagePath(System.String)">
+            <summary>
+            Provided a folder path (can have multi-level path also separated by "\\" this method will create the entire
+            folder structure.
+            </summary>
+            <param name="folderName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQDetails.getRFQProdServQntyList">
+            <summary>
+            Returns an arrayList of 'RFQProdServQnty' objects associated to this object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQDetails.getRFQDetailsbyIdDB(System.String)">
+            <summary>
+            for a given RFQ id returns the RFQ details object from the database. It does not return the related specification objects list and Product service quantity list.
+            </summary>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQDetails.getAllRFQbyEntityIdDB(System.String,System.Boolean)">
+            <summary>
+            for a given entity id, it returns an ArrayList containing objects of 'RFQDetails'. Note that the associated Prod/Serv specifications are not sent.
+            The second parameter signals whether or not to consider only the RFQ records which are created by the passed entity id
+            </summary>
+            <param name="entId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQDetails.getAllRFQIncludingDummybyEntityIdDB(System.String,System.Boolean)">
+            <summary>
+            This returns all RFQ ids (only ids) including the dummy ones created for PO
+            </summary>
+            <param name="entId"></param>
+            <param name="onlyWhenCreator"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQDetails.updateorInsertRFQNDADB(BackEndObjects.RFQDetails)">
+            <summary>
+            This method was introduced to handle scenario when it is required to update the NDA document .
+            If a new file needs to be uploaded/inserted that must be attached to the passed object as a FileUpload
+            This method will remove the image at the existing server path; If no image alreadt exists it will create the path and put the image/document in server path
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQDetails.insertRFQDetailsDB(BackEndObjects.RFQDetails)">
+            <summary>
+            inserts the passed RFQDetails object into the database.If there is attached 'RFQProductServiceDetails' list, that will also be inserted.
+            If there are attached RFQ product service quantity objects those objects will also be inserted into database
+            </summary>
+            <param name="rfqDet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQDetails.updateRFQDetailsDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'RFQ_Details' database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the RFQ id
+            the third parameter contains the type of operation
+            a delete operation will  have a  cascading effect on all the dependent tables.
+            If the Active status  is changed, a cascading operation will be done for RFQShortlisted entries for the same RFQ.
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQDetails.getAllRFQbyRequirementIdDB(System.String)">
+            <summary>
+            for a given requirement id returns all the RFQs from database which are associated with that requirement.
+            Associate Product/service list is not returned.
+            </summary>
+            <param name="reqId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQDetails.getAllRFQbyApproverIdDB(System.String,System.String)">
+            <summary>
+            For a given approver id and entity id this method returns all RFQ records which are pending approval from this user
+            </summary>
+            <param name="uId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQDetails.getAllLeadsforEntityIdDB(System.String)">
+            <summary>
+            for particular entity id, this method returns all the 'RFQDetails' object from database.
+            Note that, it does not return the respective product specification objects.
+            For any lead entry for which there is a respective potential entry exists, that record will not be retrieved.
+            </summary>
+            <param name="entId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.RFQResponse">
+            <summary>
+            this class represents the response objects to an RFQ;
+            details related to the quotes of the response can be found using the object of the class 'RFQResponseQuotes';
+            this class represents the backend database table 'RFQ_Response'
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.RFQResponse.ResponseQuoteList">
+            <summary>
+            This variable stores an arraylist of 'RFQResponseQuotes' objects which are associated with this particular RFQReponse object.
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.RFQResponse.getResponseQuoteList">
+            <summary>
+            Returns all associated responsequote objects in an arraylist which are associated with this reponse object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQResponse.setNDADocPathInFileStore(System.String)">
+            <summary>
+            This method needs to be passed the main business entity id of the reponse entity id. This method will create a folder structure using that entity id and this objects
+            RFQ id.
+            RFQ id must be set to this object before this method is called.
+            Also, this method will generate a image/doc  id for the image/doc and prepond the image name (as stored with the filestream property) with the id
+            </summary>
+            <param name="RespentId"></param>
+        </member>
+        <member name="M:BackEndObjects.RFQResponse.generateImagePath(System.String)">
+            <summary>
+            Provided a folder path (can have multi-level path also separated by "\\" this method will create the entire
+            folder structure.
+            </summary>
+            <param name="folderName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQResponse.getAllRFQResponseforRFQIdDB(System.String)">
+            <summary>
+            for any given rfq id returns all the associated 'RFQResponse' objects from the database
+            the returned dictionary contains response entity id as the 'key' and the respective 'RFQResponse' object as the 'value'.
+            It Returns all associated ResponseQuote objects associated with each of the response.
+            </summary>
+            <param name="rfId"></param>
+        </member>
+        <member name="M:BackEndObjects.RFQResponse.getRFQResponseforRFQIdandResponseEntityIdDB(System.String,System.String)">
+            <summary>
+            for a given 'RFQ id' and 'response entity id' returns the respective 'RFQResponse' object from database.
+            This method also returns the associated response quote objects.
+            </summary>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQResponse.getRFQResponseDictWOQuotesForRFQIdListandResponseEntityIdDB(System.Collections.ArrayList,System.String)">
+            <summary>
+            for a given 'RFQ id' list and 'response entity id' returns the dictionary of 'rfq-id' 'RFQResponse' object from database.
+            The key of the returned dictionary is 'rfq id'
+            This method DOES NOT return the associated response quote objects.
+            </summary>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQResponse.getRFQResponseWOQuotesForRFQIdandResponseEntityIdDB(System.String,System.String)">
+            <summary>
+            for a given 'RFQ id' and 'response entity id' returns the respective 'RFQResponse' object from database.
+            This method DOES NOT return the associated response quote objects.
+            </summary>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQResponse.getAllRFQResponseforResponseEntityIdDB(System.String)">
+            <summary>
+            for a given response entity id, this method returns all the associated responses generated from that entity 
+            the 'key' is the 'RFQ Id' and the 'value' is 'RFQResponse' object.
+            This method also returns the associated RFQ Reponse Quote objects.
+            </summary>
+            <param name="respEnt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQResponse.insertRFQResponseDB(BackEndObjects.RFQResponse)">
+            <summary>
+            inserts the passed 'RFQResponse' object into database.
+            If there are associated Response quote objects those will also be inserted.
+            </summary>
+            <param name="rfResp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQResponse.updateRFQResponseDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'RFQ_Response' database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the RFQ id/Response company id 
+            the third parameter contains the type of operation
+            a delete operation will  have no  cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQResponse.updateorInsertRFQResponseNDADB(BackEndObjects.RFQResponse)">
+            <summary>
+            This method was introduced to handle scenario when it is required to update the NDA document .
+            If a new file needs to be uploaded/inserted that must be attached to the passed object as a FileUpload
+            This method will remove the image at the existing server path; If no image alreadt exists it will create the path and put the image/document in server path
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.RFQResponseQuotes">
+            <summary>
+            for any particular RFQ's response object , stores  the respective quote details
+            this is representative of the database table 'RFQ_Response_Quote_Details'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.RFQResponseQuotes.getAllResponseQuotesforResponseEntityIdDB(System.String)">
+            <summary>
+            for a given response entity id returns all related respone quote objects for RFQs from database
+            </summary>
+            <param name="entId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQResponseQuotes.getAllRFQWithNonEmptyResponseQuotesforResponseEntityIdDB(System.String)">
+            <summary>
+            The key of the returned dictionary is the RFQ id for which there is a response quote record made by the given response entity id
+            </summary>
+            <param name="entId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQResponseQuotes.getAllResponseQuotesforRFQandResponseEntityDB(System.String,System.String)">
+            <summary>
+            returns all objects from database for a given RFQ id and the 'response company id'
+            each record of the returned dictionary contains the 'Product/Service Category Id' as the 'key' and the respective 'RFQResponseQuotes' object as 'value'
+            </summary>
+            <param name="rfId"></param>
+            <param name="entId"></param>
+        </member>
+        <member name="M:BackEndObjects.RFQResponseQuotes.getAllResponseQuotesforRFQIdDB(System.String)">
+            <summary>
+            for a given RFQ id returns all RFQReponseQuote objects from database.
+            The 'key' of the returned dictionary is the 'product category id' of the respective RFQ.
+            </summary>
+            <param name="rfqId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQResponseQuotes.insertRFQResponseQuotesDB(BackEndObjects.RFQResponseQuotes)">
+            <summary>
+            inserts the passed 'RFQResponseQuotes' object into the database
+            </summary>
+            <param name="rfResp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQResponseQuotes.updateRFQResponseQuotesDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'RFQ_Response_Quote_Details' database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the RFQ id/Response Company id 
+            the third parameter contains the type of operation
+            a delete operation will  not have any cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.RFQBroadcastList">
+            <summary>
+            This class is representative of the database object 'RFQ_Broadcast_List'
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.RFQBroadcastList.RFQ_BROADCAST_TO_ALL">
+            <summary>
+            Setting this value to broadcastList means that this RFQ should be broadcasted to all listed vendors in the site.
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.RFQBroadcastList.RFQ_BROADCAST_TO_ALL_INTERESTED">
+            <summary>
+            Setting this value to broadcastList means that all interested parties (having business in the same product category) 
+            will be notified about this RFQ.
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.RFQBroadcastList.broadcastList">
+            <summary>
+            This is the list of entities where the RFQ can be broadcasted.
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.RFQBroadcastList.getRFQBroadcastListbyIdDB(System.String)">
+            <summary>
+            for a given RFQ id, it returns the respective 'RFQBroadcastList' object from the database.
+            </summary>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQBroadcastList.insertRFQBroadcastListDB(BackEndObjects.RFQBroadcastList)">
+            <summary>
+            Inserts the 'RFQBroadcastList' object details into database
+            </summary>
+            <param name="rfqBL"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQBroadcastList.updateRFQBroadcastListDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'RFQ_Broadcast_List' database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the RFQ id
+            the third parameter contains the type of operation
+            a delete operation will  have a  cascading effect on all the dependent tables
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.RFQShortlisted">
+            <summary>
+            this class reprents potentials;
+            all the shortlisted responsed for an RFQ can be represented through objects of this class;
+            this class represents the backend table ''RFQ_Shortlisted'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.setConfMatPathInFileStore(System.String)">
+            <summary>
+            This method needs to be passed the main business entity id of the reponse entity id. This method will create a folder structure using that entity id and this objects
+            RFQ id.
+            RFQ id must be set to this object before this method is called.
+            Also, this method will generate a image/doc  id for the image/doc and prepond the image name (as stored with the filestream property) with the id
+            </summary>
+            <param name="RespentId"></param>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.generateImagePath(System.String)">
+            <summary>
+            Provided a folder path (can have multi-level path also separated by "\\" this method will create the entire
+            folder structure.
+            </summary>
+            <param name="folderName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.setFinlCustFlag(System.String)">
+            <summary>
+            set either 'Y' /'N' for this field
+            </summary>
+            <param name="flg"></param>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.setFinlSupFlag(System.String)">
+            <summary>
+            set only 'Y'/'N' for this flag
+            </summary>
+            <param name="flg"></param>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.setCreateMode(System.String)">
+            <summary>
+            Creation mode values can only be set to the values as defined by the 'POTENTILA_CRATION_MODE_' values in this class.
+            </summary>
+            <param name="cMd"></param>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.getPotStat">
+            <summary>
+            Returns the stage of the potentials - e.g. Prelim/advanced etc.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.setPotStat(System.String)">
+            <summary>
+            Potential status values can be set only to values as defined in class 'PotentialStatus'.
+            </summary>
+            <param name="pStat"></param>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.getPotActStat">
+            <summary>
+            Returns the active status of the potential -e.g. active/inactive
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.setPotActStat(System.String)">
+            <summary>
+            Potential Active status value can only be taken from the list defined in this class
+            </summary>
+            <param name="stat"></param>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.insertRFQShorListedEntryDB(BackEndObjects.RFQShortlisted)">
+            <summary>
+            Inserts one object of the 'RFQShortlisted' class into database
+            </summary>
+            <param name="rfShortLst"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.updateRFQShortListedEntryDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.getAllRFQShortListedbyEntityIdDB(System.String)">
+            <summary>
+            for a given response entity id, it return an arraylist of 'RFQShorlisted' (Potential) objects from the database
+            </summary>
+            <param name="RespentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.getAllRFQShortListedbyEntityIdOnlyRFQIdListDB(System.String)">
+            <summary>
+            Returns the RFQ id list for all RFQs for whifch the given response entity id is shortlisted
+            </summary>
+            <param name="RespentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.getAllRFQShortListedbyEntityIdAndAssignedToUser(System.String,System.String)">
+            <summary>
+            For a given reponse entity id and assigned to user this method returns all the entries which are assigned to this given user and belongs to this
+            response entity id
+            </summary>
+            <param name="RespentId"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.getRFQShortlistedbyRespEntandRFQId(System.String,System.String)">
+            <summary>
+            For a given response entity id and a RFQ id this method returns the RFQShortlisted object from database
+            </summary>
+            <param name="RespentId"></param>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.getAllRFQShortListedbyPotentialIdDB(System.String)">
+            <summary>
+            For a given potential id returns the respective 'RFQShortlisted' object from database
+            </summary>
+            <param name="potnId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.getAllShortListedEntriesbyRFQId(System.String)">
+            <summary>
+            for a given RFQ id, this method returns all the 'RFQShortlisted' entries from database.
+            The return value is an Arraylist of 'RFQShortlisted' entries.
+            </summary>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.getRFQShortlistedEntryforFinalizedVendor(System.String)">
+            <summary>
+            For a given response entity id and RFQ id, this method returns the respective record from database for the finalized Potential entry.
+            </summary>
+            <param name="respEntId"></param>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQShortlisted.getAllRFQShortlistedEntriesforFinalizedVendor(System.String)">
+            <summary>
+            For a given response entity id this method returns a list of RFQShortlisted objects which this entity has won
+            Key is the rfq id
+            </summary>
+            <param name="respEntId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.RFQActiveStat">
+            <summary>
+            defines the RFQ Active Status list;
+            this class represents the backend table 'RFQ_Active_Status'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.RFQActiveStat.getAllActiveStatNamesDB">
+            <summary>
+            returns all the active status values from the database in an arraylist
+            each element of the arraylist is an object of the class 'RFQActiveStat'
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQActiveStat.isActiveStatValidDB(System.String)">
+            <summary>
+            verifies from the database whether the passed parameter is a valid active status in the database
+            if found it returns a 'true' else returns a 'false'
+            </summary>
+            <param name="stName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQActiveStat.insertActiveStatDB(System.Collections.ArrayList)">
+            <summary>
+            the parameter is a list of 'RFQActiveStat' objects
+            each of these object is inserted into the database
+            </summary>
+            <param name="stList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQActiveStat.updateActiveStatDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'RFQ_Active_Status' database table
+            the first paramter contains column name - taget value pair
+             the second parameter contains column name - target value as where clause - note that this where clause must contain the 'active_status_name'
+             the third parameter contains the type of operation
+             a delete operation will  have no  cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.RFQApprovalStat">
+            <summary>
+            this class is representative of the database object 'RFQ_Approval_Status'
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.RFQApprovalStat.RFQ_APPROVAL_STAT_APPROVED">
+            <summary>
+            Using this value for approval status means that the RFQ is approved.
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.RFQApprovalStat.RFQ_APPROVAL_STAT_REJECTED">
+            <summary>
+            using this value for approval status means tha the RFQ is rejected by the approver
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.RFQApprovalStat.getAllApprovalStatDB">
+            <summary>
+            returns all data from the database object 'RFQApprovalStat' 
+            each lelment of the arraylist is an object of type 'RFQApprovalStat'
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQApprovalStat.isApprovalStatValidDB(System.String)">
+            <summary>
+            returns true if the passed paramter is a valid approval status, else returns false
+            </summary>
+            <param name="stName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQApprovalStat.InsertApprovalStatDB(System.Collections.ArrayList)">
+            <summary>
+            inserts all the objects from the arraylist into the database
+            </summary>
+            <param name="stList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.RFQApprovalStat.updateApprovalStatDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'RFQ_Approval_Status' database table
+            the first paramter contains column name - taget value pair
+             the second parameter contains column name - target value as where clause - note that this where clause must contain the 'approval_status_name'
+             the third parameter contains the type of operation
+             a delete operation will  have no  cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.DeliveryStat">
+            <summary>
+            this class is represtative of the database object 'Delivery_Status'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.DeliveryStat.getAllDeliveryStatDB">
+            <summary>
+            returns all delivery status from database
+            each member of this arraylist is an object of type 'DeliveryStat'
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DeliveryStat.isDeliveryStatValidDB(System.String)">
+            <summary>
+            if the passed delivery status name is found in the database it returns a 'true', else it returns 'false'
+            </summary>
+            <param name="stName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DeliveryStat.insertDeliveryStatDB(System.Collections.ArrayList)">
+            <summary>
+            inserts all the delivery status objects passed through the arraylist in database
+            </summary>
+            <param name="stList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DeliveryStat.updateDeliveryStatDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'Delivery_Status' database table
+            the first paramter contains column name - taget value pair
+             the second parameter contains column name - target value as where clause - note that this where clause must contain the 'delivery_status_name'
+             the third parameter contains the type of operation
+             a delete operation will  have no  cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.PaymentStat">
+            <summary>
+            this class is representative of the database object 'Payment_Status'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.PaymentStat.getAllPaymentStatDB">
+            <summary>
+            returns all the 'PaymentStat' objects from database
+            each member of the returned arraylist is an object of 'PaymentStat'
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PaymentStat.isPaymentStatValidDB(System.String)">
+            <summary>
+            verifies if the passed payment status is a valid status
+            returns true if this is available in database , else returns false
+            </summary>
+            <param name="stName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PaymentStat.insertPaymentStatDB(System.Collections.ArrayList)">
+            <summary>
+            inserts all the PaymentStat objects from the ArrayList into database
+            </summary>
+            <param name="stList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PaymentStat.updatePaymentStatDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'Payment_Status' database table
+            the first paramter contains column name - taget value pair
+             the second parameter contains column name - target value as where clause - note that this where clause must contain the 'payment_status_name'
+             the third parameter contains the type of operation
+             a delete operation will  have no  cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.PaymentType">
+            <summary>
+            this class is representative of the database object 'Payment_Type'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.PaymentType.getAllPaymentTypeDB">
+            <summary>
+            get all PaymentType objects from the database
+            each emember of the arraylist is an object of type 'PaymentType'
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PaymentType.isPaymentTypeValidDB(System.String)">
+            <summary>
+            verifies if the passed payment type name is available in the database or not
+            if found, returns 'true' else 'false'
+            </summary>
+            <param name="tpName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PaymentType.insertPaymentTypeDB(System.Collections.ArrayList)">
+            <summary>
+            inserts all the objects in passed arraylist into database
+            </summary>
+            <param name="stList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PaymentType.updatePaymentTypeDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'Payment_Type' database table
+            the first paramter contains column name - taget value pair
+             the second parameter contains column name - target value as where clause - note that this where clause must contain the 'payment_type_name'
+             the third parameter contains the type of operation
+             a delete operation will  have no  cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.InvoiceType">
+            <summary>
+            this class is representative of the database object 'Invoice_Types'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.InvoiceType.getAllInvoiceTypeDB">
+            <summary>
+            returns all the invoice type objects from database
+            each member of the arraylist is an object of the class 'InvoiceType'
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.InvoiceType.isInvoiceTypeValidDB(System.String)">
+            <summary>
+            verfies if the passed InvoiceType is present in the database
+            if found returns 'true',else returns 'false'
+            </summary>
+            <param name="tpName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.InvoiceType.insertInvoiceTypeDB(System.Collections.ArrayList)">
+            <summary>
+            inserts all the invoice type objects passed through the parameter into the database
+            </summary>
+            <param name="stList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.InvoiceType.updateInvoiceTypeDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'Invoice_Types' database table
+            the first paramter contains column name - taget value pair
+             the second parameter contains column name - target value as where clause - note that this where clause must contain the 'invoice_type_name'
+             the third parameter contains the type of operation
+             a delete operation will  have no  cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.DefectResolStatCodes">
+            <summary>
+            this class is representative of the database object 'Defect_Resolution_Status_Codes'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.DefectResolStatCodes.getAllDefectResolStatDB">
+            <summary>
+            returns all the defect resolution status codes from database
+            each member of the returned arraylist is an object of 'DefectResolStatCodes'
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectResolStatCodes.isDefectResolStatValidDB(System.String)">
+            <summary>
+            verifies if the defecet resolution status is a valid one- if valid then returns true else false
+            </summary>
+            <param name="stName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectResolStatCodes.insertDefectResolStatDB(System.Collections.ArrayList)">
+            <summary>
+            inserts all defect resolution status objects passed through the parameter into the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectResolStatCodes.updateDefectResolStatDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'Defect_Resolution_Status_Codes' database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the 'Defect_Resolution_Status'
+            the third parameter contains the type of operation
+            a delete operation will  have no  cascading effect on any table
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.DefectStatCodes">
+            <summary>
+            this class is representative of the database object 'Defect_Status_Codes'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.DefectStatCodes.getAllDefectStatCodesDB">
+            <summary>
+            returns all the defect stat codes from database
+            each element of the arraylist is an object of type 'DefectStatCodes'
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectStatCodes.isDefectStatValidDB(System.String)">
+            <summary>
+            verifies if the passed parameter is a valid defect status in the database table or not
+            returns true if valid else returns false
+            </summary>
+            <param name="stName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectStatCodes.insertDefectStatDB(System.Collections.ArrayList)">
+            <summary>
+            each element of the passed arraylist is an object of the class 'DefectStatCodes'
+            each of these object is inserted into database
+            </summary>
+            <param name="dfStat"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.DefectStatCodes.updateDefectStatDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'Defect_Status_Codes' database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the 'Defect_Status'
+            the third parameter contains the type of operation
+            a delete operation will  have no  cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.QuoteUnits">
+            <summary>
+            THIS CLASS IS BEING DEPRECATED...AS THE CLASS 'UnitOfMsrmnt' WILL BE SUFFICIENT
+            this class represents the quote units object in database
+            each object of this class is a record of the database object 'Quote_Units'
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:BackEndObjects.QuoteUnits.getAllQuoteUnitsDB" -->
+        <member name="M:BackEndObjects.QuoteUnits.getQuoteUnitbyNameDB(System.String)">
+            <summary>
+            for a given quote unit name returns the respective database object
+            </summary>
+            <param name="untName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.QuoteUnits.isQuoteUnitValidDB(System.String)">
+            <summary>
+            verifies if a quote unit name is present in the database; if found then retturns true else returns false
+            </summary>
+            <param name="unitName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.QuoteUnits.insertQuoteUnitsDB(System.Collections.ArrayList)">
+            <summary>
+            inserts all the passed quote unit objects into the database
+            </summary>
+            <param name="quObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.QuoteUnits.updateQuoteUnitsDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'Quote_Units' database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the 'unit_name'
+            the third parameter contains the type of operation
+            a delete operation will  have no  cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.UnitOfMsrmnt">
+            <summary>
+            this class represents the database object 'Unit_of_measurement'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.UnitOfMsrmnt.getAllMsrmntUnitsDB">
+            <summary>
+            retrieves all the measurement units from database
+            each element of the returned ArrayList is an object of type 'UnitOfMsrmnt'
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.UnitOfMsrmnt.isMsrmntUnitValidDB(System.String)">
+            <summary>
+            verifies from database whether or not the passed measurement unit name is valid
+            if valid, returns true else returns false
+            </summary>
+            <param name="uName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.UnitOfMsrmnt.insertMsrmntUnitDB(System.Collections.ArrayList)">
+            <summary>
+            inserts all the passed objects into database
+            each element of the passed arraylist should be an object of type 'UnitOfMsrmnt'
+            </summary>
+            <param name="unList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.UnitOfMsrmnt.updateMsrmntUnitDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'UnitOfMsrmnt' database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the 'msrmnt_unit'
+            the third parameter contains the type of operation
+            a delete operation will  have no  cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.PotentialStatus">
+            <summary>
+            this class is representative of the database object 'Potential_Status'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.PotentialStatus.setStatusName(System.String)">
+            <summary>
+            Status name can only be set to any one the values,
+            defined by POTENTIAL_STAT_ variables in this class
+            </summary>
+            <param name="stName"></param>
+        </member>
+        <member name="M:BackEndObjects.PotentialStatus.getAllStatusNameDB">
+            <summary>
+            gets all the status name from database
+            each element of the retunred arraylist is an object of type 'PotentialStatus'
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PotentialStatus.isPotentialStatValidDB(System.String)">
+            <summary>
+            verifies if the passed value is a valid potential status in the database table or not
+            if valid returns true else returns false
+            </summary>
+            <param name="stName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PotentialStatus.insertPotentialStatDB(System.Collections.ArrayList)">
+            <summary>
+            each element of the passed parameter is an object of type 'PotentialStatus'
+            all passed objects are inserted into database
+            </summary>
+            <param name="unList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PotentialStatus.updatePotentialStatDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'Potential_Status' database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain the 'status_name'
+            the third parameter contains the type of operation
+            a delete operation will  have no  cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.Id">
+            <summary>
+            This class is representative of the backend object 'Id_Table'.
+            This class has methods to generate unique ids of different types
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_PROD_CAT_STRING">
+            <summary>
+            this is the product category id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_CMP_USR_STRING">
+            <summary>
+            this is the user or shop id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_FEAT_STRING">
+            <summary>
+            this is the feature id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_SPEC_SRING">
+            <summary>
+            this is the specification id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_CURR_STRING">
+            <summary>
+            this is the currency id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_COUNTRY_STRING">
+            <summary>
+            this is the country id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_STATE_STRING">
+            <summary>
+            this is the state id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_CITY_STRING">
+            <summary>
+            this is the city id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_LOCAL_STRING">
+            <summary>
+            this is the locality id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_SUB_BUS_STRING">
+            <summary>
+            this is the sub business /chain id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_USR_SHOP_DESC_STRING">
+            <summary>
+            this is the user/business description id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_DEPT_ID_STRING">
+            <summary>
+            This is the department id
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_REQR_STRING">
+            <summary>
+            this is the requiremnet id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_RFQ_STRING">
+            <summary>
+            this is the RFQ id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_COMM_STRING">
+            <summary>
+            this is the communication id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_DEFECT_STRING">
+            <summary>
+            this is the defect id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_IMAGE_ID_STRING">
+            <summary>
+            this is the image id string 
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_POTENTIAL_ID_STRING">
+            <summary>
+            This is the potential id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_DOCFORMAT_ID_STRING">
+            <summary>
+            This is the docformat id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_PO_ID_STRING">
+            <summary>
+            This is the purchase order id string 
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_INV_ID_STRING">
+            <summary>
+            This is the invoice id string
+            </summary>
+        </member>
+        <member name="F:BackEndObjects.Id.ID_TYPE_PMNT_ID_STRING">
+            <summary>
+            This is the payment id string
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Id.getNewId(System.String)">
+            <summary>
+            for a given type of id, this method will return the next available id to the caller module.
+            if the id type is not available in the database it will throw an exception
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.Contacts">
+            <summary>
+            An object of this class represent a record of the database object 'All_Contacts'.
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Contacts.getContactEntityId">
+            <summary>
+            For contacts which are not from this site, this entity id is stored only in this table 'All_Contacts' and not in the global tables 
+            to store entity details.
+            As this contact will remain private only this entity and not visible to other users of this site.
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.Contacts.setContactEntityId(System.String)">
+            <summary>
+            For contacts which are not from this site, this entity id is stored only in the  table 'All_Contacts' and not in the global tables 
+            to store entity details.
+            As this contact will remain private only this entity and not visible to other users of this site.
+            </summary>
+            <param name="cEntId"></param>
+        </member>
+        <member name="M:BackEndObjects.Contacts.getFromSite">
+            <summary>
+            This field tell whether or not this object is from this site or only a contact manually created by some user.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Contacts.insertContactDetailsDB(BackEndObjects.Contacts)">
+            <summary>
+            Inserts the parameter Contacts object into the database
+            </summary>
+            <param name="cntObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Contacts.getAllContactsbyEntityIdDB(System.String)">
+            <summary>
+            For a given entity id this method returns a list of 'Contacts' object from the database.
+            </summary>
+            <param name="entId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Contacts.getContactDetailsforContactEntityDB(System.String,System.String)">
+            <summary>
+            For a given entity id and a contact id, this method returns the respective 'Contacts' object from database.
+            </summary>
+            <param name="entId"></param>
+            <param name="contactEntId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Contacts.updateContactDetailsDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            update or delete values in the 'All_Contacts' database table
+            the first paramter contains column name - taget value pair
+            the second parameter contains column name - target value as where clause - note that this where clause must contain 'entity id' and 'contact entity id'.
+            the third parameter contains the type of operation
+            a delete operation will  have no  cascading effect on any table
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.PurchaseOrder">
+            <summary>
+            This class is representative of the backend object 'purchase_order'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.PurchaseOrder.updatePurchaseOrderDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            Where clause must contain the purchase order id
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PurchaseOrder.getPurchaseOrderforPoIdDB(System.String)">
+            <summary>
+            for a given purchase order id this method returns the PurchaseOrder object from DB
+            </summary>
+            <param name="poId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PurchaseOrder.getPurchaseOrdersforRFQIdListDB(System.Collections.ArrayList)">
+            <summary>
+            For a given list of rfq ids this method returns the dictionary of 'rfq-id','po-id' where rfq id is the key
+            </summary>
+            <param name="rfqList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PurchaseOrder.getPurchaseOrdersforPOIdListDB(System.Collections.ArrayList)">
+            <summary>
+            For a given list of po ids this method returns the dictionary of 'rfq-id','po-id' where rfq id is the key
+            </summary>
+            <param name="poList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PurchaseOrder.getPurchaseOrderforRFQIdDB(System.String)">
+            <summary>
+            For a given RFQ id this method returns the purchase order object from database
+            with the oldest date created value (the original PO)
+            </summary>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PurchaseOrder.getPurchaseOrdersForProdNameAndRespEntDB(System.String,System.String)">
+            <summary>
+            For a given product name and response entity id this method returns all respective purchase order quote details
+            The key is 'po_id-rfq_id'
+            </summary>
+            <param name="prodName"></param>
+            <param name="respEntId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PurchaseOrder.getTotalDeliveredQntyByRFQIdAndProductName(System.Collections.ArrayList,System.String)">
+            <summary>
+            For a given set of RFQ id and product name this method returns a dictionary of rfq id and total delivered quantity 
+            the key of the dictionary is the RFQ id
+            </summary>
+            <param name="rfqList"></param>
+            <param name="prodName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.PurchaseOrderQuote">
+            <summary>
+            This class is representative of the backend object 'purchase_order_quote_details'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.PurchaseOrderQuote.insertPurchaseOrderQuoteListDB(System.Collections.ArrayList)">
+            <summary>
+            This method inserts an ArrayList of PurchaseOrderQuote objects into DB.
+            </summary>
+            <param name="pqList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PurchaseOrderQuote.updatePurchaseOrderQuoteDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            Where clause must contain the purchase order id
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PurchaseOrderQuote.getPurcahseOrderQuoteListbyPOIdDB(System.String)">
+            <summary>
+            For a given purchase order id, this method returns an ArrayList of 'PurchaseOrderQuote' objects
+            </summary>
+            <param name="poId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BackEndObjects.PurchaseOrderSpec">
+            <summary>
+            This class is representative of the backend object 'purchase_order_spec_details'
+            </summary>
+        </member>
+        <member name="M:BackEndObjects.PurchaseOrderSpec.insertPurchaseOrderQuoteListDB(System.Collections.ArrayList)">
+            <summary>
+            This method inserts an ArrayList of 'PurchaseOrderSpec' objects
+            </summary>
+            <param name="pqList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PurchaseOrderSpec.updatePurchaseOrderSpecDB(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            Where clause must contain the purchase order id
+            </summary>
+            <param name="targetValue"></param>
+            <param name="whereClause"></param>
+            <param name="op"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.PurchaseOrderSpec.getPurchaseOrderSpecListbyPOIdDB(System.String)">
+            <summary>
+            For a given purcahse order if this method returns an ArryList of 'PurchaseOrderSpec' objects.
+            </summary>
+            <param name="poId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.AuditData.getAllContextIds">
+            <summary>
+            Returns all the three context ids associated with this object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.AuditData.insertContextObject(BackEndObjects.AuditData)">
+            <summary>
+            Inserts the passed AuditData object into database
+            </summary>
+            <param name="auditObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.AuditData.getContextFieldNamesforTable(System.String)">
+            <summary>
+            returns all context field names in the dictionary for the mentioned table
+            </summary>
+            <param name="tabName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.AuditData.createAuditRecordForCommand(System.String,System.String,System.String)">
+            <summary>
+            This method works in multiple steps -
+            1. Invoke getAuditRecord to generate a dictionary of field names and values as passed in the command
+            2. Invoke getContextFieldValues to get the dictionary of context fields and their respective values
+            3. No audit entry will be created for that command where there is not context field value
+            4. one entry of a field and its value along with the respective (upto 3) context field/s will be made into audit data table
+            </summary>
+            <param name="cmd"></param>
+            <param name="user"></param>
+            <param name="cmpId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.AuditData.getAuditRecord(System.String)">
+            <summary>
+            This method parses the query string and returns the field name and value in a dictionary.
+            All the values are returned as a string without enclosing quotes (if any).
+            </summary>
+            <param name="cmd"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.AuditData.getAuditRecordsForContextIdsDB(System.Collections.ArrayList,System.String)">
+            <summary>
+            Returns an arraylist of AuditData objects sorted in descending order by change time stamp
+            The 0 th indexed element of the arraylist contains the object with latest change time stamp and goes descedning thereafter.
+            The second parameter is optional - should be used in situations where only the context ids might not be sufficient to point out the audit entries
+            </summary>
+            <param name="contextFieldValues"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Workflow_Action.insertWorkflowActionObject(BackEndObjects.Workflow_Action)">
+            <summary>
+            inserts the passed workflow_action object into DB
+            </summary>
+            <param name="actionObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.Workflow_Action.getWorkflowActionHistoryForContextIdandEntId(System.String,System.String,System.String)">
+            <summary>
+            For a given context id, context name and entity id this method returns an arraylist of Workflow_action objects in descending order of action time
+            </summary>
+            <param name="contextId"></param>
+            <param name="entId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.AuditFieldMapping.getAllFieldMappingDetailsForTableName(System.String)">
+            <summary>
+            The key in the returned dictionary is the table field name and the value if the object of type 'AuditFieldMapping' representing the records from the DB
+            </summary>
+            <param name="tName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BackEndObjects.AuditFieldMapping.getAllFieldMappingDetails">
+            <summary>
+            This method returns all audit field mapping details from DB in a dictionary of dictionary 
+            The key of the return dictionary is the table name.
+            The inner dictionary contains field names as Key and AuditFieldMapping object as the value
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,951 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DBConn</name>
+    </assembly>
+    <members>
+        <member name="M:DBConn.Connections.disconnect">
+            <summary>
+            it is advisable to invoke this method once the user is done with an object of this class
+            </summary>
+        </member>
+        <member name="M:DBConn.Connections.#ctor">
+            <summary>
+            this method initiates the sqlconnection object associated with this class,
+            it is advisable to invoke the disconnect() method of this class to release resource once the user is done with the connection
+            </summary>
+        </member>
+        <member name="M:DBConn.Connections.execQuery(System.String,System.String)">
+            <summary>
+            this method returns a dataset filled with records after the command is executed
+            </summary>
+            <param name="cmd"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DBConn.Connections.execInsertUpdate(System.String,System.String)">
+            <summary>
+            The third parameter is added for audit - framework
+            It will hold the entity id. If this id/user id is passed as empty no audit entry will be made
+            </summary>
+            <param name="cmd"></param>
+            <param name="userId"></param>
+            <param name="contextId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DBConn.Connections.execInsertUpdateWithoutAuditEntry(System.String)">
+            <summary>        
+            This method is a non-audit version of the 'execInsertUpdate' method. Mainly used by Audit framework's internal method
+            </summary>
+            <param name="cmd"></param>
+            <param name="userId"></param>
+            <param name="contextId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DBConn.AuditData.getAllContextIds">
+            <summary>
+            Returns all the three context ids associated with this object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DBConn.AuditData.insertContextObject(DBConn.AuditData)">
+            <summary>
+            Inserts the passed AuditData object into database
+            </summary>
+            <param name="auditObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DBConn.AuditData.getContextFieldNamesforTable(System.String)">
+            <summary>
+            returns all context field names in the dictionary for the mentioned table
+            </summary>
+            <param name="tabName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DBConn.AuditData.createAuditRecordForCommand(System.String,System.String,System.String)">
+            <summary>
+            This method works in multiple steps -
+            1. Invoke getAuditRecord to generate a dictionary of field names and values as passed in the command
+            2. Invoke getContextFieldValues to get the dictionary of context fields and their respective values
+            3. No audit entry will be created for that command where there is not context field value
+            4. one entry of a field and its value along with the respective (upto 3) context field/s will be made into audit data table
+            </summary>
+            <param name="cmd"></param>
+            <param name="user"></param>
+            <param name="cmpId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DBConn.AuditData.getAuditRecord(System.String)">
+            <summary>
+            This method parses the query string and returns the field name and value in a dictionary.
+            All the values are returned as a string without enclosing quotes (if any).
+            </summary>
+            <param name="cmd"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DBConn.AuditData.getAuditRecordsForContextIdsDB(System.Collections.ArrayList,System.String)">
+            <summary>
+            Returns an arraylist of AuditData objects sorted in descending order by change time stamp
+            The 0 th indexed element of the arraylist contains the object with latest change time stamp and goes descedning thereafter.
+            The second parameter is optional - should be used in situations where only the context ids might not be sufficient to point out the audit entries
+            </summary>
+            <param name="contextFieldValues"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DBConn.AuditData.splitWithExclusion(System.String,System.String,System.String,System.String)">
+            <summary>
+            Returns a splitted string array based on the supplied delimiter.
+            The exclusion start and end string are used to skip substrings even if that substring contains the delim.
+            </summary>
+            <param name="delim"></param>
+            <param name="exclusionStartString"></param>
+            <param name="exclusionEndString"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.City_Locality_MapDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.City_State_MapDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Communication_DetailsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Country_DetailsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Currency_Conv_DetailsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Defect_DetailsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Defect_Resolution_Status_CodesDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Defect_Status_CodesDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Delivery_StatusDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Feature_DetailsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Feature_Specification_MapDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Id_TableDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Invoice_DetailsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Invoice_TypesDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Payment_DetailsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Payment_StatusDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Payment_TypeDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Policy_DetailsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Policy_DocumentsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Potential_StatusDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Product_Category_HierarchyDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Quote_UnitsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Requirement_DetailsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Requirement_Specification_MapDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_Active_StatusDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_Approval_StatusDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_DetailsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_Product_Service_MapDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_ResponseDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_Response_Quote_DetailsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_ShortlistedDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Shop_Main_PrdctsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Shop_Pic_MapDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Shop_User_Addr_DetailsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Shop_User_DetailsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.State_Province_DetailsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Transaction_HistoryDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Unit_of_MeasurementDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Userid_Pass_User_MapDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Usr_Shop_DescDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.City_Locality_MapRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.City_State_MapRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Communication_DetailsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Country_DetailsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Currency_Conv_DetailsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Defect_DetailsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Defect_Resolution_Status_CodesRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Defect_Status_CodesRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Delivery_StatusRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Feature_DetailsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Feature_Specification_MapRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Id_TableRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Invoice_DetailsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Invoice_TypesRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Payment_DetailsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Payment_StatusRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Payment_TypeRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Policy_DetailsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Policy_DocumentsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Potential_StatusRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Product_Category_HierarchyRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Quote_UnitsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Requirement_DetailsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Requirement_Specification_MapRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_Active_StatusRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_Approval_StatusRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_DetailsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_Product_Service_MapRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_ResponseRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_Response_Quote_DetailsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_ShortlistedRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Shop_Main_PrdctsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Shop_Pic_MapRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Shop_User_Addr_DetailsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Shop_User_DetailsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.State_Province_DetailsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Transaction_HistoryRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Unit_of_MeasurementRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Userid_Pass_User_MapRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Usr_Shop_DescRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.City_Locality_MapRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.City_State_MapRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Communication_DetailsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Country_DetailsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Currency_Conv_DetailsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Defect_DetailsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Defect_Resolution_Status_CodesRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Defect_Status_CodesRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Delivery_StatusRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Feature_DetailsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Feature_Specification_MapRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Id_TableRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Invoice_DetailsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Invoice_TypesRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Payment_DetailsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Payment_StatusRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Payment_TypeRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Policy_DetailsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Policy_DocumentsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Potential_StatusRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Product_Category_HierarchyRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Quote_UnitsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Requirement_DetailsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Requirement_Specification_MapRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_Active_StatusRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_Approval_StatusRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_DetailsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_Product_Service_MapRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_ResponseRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_Response_Quote_DetailsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.RFQ_ShortlistedRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Shop_Main_PrdctsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Shop_Pic_MapRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Shop_User_Addr_DetailsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Shop_User_DetailsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.State_Province_DetailsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Transaction_HistoryRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Unit_of_MeasurementRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Userid_Pass_User_MapRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSet.Usr_Shop_DescRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.City_Locality_MapTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.City_State_MapTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Communication_DetailsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Country_DetailsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Currency_Conv_DetailsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Defect_DetailsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Defect_Resolution_Status_CodesTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Defect_Status_CodesTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Delivery_StatusTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Feature_DetailsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Feature_Specification_MapTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Id_TableTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Invoice_DetailsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Invoice_TypesTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Payment_DetailsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Payment_StatusTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Payment_TypeTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Policy_DetailsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Policy_DocumentsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Potential_StatusTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Product_Category_HierarchyTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Quote_UnitsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Requirement_DetailsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Requirement_Specification_MapTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.RFQ_Active_StatusTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.RFQ_Approval_StatusTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.RFQ_DetailsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.RFQ_Product_Service_MapTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.RFQ_ResponseTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.RFQ_Response_Quote_DetailsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.RFQ_ShortlistedTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Shop_Main_PrdctsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Shop_Pic_MapTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Shop_User_Addr_DetailsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Shop_User_DetailsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.State_Province_DetailsTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Transaction_HistoryTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Unit_of_MeasurementTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Userid_Pass_User_MapTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.Usr_Shop_DescTableAdapter">
+             <summary>
+            Represents the connection and commands used to retrieve and save data.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.TableAdapterManager">
+             <summary>
+            TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+            </summary>
+        </member>
+        <member name="M:DBConn.BEOBJDataSetTableAdapters.TableAdapterManager.UpdateUpdatedRows(DBConn.BEOBJDataSet,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+             <summary>
+            Update rows in top-down order.
+            </summary>
+        </member>
+        <member name="M:DBConn.BEOBJDataSetTableAdapters.TableAdapterManager.UpdateInsertedRows(DBConn.BEOBJDataSet,System.Collections.Generic.List{System.Data.DataRow})">
+             <summary>
+            Insert rows in top-down order.
+            </summary>
+        </member>
+        <member name="M:DBConn.BEOBJDataSetTableAdapters.TableAdapterManager.UpdateDeletedRows(DBConn.BEOBJDataSet,System.Collections.Generic.List{System.Data.DataRow})">
+             <summary>
+            Delete rows in bottom-up order.
+            </summary>
+        </member>
+        <member name="M:DBConn.BEOBJDataSetTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+             <summary>
+            Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+            </summary>
+        </member>
+        <member name="M:DBConn.BEOBJDataSetTableAdapters.TableAdapterManager.UpdateAll(DBConn.BEOBJDataSet)">
+             <summary>
+            Update all changes to the dataset.
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.TableAdapterManager.UpdateOrderOption">
+             <summary>
+            Update Order Option
+            </summary>
+        </member>
+        <member name="T:DBConn.BEOBJDataSetTableAdapters.TableAdapterManager.SelfReferenceComparer">
+             <summary>
+            Used to sort self-referenced table's rows
+            </summary>
+        </member>
+    </members>
+</doc>

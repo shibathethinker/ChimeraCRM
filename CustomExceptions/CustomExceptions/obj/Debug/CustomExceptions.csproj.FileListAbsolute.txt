@@ -1,0 +1,5 @@
+F:\Study\VisualStudio\Projects\FeedBackSys1\CustomExceptions\CustomExceptions\bin\Debug\CustomExceptions.dll
+F:\Study\VisualStudio\Projects\FeedBackSys1\CustomExceptions\CustomExceptions\bin\Debug\CustomExceptions.pdb
+F:\Study\VisualStudio\Projects\FeedBackSys1\CustomExceptions\CustomExceptions\obj\Debug\ResolveAssemblyReference.cache
+F:\Study\VisualStudio\Projects\FeedBackSys1\CustomExceptions\CustomExceptions\obj\Debug\CustomExceptions.dll
+F:\Study\VisualStudio\Projects\FeedBackSys1\CustomExceptions\CustomExceptions\obj\Debug\CustomExceptions.pdb

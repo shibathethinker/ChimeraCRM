@@ -1,0 +1,17 @@
+F:\Study\VisualStudio\Projects\FeedBackSys1\DBConn\DBConn\bin\Debug\DBConn.dll
+F:\Study\VisualStudio\Projects\FeedBackSys1\DBConn\DBConn\bin\Debug\DBConn.pdb
+F:\Study\VisualStudio\Projects\FeedBackSys1\DBConn\DBConn\obj\Debug\ResolveAssemblyReference.cache
+F:\Study\VisualStudio\Projects\FeedBackSys1\DBConn\DBConn\obj\Debug\Interop.ORADCLib.dll
+F:\Study\VisualStudio\Projects\FeedBackSys1\DBConn\DBConn\obj\Debug\DBConn.csproj.ResolveComReference.cache
+F:\Study\VisualStudio\Projects\FeedBackSys1\DBConn\DBConn\obj\Debug\DBConn.dll
+F:\Study\VisualStudio\Projects\FeedBackSys1\DBConn\DBConn\obj\Debug\DBConn.pdb
+F:\Study\VisualStudio\Projects\FeedBackSys1\DBConn\DBConn\bin\Debug\DBConn.dll.config
+F:\Study\VisualStudio\Projects\FeedBackSys1\DBConn\DBConn\bin\Debug\DBConn.XML
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\DBConn\DBConn\bin\Debug\DBConn.dll.config
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\DBConn\DBConn\bin\Debug\DBConn.XML
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\DBConn\DBConn\bin\Debug\DBConn.dll
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\DBConn\DBConn\bin\Debug\DBConn.pdb
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\DBConn\DBConn\obj\Debug\DBConn.csprojResolveAssemblyReference.cache
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\DBConn\DBConn\obj\Debug\DBConn.csproj.ResolveComReference.cache
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\DBConn\DBConn\obj\Debug\DBConn.dll
+C:\Users\shibathethinker\Documents\Visual Studio 2010\Projects\FeedBackSys1\DBConn\DBConn\obj\Debug\DBConn.pdb

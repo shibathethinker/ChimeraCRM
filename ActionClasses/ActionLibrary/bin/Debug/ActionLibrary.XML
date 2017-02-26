@@ -1,0 +1,2336 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ActionLibrary</name>
+    </assembly>
+    <members>
+        <member name="M:ActionLibrary.LoginActions.retrieveAccessList(System.String,System.String)">
+            <summary>
+            This method retrieves the access details of the logged in user in a Dictionary
+            The key defines the access context and the value is true/false.
+            For any particular access context the resultant value is derived from a OR condition if the same access context is defined in multiple groups where the user 
+            belongs to
+            The first parameter is the user id and the second parameter is the main business entity id
+            If the user has owner access this method does not do any other access check 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.RegistrationActions">
+            <summary>
+            this action class can be used to process all reagistration related actions,
+            this class stores all the business logics required to perform the registration related actions;
+            it interacts with the backend objects namespace and the dbcon.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.RegistrationActions.completeRegr(System.Collections.ArrayList)">
+             <summary>
+             Only pass objects related to a single main business entity;
+            Though for a given main business entity there can be multple related objects (e.g. subbusinessentity,image,user details,AddressDetails etc.) 
+            which can be passed on to this method AND these should be passed as separate objects in the arraylist and not attached to the main business entity.
+            ALSO, if other types of objects (subbusinessentity,image,user details etc.) are being sent along with the associated MainBusinessEntity in the arraylist,
+            make sure to first get the associated MainBusinessEntity id.
+               ***********************************************************************************************************
+             <para>the following types of objects can be passd in the arraylist as parameters (All OPTIONAL) </para>
+             <para>a. MainBusinessEntity (only one can be processed) - NOTE THAT, if the 'entityId' property of the passed object is NULL/empty/not currently present in database
+             then this method cosiders this as an INSERT request; otherwise it will be processed as an UPDATE.An update request to the associate 'product/service' category
+             should be made only through this object (Because unlike the other possible parameters 'subBusiness'/'userDetails'/'Image') product or service
+             details object does not have associated main business entity object.And, an update request for an associate 'ProductCategory' object will always result in a INSERT into table
+             'Shop_Main_Prdcts'.
+             DO not attach the userDetails property to the main business entity. Rather send it as a separate object.
+             </para>
+             <para>b.subBusinessEntity (multiple objects - which mainly holds address details of the sub-chains under the main business entity)- NOTE THAT, 
+             if the 'subEntityId' property of the passed object is NULL/empty/not currently present in database, then this method considers this as an INSERT request, otherwise it will be processed as an UPDATE -
+             ** must have the 'mainBusinessId' property set for each of the subbusiness entity object passed;otherwise invalidParamException will be thrown**</para>
+             <para>c.userDetails (multiple objects - which mainly holds the userid-password details for multiple users for all the sub business entities) - NOTE THAT,
+             if the 'userId' property of the passed object is NULL/empty/not currently present in database, then this method considers this as an INSERT request, otherwise it will be processed as an UPDATE</para>
+             <para> d.Image  (Multiple objects - which mainly holds the all the images associated with the MAIN BUSINESS entities - NOTE THAT 
+             if the 'imgId' property of the passed object is  NULL/empty/not currently present in database, 
+             then this method considers this as an INSERT request, otherwise it will be processed as an UPDATE</para>
+             <para>If sending 'AddressDetails' object the sub entity id value must be set to AddressDetails.DUMMY_CHAIN_ID.This ensures that this address
+             is considered for the associated Mainbusinessentity.Note that according to current design only one address object can be sent for a main business entity</para>
+             ***********************************************************************************************************
+             </summary>
+             <param name="a"></param>
+        </member>
+        <member name="T:ActionLibrary.PurchaseActions">
+            <summary>
+            This class can be used to process all purchase related actions.
+            This class stores all the business logics required to perform the purchase related actions;
+            it interacts with backend object namespace and dbcon.
+            </summary>
+        </member>
+        <member name="T:ActionLibrary.PurchaseActions._createRequirements">
+            <summary>
+            This inner class defines all the operations required to complete a new requirement.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRequirements.getParentProductDetails">
+            <summary>
+            This method returns all product/service category details for which there is no parent category;
+             i.e, it returns a list of all top level product/service category.This method is particularly useful for scenarios where it is required to
+             list the main catogories online.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRequirements.getChildProductDetails(System.String)">
+            <summary>
+            for any given parent categoryid  returns all the associated child cateogories
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRequirements.getAllFeaturesForCategory(System.String)">
+            <summary>
+            for any given product category id, returns all the associated Feature objects.
+            Each of the elements of the returned dictionary has a Feature object which in turn contains all the specifications attached to it.
+            </summary>
+            <param name="catId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRequirements.getAllUnitsOfMsrmnt">
+            <summary>
+            Returns all units of measurement from database. Each element of the returned ArrayList is an object of 'UnitOfMsrmnt'.
+            Use 'getUnitName()' method on each of the containing objects to get the name of the units.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRequirements.getAllCurrencies">
+            <summary>
+            Returns an ArrayList which contains only the names of all the available currecnies in the database
+            </summary>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:ActionLibrary.PurchaseActions._createRequirements.getAllQuoteUnits" -->
+        <member name="M:ActionLibrary.PurchaseActions._createRequirements.getAllCountryNames">
+            <summary>
+            This method returns a dictionary; each element of the dictionary is the id of the country (the 'key') and the
+            name of the country (the 'value').
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRequirements.getAllStateNamesForCountry(System.String)">
+            <summary>
+            For a given country id,this method returns a dictionary; each element of the dictionary is the id of the State (the 'key') and the
+            name of the State (the 'value').
+            </summary>
+            <param name="cId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRequirements.getAllCityNamesForState(System.String)">
+            <summary>
+            For a given state id,this method returns a dictionary; each element of the dictionary is the id of the City (the 'key') and the
+            name of the City (the 'value').
+            </summary>
+            <param name="stId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRequirements.getAllLocalityNamesForCity(System.String)">
+            <summary>
+            For a given City id,this method returns a dictionary; each element of the dictionary is the id of the Locality (the 'key') and the
+            name of the Locality (the 'value').
+            </summary>
+            <param name="ctId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRequirements.createNewRequirement(BackEndObjects.Requirement)">
+            <summary>
+            This method inserts the requirement object into the database. If the passed object has specifications attached to it,
+            those details are also inserted into the database.
+            For a given requirement object there can be multiple 'Requirement_Spec' objects attached to it.
+            This method returns the number of records created in the database. In case it returns 0, that means the insert operation failed.
+            </summary>
+            <param name="reqObj"></param>
+        </member>
+        <member name="T:ActionLibrary.PurchaseActions._dispRequirements">
+            <summary>
+            This class contains operations to display the requirement details 
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._dispRequirements.getAllRequirements(System.String,System.String)">
+            <summary>
+            For a given user id and company id, it returns an ArrayList of 'RequirementRecords' objects.
+            Each of this returned object contains  Requirement object (with associated Requirement specifications) and associated RFQs.
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._dispRequirements.getAllRequirementsFiltered(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            This is same as 'getAllRequirements(String,String)' except, here there is a third parameter which can be used to specify the filter conditions.
+            The third parameter is a dictionary which contains FILTER parameter name as 'key' and the respective filter value as the 'value'.
+            Note that, all the filter parameters name must be chosen from the 'FILTER_BY_' properties of this class.
+            Also, all the date values passed as filter parameter must be passed in 'yyyy-MM-dd' format.
+            The tagged RFQs are not sent with the requirement list
+            </summary>
+            <param name="cmUsrId"></param>
+            <param name="userId"></param>
+            <param name="filterParam"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.PurchaseActions._updateRequirements">
+            <summary>
+            This class contains method to update requirement details.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._updateRequirements.updateRequirement(BackEndObjects.Requirement,System.String)">
+            <summary>
+            It is mandatory the pass the requirement object id attached to this method.Otherwise, this method will throw exception.
+            The second parameter is the operation name ('update'/'delete').
+            Attach only those property values to the requirement object which needs to be updated. Other than the requirement id,
+            any other property value will be used for updating in case the second parameter value is 'DBConn.Connections.OPERATION_UPDATE'.
+            Also, if the property 'requriementSpecList' is sent, those specification objects will also be modified.
+            NOTE that, not all properties can be modified through this method - mainly  the create date/create user properties.
+            A delete operation will have a cascading effect on the dependent tables and will remove the entire record from the requirement table.
+            </summary>
+            <param name="reqObj"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.PurchaseActions._createRFQ">
+            <summary>
+            This class contains all necessary operations to create a new RFQ.
+            Many of its methods are direct copy of respective methods from '_createRequirements' class.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRFQ.getParentProductDetails">
+            <summary>
+            This method returns all product/service category details for which there is no parent category;
+             i.e, it returns a list of all top level product/service category.This method is particularly useful for scenarios where it is required to
+             list the main catogories online.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRFQ.getChildProductDetails(System.String)">
+            <summary>
+            for any given parent categoryid  returns all the associated child cateogories
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRFQ.getAllFeaturesForCategory(System.String)">
+            <summary>
+            for any given product category id, returns all the associated Feature objects.
+            Each of the elements of the returned dictionary has a Feature object which in turn contains all the specifications attached to it.
+            </summary>
+            <param name="catId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRFQ.getAllUnitsOfMsrmnt">
+            <summary>
+            Returns all units of measurement from database. Each element of the returned ArrayList is an object of 'UnitOfMsrmnt'.
+            Use 'getUnitName()' method on each of the containing objects to get the name of the units.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRFQ.getAllCurrencies">
+            <summary>
+            Returns an ArrayList which contains only the names of all the available currecnies in the database
+            </summary>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:ActionLibrary.PurchaseActions._createRFQ.getAllQuoteUnits" -->
+        <member name="M:ActionLibrary.PurchaseActions._createRFQ.getAllCountryNames">
+            <summary>
+            This method returns a dictionary; each element of the dictionary is the id of the country (the 'key') and the
+            name of the country (the 'value').
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRFQ.getAllStateNamesForCountry(System.String)">
+            <summary>
+            For a given country id,this method returns a dictionary; each element of the dictionary is the id of the State (the 'key') and the
+            name of the State (the 'value').
+            </summary>
+            <param name="cId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRFQ.getAllCityNamesForState(System.String)">
+            <summary>
+            For a given state id,this method returns a dictionary; each element of the dictionary is the id of the City (the 'key') and the
+            name of the City (the 'value').
+            </summary>
+            <param name="stId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRFQ.getAllLocalityNamesForCity(System.String)">
+            <summary>
+            For a given City id,this method returns a dictionary; each element of the dictionary is the id of the Locality (the 'key') and the
+            name of the Locality (the 'value').
+            </summary>
+            <param name="ctId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRFQ.createNewRFQ(BackEndObjects.RFQDetails)">
+            <summary>
+            This method inserts the RFQ object into the database. If the passed object has specifications attached to it,
+            those details are also inserted into the database.
+            For a given RFQ object there can be multiple 'Requirement_Spec' objects attached to it.
+            This method returns the number of records created in the database. In case it returns 0, that means the insert operation failed.
+            For a new RFQ, the creation Mode should always be 'AUTO' (RFQDetails.CREATION_MODE_AUTO) - this method enforces this rule
+            irrespective of the value present for the passed creation mode.
+            Also, this method enforces the rule that for Lead/RFQ entry created in AUTO mode, the createdEntity id is same as the entity id.
+            </summary>
+            <param name="rfqObj"></param>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._createRFQ.insertRFQBroadcastDetails(BackEndObjects.RFQBroadcastList)">
+            <summary>
+            Updates the list which specifies which user/users should be able to view the RFQ after it is broadcasted.
+            </summary>
+            <param name="rBL"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.PurchaseActions._dispRFQDetails">
+            <summary>
+            This class contains operations related to display of RFQ records on the purchase screen
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._dispRFQDetails.getAllRFQDetails(System.String,System.String)">
+            <summary>
+            Given an entity id and the user id (who is trying to view the RFQ list), this method returns all the RFQ records available in the DB along with the Product/service 
+            specifications.
+            Each object of the returned ArrayList is instance of the class 'RFQDetails' with attached 'RFQProductServiceDetails' objects.
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._dispRFQDetails.getAllRFQDetailsFiltered(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            This is same as 'getAllRFQDetails(String,String)' except, here there is a third parameter which can be used to specify the filter conditions.
+            The third parameter is a dictionary which contains FILTER parameter name as 'key' and the respective filter value as the 'value'.
+            Note that, all the filter parameters name must be chosen from the 'FILTER_BY_' properties of this class.
+            Also, all the date values passed as filter parameter must be passed in 'yyyy-MM-dd' format.
+            Each object of the returned ArrayList is instance of the class 'RFQDetails' with attached 'RFQProductServiceDetails' objects.
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="filterParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._dispRFQDetails.getAllRFQDetailsFilteredForEntityandApproverId(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            For a given entity id and approver id this method filters out all the RFQ objects in an ArrayList which meets the filter criteria as mentioned in the
+            filter parameter list
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="filterParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._dispRFQDetails.viewRFQResponses(System.String,System.String,System.String)">
+            <summary>
+            This methid return all response for an RFQ.
+            This method returns a Dictionary of 'String' and 'RFQReponseRecord' objects. The 'key' is the response entity id.
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._dispRFQDetails.viewRFQResponseQuoteDetail(System.String,System.String,System.String,System.String)">
+            <summary>
+            This method returns an object of 'RFQResponseQuoteTotal'.
+            For a particular RFQ, this method returns the respective response quote details given a particular response entity id. 
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="responseEntId"></param>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._dispRFQDetails.getRFQBroadCastList(System.String,System.String,System.String)">
+            <summary>
+            Returns a dictionary containing the 'entity id' and 'entity name'.
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._dispRFQDetails.viewRFQResponsesForShortListedEntries(System.String,System.String,System.String)">
+            <summary>
+            This method returns all Shortlisted entries for a particular RFQ.
+            This method returns a Dictionary of 'String' and 'RFQReponseRecord' objects. The 'key' is the response entity id.
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._dispRFQDetails.getFinalizedVendorIdforRFQid(System.String,System.String,System.String)">
+            <summary>
+            For a given rfq id, this method returns the Potential details  of the finalized vendor
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.PurchaseActions._updateRFQDetails">
+            <summary>
+            This class contains method to update RFQ details
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._updateRFQDetails.shortListResponseEntry(System.String,System.String,System.String)">
+            <summary>
+            This method needs to be called when a user shortlists a Lead entry - that lead entry is automatically,
+            shown as a potential for the response entity id.
+             Given a response entity id, user id and the RFQ id this method will create a potential entry for the respective response entity id and RFQ id
+            </summary>
+            <param name="respEntId"></param>
+            <param name="userId"></param>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._updateRFQDetails.finalizeDeal(BackEndObjects.RFQShortlisted,System.String,System.String)">
+            <summary>
+            This method can be used after the customer clicks the 'Finalize Deal' button from purchase screen for a shortlisted entry.
+            The first parameter must contain the RFQ id and the response entity id.
+            </summary>
+            <param name="rfS"></param>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._updateRFQDetails.updateRFQ(BackEndObjects.RFQDetails,System.String)">
+            <summary>
+             It is mandatory the pass the rfq  id attached to this method.Otherwise, this method will throw exception.
+            The second parameter is the operation name ('update'/'delete').
+            Attach only those property values to the requirement object which needs to be updated. Other than the requirement id,
+            any other property value will be used for updating in case the second parameter value is 'DBConn.Connections.OPERATION_UPDATE'.
+            Along with the 'RFQDetails' object if the associated 'RFQProductServiceDetails' are also sent with this object (Property 'RFQProdServList'), those
+            will also be updated. For the product service list to be udpated the associated prod/cat id and Feature id must be sent.
+            In case of a delete operation it will delete the entire RFQ record from the main RFQ table and also it will have a cascading effect on all the dependant 
+            tables.
+            NOTE THAT not all the properties of an RFQ can be changed -
+            1. Submit date,
+            2. Created entity,
+            3. Created User,
+            4. Create Mode.
+            Similarly some properties of the attached 'RFQProdServList' property can not be modified as well.
+            </summary>
+            <param name="rfqObj"></param>
+            <param name="operation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._updateRFQDetails.updateRFQBroadCastList(BackEndObjects.RFQBroadcastList)">
+            <summary>
+            This method can be used to update/delete entries from the RFQ broadcast list for a particular RFQ.
+            Whichever be the current broadcast list of an RFQ, this method will remove the exsting one and set this new list.
+            </summary>
+            <param name="rfqBl"></param>
+            <param name="operation"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.PurchaseActions._dispPODetails">
+            <summary>
+            This class contains operations related to display of PO records on the purchase screen
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._dispPODetails.getAllPODetailsFiltered(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            The third parameter is a dictionary which contains FILTER parameter name as 'key' and the respective filter value as the 'value'.
+            Note that, all the filter parameters name must be chosen from the 'FILTER_BY_' properties of this class.
+            Also, all the date values passed as filter parameter must be passed in 'yyyy-MM-dd' format.
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="filterParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._dispPODetails.getAllSODetailsFiltered(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            The third parameter is a dictionary which contains FILTER parameter name as 'key' and the respective filter value as the 'value'.
+            Note that, all the filter parameters name must be chosen from the 'FILTER_BY_' properties of this class.
+            Also, all the date values passed as filter parameter must be passed in 'yyyy-MM-dd' format.
+            Each object of the returned ArrayList is instance of the class 'PurchaseOrder'.The RFQ id is appended with a semicolon as a delim followed by the creation mode
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="filterParam"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.PurchaseActions._dispInvoiceDetails">
+            <summary>
+            This class contains operations related to the display of invoice records
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.PurchaseActions._dispInvoiceDetails.getAllInvDetailsFiltered(System.String,System.Collections.ArrayList,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            The second parameter is the complete invoice object arraylist which needs to be filtered
+            The third parameter is a dictionary which contains FILTER parameter name as 'key' and the respective filter value as the 'value'.
+            Note that, all the filter parameters name must be chosen from the 'FILTER_BY_' properties of this class.
+            Also, all the date values passed as filter parameter must be passed in 'yyyy-MM-dd' format.
+            Each object of the returned ArrayList is instance of the class 'Invoice' 
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="filterParam"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.DisplayNamesForDashBoard">
+            <summary>
+            This class holds all the column names to be displayed on reports
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.DefectActions._dispDefectDetails.getAllDefectsFiltered(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            The context tells whether it is a filter for a incoming or an ourgoing defect.
+            The passed values should be "incoming"/"outgoing".
+            If the context value is "incoming" the second paramter should be the supplier id.
+            If the context value is "outgoing" the second parameter should be the customer id
+            </summary>
+            <param name="context"></param>
+            <param name="searchForId"></param>
+            <param name="filterParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.DefectActions._dispDefectDetails.getAllOpenDefectFilteredForSupplierAndAssignedToUser(System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            this will filter out all open defects satisfying the filter criteria which are assigned to the given user id and belonging to the given entity id
+            </summary>
+            <param name="context"></param>
+            <param name="searchForId"></param>
+            <param name="userId"></param>
+            <param name="filterParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.DefectActions._dispDefectDetails.getAllDefectsFilteredORDERBYCreateDate(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            The context tells whether it is a filter for a incoming or an ourgoing defect.
+            The passed values should be "incoming"/"outgoing".
+            If the context value is "incoming" the second paramter should be the supplier id.
+            If the context value is "outgoing" the second parameter should be the customer id
+            </summary>
+            <param name="context"></param>
+            <param name="searchForId"></param>
+            <param name="filterParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.DefectActions._dispDefectDetails.getAllOpenSRFilteredForSupplierAndAssignedToUser(System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            this will filter out all open defects satisfying the filter criteria which are assigned to the given user id and belonging to the given entity id
+            </summary>
+            <param name="context"></param>
+            <param name="searchForId"></param>
+            <param name="userId"></param>
+            <param name="filterParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.DefectActions._dispDefectDetails.getAllSRsFilteredORDERBYCreateDate(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            The context tells whether it is a filter for a incoming or an ourgoing defect.
+            The passed values should be "incoming"/"outgoing".
+            If the context value is "incoming" the second paramter should be the supplier id.
+            If the context value is "outgoing" the second parameter should be the customer id
+            </summary>
+            <param name="context"></param>
+            <param name="searchForId"></param>
+            <param name="filterParams"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.SalesActions">
+            <summary>
+            This class can be used to process all purchase related actions
+            This class stores all the business logics required to perform the purchase related actions;
+            it interacts with backend object namespace and dbcon.
+            </summary>
+        </member>
+        <member name="T:ActionLibrary.SalesActions._createPotential">
+            <summary>
+            This class contains methods to create a potential.
+            There are multple ways of creating a potential -
+            1. Convert a Manually created lead to a potential
+            2. Create a Manully created Potential without a lead entry
+            3. An automatic potential entry created once a Lead entry is shortlisted by the customer.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createPotential.getParentProductDetails">
+            <summary>
+            This method returns all product/service category details for which there is no parent category;
+             i.e, it returns a list of all top level product/service category.This method is particularly useful for scenarios where it is required to
+             list the main catogories online.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createPotential.getChildProductDetails(System.String)">
+            <summary>
+            for any given parent categoryid  returns all the associated child cateogories
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createPotential.getAllFeaturesForCategory(System.String)">
+            <summary>
+            for any given product category id, returns all the associated Feature objects.
+            Each of the elements of the returned dictionary has a Feature object which in turn contains all the specifications attached to it.
+            </summary>
+            <param name="catId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createPotential.getAllUnitsOfMsrmnt">
+            <summary>
+            Returns all units of measurement from database. Each element of the returned ArrayList is an object of 'UnitOfMsrmnt'.
+            Use 'getUnitName()' method on each of the containing objects to get the name of the units.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createPotential.getAllCurrencies">
+            <summary>
+            Returns an ArrayList which contains only the names of all the available currecnies in the database
+            </summary>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:ActionLibrary.SalesActions._createPotential.getAllQuoteUnits" -->
+        <member name="M:ActionLibrary.SalesActions._createPotential.getAllCountryNames">
+            <summary>
+            This method returns a dictionary; each element of the dictionary is the id of the country (the 'key') and the
+            name of the country (the 'value').
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createPotential.getAllStateNamesForCountry(System.String)">
+            <summary>
+            For a given country id,this method returns a dictionary; each element of the dictionary is the id of the State (the 'key') and the
+            name of the State (the 'value').
+            </summary>
+            <param name="cId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createPotential.getAllCityNamesForState(System.String)">
+            <summary>
+            For a given state id,this method returns a dictionary; each element of the dictionary is the id of the City (the 'key') and the
+            name of the City (the 'value').
+            </summary>
+            <param name="stId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createPotential.getAllLocalityNamesForCity(System.String)">
+            <summary>
+            For a given City id,this method returns a dictionary; each element of the dictionary is the id of the Locality (the 'key') and the
+            name of the Locality (the 'value').
+            </summary>
+            <param name="ctId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createPotential.getAllContactsForEntity(System.String,System.String)">
+            <summary>
+            For a given entity id, it returns an ArrayList containing 'Contacts' object from database.
+            This list is the contact list of this particular organization.
+            </summary>
+            <param name="entityId"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createPotential.convertManulLeadToPotential(System.String,System.String,System.String)">
+            <summary>
+            Given a response entity id, user id and the RFQ id this method will
+            create a potential entry for the respective response entity id and RFQ id.
+            </summary>
+            <param name="respEntId"></param>
+            <param name="userId"></param>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createPotential.createPotentialManually(BackEndObjects.RFQDetails,System.Collections.ArrayList,System.String,System.String)">
+            <summary>
+            This method creates a Potential entry when created manually.
+            Along with creating a new potential records in the backend, this method creates the respetive Lead entry and the
+            response quote records (if any).
+            The second parameter is an ArrayList of 'RFQResponseQuoteRecord' objects. To populate the backend potential record with the proper
+            amount, amount value for each of this record should be passed.
+            The potential creation mode will automatically be set to 'Manual'.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createPotential.convertLeadToPotential(System.String,System.String,System.String)">
+            <summary>
+            This method needs to be called when a user shortlists a Lead entry - that lead entry is automatically,
+            shown as a potential for the response entity id.
+             Given a response entity id, user id and the RFQ id this method will create a potential entry for the respective response entity id and RFQ id
+            </summary>
+            <param name="respEntId"></param>
+            <param name="userId"></param>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.SalesActions._dispPotentials">
+            <summary>
+            Each instance of this class represents a potential.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SalesActions._dispPotentials.FILTER_BY_REQUEST_FOR_FINALIZATION">
+            <summary>
+            This filter parameter is not implemented as of now
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._dispPotentials.getAllPotentials(System.String,System.String)">
+            <summary>
+            For a given response entity id, this methods returns all potentials in an ArrayList.
+            Each object of this ArrayList is an object of type 'PotentialRecords' class (which is a subclass of 'RFQShortlisted' class).
+            This method does not provide the option to filter the list.
+            Note that this method only returns the arraylist of potential objects, associated specification details and NDA document are note sent.
+            </summary>
+            <param name="respEntityId"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._dispPotentials.getAllActiveAndAssignedToPotentials(System.String,System.String)">
+            <summary>
+            Returns all Active potentials which are assigned to the given user along belongs to the given entity id
+            </summary>
+            <param name="respEntityId"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._dispPotentials.getPotentialQuoteDetails(System.String,System.String,System.String)">
+            <summary>
+            For a given entity id,user id and RFQ id this method returns a Dictionary of 'RFQResponseQuotes'.
+             Each record of the returned dictionary contains the 'Product/Service Category Id' as the 'key' and the respective 'RFQResponseQuotes' object as 'value'.
+             A more versatile method is 'getPotentialQuoteandSpecDetails'.
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="rfqId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._dispPotentials.getPotentialSpecificationDetails(System.String,System.String,System.String)">
+            <summary>
+            For a given entity id, user id and potential id, it returns a dictionary of 'RFQProductServiceDetails'.
+            Each record of the returned dictionary contains the 'Product/Service Category Id' as the 'key' and the respective 'RFQProductServiceDetails' object as 'value'.
+            A more versatile method is 'getPotentialQuoteandSpecDetails'.
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="potId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._dispPotentials.getAllPotentialsFiltered(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            This is same as 'getAllPotentials(String,String)' except, here there is a third parameter which can be used to specify the filter conditions.
+            The third parameter is a dictionary which contains FILTER parameter name as 'key' and the respective filter value as the 'value'.
+            Note that, all the filter parameters name must be chosen from the 'FILTER_BY_' properties of this class.
+            Also, all the date values passed as filter parameter must be passed in 'yyyy-MM-dd' format.
+            The return value is an Arraylist of 'PotentialRecords' objects
+            </summary>
+            <param name="respEntityId"></param>
+            <param name="userId"></param>
+            <param name="filterParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._dispPotentials.getAllActiveAndAssignedPotentialsFiltered(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Returns all active potentials for the reponse entity id which are assigned to the given user id and satisfy the filter condition list
+            </summary>
+            <param name="respEntityId"></param>
+            <param name="userId"></param>
+            <param name="filterParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._dispPotentials.getPotentialQuoteandSpecDetails(System.String,System.String,System.String,System.String)">
+            <summary>
+            This method is a replicate of the method _dispRFQDetails.viewRFQResponseQuoteDetail.
+             For a particular RFQ, this method returns the respective response quote details given a particular response entity id.
+             This method does the work of both the other methods 'getPotentialQuoteDetails' and 'getPotentialSpecificationDetails' together and returns the combined entity
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="responseEntId"></param>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._dispPotentials.getPotentialNDA(System.String,System.String,System.String)">
+            <summary>
+            For a given response entity id, user id and the rfq id this method will return the respective NDA document path.
+            </summary>
+            <param name="responseEntId"></param>
+            <param name="userId"></param>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.SalesActions._updatePotentials">
+            <summary>
+            This class is only for updating the  Potential details of manually created potentials.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._updatePotentials.updatePotential(ActionLibrary.PotentialRecords,System.String,System.String,System.String)">
+            <summary>
+            This method is for updating a Potential details if the potential was created manually.
+            If this is a delete operation, records from RFQDetails,RFQShortlisted and other prod/service details will be deleted.
+            To update related product/service details for a manually created potential, use the method 'updatePotentialProdServDetails'.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._updatePotentials.updatePotentialProdServDetails(ActionLibrary.PotentialRecords,System.String,System.String,System.Collections.ArrayList,System.String)">
+             <summary>
+             The fourth parameter is an ArrayList of 'RFQProductServiceDetails' associated with a particular potential record.
+             In case a delete was performed a check if there is no record available in the table 'RFQ_Product_Service_Map' after the deletion for the given
+            RFQid and prodcatid.
+            If Yes, this method will delete all entries from the dependent table (this can not be done through foreign key rule) 'RFQ_Response_Quote_Details' for the respective 
+            RFQid and prodcatid
+             </summary>
+             <param name="cmpUsrId"></param>
+             <param name="userId"></param>
+             <param name="prodServList"></param>
+             <param name="operation"></param>
+             <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._updatePotentials.finalizeDeal(BackEndObjects.RFQShortlisted,System.String,System.String)">
+            <summary>
+            This method can be used after the vendor clicks the 'Finalize Deal' button from sales screen for a Potential entry.
+            The first parameter must contain the RFQ id and the response entity id.
+            If the potential entry was created manually thi method will mark some other necessary flags as complete as well.
+            </summary>
+            <param name="rfS"></param>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.SalesActions._respondToPotentials">
+            <summary>
+            This class contains methods to creat/update reponse for a particular Potential entry.
+             This updated response will be viewed by the customer in his RFQ response section.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._respondToPotentials.updateOrCreatePotentialQuoteDetails(BackEndObjects.RFQResponse,System.Collections.ArrayList,System.Boolean)">
+            <summary>
+            This method can be used to both create /update the response quote details for a given RFQ.
+            The first parameter is RFQResponse object (if this object is found already existing in database then this will be considered as an Update request).
+            The second parameter is an ArrayList of 'RFQResponseQuotes' objects (for update, send only those response quote records which needs to be updated - 
+            ALSO , for an update the prod category value must be sent for each of item in this list).
+            The third parameter is useful only for update request.. this parameter says whether or not to update the NDA/documents passed through the first parameter.
+            For an insert request it is advisable NOT TO provide any rfqid in the 'RFQResponse' object as this will be ignored and system will create new id.
+            </summary>
+            <param name="rfS"></param>
+            <param name="rfQuotes"></param>
+            <param name="updateNDA"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.SalesActions._quoteDetails">
+            <summary>
+            This class contain methods which lets the user to update/create quote details in response to an RFQ.
+            These methods can be used from Lead/Potential sections to update quote details.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._quoteDetails.insertRFQResponseQuote(BackEndObjects.RFQResponse,System.Collections.ArrayList)">
+            <summary>
+            This method inserts the RFQ response into backend database.
+            The first parameter should be an object of type 'RFQResponse' class.
+            The second parameter is an ArrayList of 'RFQResponseQuotes' class. Each object in that arraylist is response quote to one of the product/service category of the 
+            RFQ.
+            </summary>
+            <param name="rfR"></param>
+            <param name="RFQResponseQuoteList"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.SalesActions._dispLeads">
+            <summary>
+            This class contains method to display the lead records in the sales screen.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._dispLeads.getAllLeadDetails(System.String,System.String)">
+            <summary>
+            For a given entity id and a user id, this method returns all Lead objects with associated product specifications.
+            Each element of the returned arraylist is an object of type 'LeadRecord' (which is a subclass of 'RFQDetails') with the property 'RFQProdServList' set in it.
+            Note that the returned list does not contain LeadResponse object. If required the caller method needs to retrieve this data.
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._dispLeads.getAllLeadDetailsWOProdQntyAndSpec(System.String,System.String)">
+            <summary>
+            This is a faster version of 'getAllLeadDetails' but it does not return the associated product specs and quantity details
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._dispLeads.getAllActiveAndAssignedToLeadDetailsWOProdQntyAndSpec(System.String,System.String)">
+            <summary>
+            All Leads which are active and assigned to the passed user id
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._dispLeads.getAllLeadDetailsFiltered(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            This method functions the same way as 'getAllLeadDetails' except that this method can send the List filtered.
+            Each element of the returned arraylist is an object of type 'LeadRecord' (which is a subclass of 'RFQDetails') with the property 'RFQProdServList' set in it.
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="filterParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._dispLeads.getAllActiveAndAssignedToLeadDetailsFilteredWOProdQntyAndSpec(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Returns all active leads which are meeting the filter criteria and are assigned to the given userid
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="filterParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._dispLeads.getAllLeadDetailsFilteredIncludingConvertedtoPotential(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            This method is similar to 'getAllLeadDetailsFiltered' except that it contains all leads which have already been converted to potential
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="filterParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._dispLeads.getLeadQuoteandSpecDetails(System.String,System.String)">
+            <summary>
+            For a particular lead response, this method provides the specfication objects and respective response quote from a response entity.
+            The response object is 'RFQResponseQuoteTotal' which contains a property (another property is the total amount of a complete response quote)
+            'RFQResponseQuoteRecordList' which actually an ArrayList 
+            of 'RFQResponseQuoteRecord' objects.
+            'RFQResponseQuoteRecord' is a subclass of 'RFQResponseQuotes' - each object of which represents one record of response for an RFQ/Lead for one particular.
+            </summary>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="responseEntId"></param>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.SalesActions._updateLeads">
+            <summary>
+            This class contains methods for updating details of manually created Leads.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._updateLeads.updateLead(ActionLibrary.LeadRecord,System.String,System.String,System.String)">
+            <summary>
+            This method is for updating a Lead details if the Lead was created manually.
+            If this is a delete operation, records from RFQDetails, and other prod/service details will be deleted.
+            In the object of 'LeadRecord' pass only those properties (other than the RFQ id) which need to be updated.
+            No need to send the entityName with this parameter as the enttity name will not be modified by this method (only the entity id will be modified).
+            To update related product/service details for a manually created Lead, use the method 'updateLeadProdServDetails'.
+            </summary>
+            <param name="rfS"></param>
+            <param name="cmpUsrId"></param>
+            <param name="userId"></param>
+            <param name="operation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._updateLeads.updateLeadProdServDetails(ActionLibrary.LeadRecord,System.String,System.String,System.Collections.ArrayList,System.String)">
+             <summary>
+             The first parameter is mainly checked to confirm the creation mode. No need to send the entiy name with it.
+            The fourth parameter is an ArrayList of 'RFQProductServiceDetails' associated with a particular Lead record.
+             In case a delete was performed a check if there is no record available in the table 'RFQ_Product_Service_Map' after the deletion for the given
+            RFQid and prodcatid.
+            If Yes, this method will delete all entries from the dependent table (this can not be done through foreign key rule) 'RFQ_Response_Quote_Details' for the respective 
+            RFQid and prodcatid
+             </summary>
+             <param name="leadRec"></param>
+             <param name="cmpUsrId"></param>
+             <param name="userId"></param>
+             <param name="prodServList"></param>
+             <param name="operation"></param>
+             <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.SalesActions._respondToLeads">
+            <summary>
+            This class contains methods to creat/update reponse for a particular lead entry.
+            This updated response will be viewed by the customer in his RFQ response section.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._respondToLeads.isFirstResponse(System.String,System.String,System.String)">
+            <summary>
+            For a given rfq id, this method checks whether or not one response has already been provided by the response entity id.
+            If yes, this method returns a true.
+            The first parameter is the reponse entity id;
+            The second parameter is the user id of the reponse entity id;
+            The third parameter is the RFQ id.
+            </summary>
+            <param name="respEntityId"></param>
+            <param name="userId"></param>
+            <param name="rfId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._respondToLeads.updateOrCreateLeadQuoteDetails(BackEndObjects.RFQResponse,System.Collections.ArrayList,System.Boolean)">
+            <summary>
+            This method can be used to both create /update the response quote details for a given RFQ.
+            The first parameter is RFQResponse object (if this object is found already existing in database then this will be considered as an Update request).
+            The second parameter is an ArrayList of 'RFQResponseQuotes' objects (for update, send only those response quote records which needs to be updated - 
+            ALSO , for an update the prod category value must be sent for each of item in this list).
+            The third parameter is useful only for update request.. this parameter says whether or not to update the NDA/documents passed through the first parameter.
+            For an insert request it is advisable NOT TO provide any rfqid in the 'RFQResponse' object as this will be ignored and system will create new id.
+            </summary>
+            <param name="rfS"></param>
+            <param name="rfQuotes"></param>
+            <param name="updateNDA"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.SalesActions._createLeads">
+            <summary>
+            This class contains all methods to create a new Lead entry Manually from the Sales screen
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createLeads.getParentProductDetails">
+            <summary>
+            This method returns all product/service category details for which there is no parent category;
+             i.e, it returns a list of all top level product/service category.This method is particularly useful for scenarios where it is required to
+             list the main catogories online.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createLeads.getChildProductDetails(System.String)">
+            <summary>
+            for any given parent categoryid  returns all the associated child cateogories
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createLeads.getAllFeaturesForCategory(System.String)">
+            <summary>
+            for any given product category id, returns all the associated Feature objects.
+            Each of the elements of the returned dictionary has a Feature object which in turn contains all the specifications attached to it.
+            </summary>
+            <param name="catId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createLeads.getAllUnitsOfMsrmnt">
+            <summary>
+            Returns all units of measurement from database. Each element of the returned ArrayList is an object of 'UnitOfMsrmnt'.
+            Use 'getUnitName()' method on each of the containing objects to get the name of the units.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createLeads.getAllCurrencies">
+            <summary>
+            Returns an ArrayList which contains only the names of all the available currecnies in the database
+            </summary>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:ActionLibrary.SalesActions._createLeads.getAllQuoteUnits" -->
+        <member name="M:ActionLibrary.SalesActions._createLeads.getAllCountryNames">
+            <summary>
+            This method returns a dictionary; each element of the dictionary is the id of the country (the 'key') and the
+            name of the country (the 'value').
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createLeads.getAllStateNamesForCountry(System.String)">
+            <summary>
+            For a given country id,this method returns a dictionary; each element of the dictionary is the id of the State (the 'key') and the
+            name of the State (the 'value').
+            </summary>
+            <param name="cId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createLeads.getAllCityNamesForState(System.String)">
+            <summary>
+            For a given state id,this method returns a dictionary; each element of the dictionary is the id of the City (the 'key') and the
+            name of the City (the 'value').
+            </summary>
+            <param name="stId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createLeads.getAllLocalityNamesForCity(System.String)">
+            <summary>
+            For a given City id,this method returns a dictionary; each element of the dictionary is the id of the Locality (the 'key') and the
+            name of the Locality (the 'value').
+            </summary>
+            <param name="ctId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createLeads.getAllContactsForEntity(System.String,System.String)">
+            <summary>
+            For a given entity id, it returns an ArrayList containing 'Contacts' object from database.
+            This list is the contact list of this particular organization.
+            </summary>
+            <param name="entityId"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ActionLibrary.SalesActions._createLeads.createNewLead(ActionLibrary.LeadRecord,System.String,System.String)">
+            <summary>
+            This method should only be used to CREATE A LEAD ENTRY MANUALLY.
+            This method creates a new Lead entry into database.
+            In the backend Lead entries are maintained as RFQDetails objects
+            This method inserts the Lead Record object into the database (along with all the associated objects)
+            those details are also inserted into the database.
+            This method returns the number of records created in the database. In case it returns 0, that means the insert operation failed.
+            For a new Manually created Lead, the creation Mode should always be 'Manusl' (RFQDetails.RFQDetails.CREATION_MODE_MANUAL). 
+            </summary>
+            <param name="leadObj"></param>
+        </member>
+        <member name="T:ActionLibrary.customerDetails">
+            <summary>
+            This class is represents the customer details data. Method of this class can be used in multple contexts to get the customer details to be
+            displaed on lead/potential screens etc.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.customerDetails.getContactDetails(System.String,System.String)">
+            <summary>
+            For a given customer id and business entity id, this method searches in Contact list and Main business entity backend objects and returns
+            the matching customer entity detail object.
+            The returned value is a dictionary where the key defines the type of object being returned (RETURN_OBJECT_TYPE_CONTACT_DETAILS/RETURN_OBJECT_TYPE_MAIN_BUSINESS_ENTITY)
+            and the value is an object of respective type.
+            </summary>
+            <param name="contactEntId"></param>
+            <param name="cmpUsrUsrId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.RequirementRecords">
+            <summary>
+            Each instance of this class represents one record of the 'All Requirements' grid in the purchase screen.
+            This class is available only to this namespace
+            </summary>
+        </member>
+        <member name="T:ActionLibrary.PotentialRecords">
+            <summary>
+            This class adds properties to the bases class 'RFQShortlisted' where some properties are not directly available and needs to be 
+            extracted from the associated RFQDetails object.
+            e.g - duedate,EntityId,createdBy,entityName
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.PotentialRecords.findAndSetEntityName">
+            <summary>
+            This method finds the entity name by certain business rule and set the property 'entityName'.
+            Invoke this method only after setting all other properties of the 'PotentialRecords' object.
+            </summary>
+        </member>
+        <member name="T:ActionLibrary.RFQResponseQuoteRecord">
+            <summary>
+            Each instance of this class represents one record of the RFQ Response Quote.
+            Each record contains the product/service details, total amount, quanity.
+            A complete response from a vendor for a RFQ may contain multiple  records like this.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.RFQResponseQuoteRecord.setAmntQuntyandProdSpec">
+            <summary>
+            THIS METHOD NEEDS TO BE RE-WRITTEN - AS THIS CURRENTLY IS SET TO A DUMMY METHOD.
+            By default a 'RFQResponseQuoteRecord' object does not have the three properties set/calculated - 'amount','quantity' and 'prodServiceDetails'.
+            Calling this method will set these properties properly on that object.
+            </summary>
+        </member>
+        <member name="T:ActionLibrary.RFQResponseQuoteTotal">
+            <summary>
+            An object of this class represents a complete response from a vendor for a RFQ.
+            This contains a property 'RFQResponseQuoteRecordList' which actually an ArrayList of 'RFQResponseQuoteRecord' objects.
+            'RFQResponseQuoteRecord' is a subclass of 'RFQResponseQuotes' - each object of which represents one record of response for an RFQ/Lead for one particular
+            product specification.
+            Also, it contains the total amount for a particular response.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.RFQResponseQuoteTotal.calculateTotalAmnt">
+            <summary>
+            Invoke this method to calculate the total amount of the respone.
+            Invoke this method only after the property 'RFQResponseQuoteRecordList' is set.
+            </summary>
+        </member>
+        <member name="T:ActionLibrary.LeadRecord">
+            <summary>
+            This is a wrapper class which encapsulates the all underlying classes required to represent a lead.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.LeadRecord.findAndSetEntityName">
+            <summary>
+            This method finds the entity name by certain business rule and set the property 'entityName'.
+            Invoke this method only after setting all other properties of the 'LeadRecord' object.
+            </summary>
+        </member>
+        <member name="T:ActionLibrary.RFQResponseRecord">
+            <summary>
+            This class is a subclass of 'RFQResponse' and contains the entity name property.
+            A record of this class is generated when the response entity's name needs to be displayed along with other details.
+            This is mainly useful in purchase screens to know the name details (along with other) of the reposne entities.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.RFQResponseRecord.findAndSetEntityName">
+            <summary>
+            This method finds the entity name by certain business rule and set the property 'entityName'.
+            Invoke this method only after setting all other properties of the 'RFQReponseRecord' object.
+            </summary>
+        </member>
+        <member name="M:ActionLibrary.DateUtility.getDeConvertedDate(System.String)">
+            <summary>
+            For date values like 'Mar-18-2014' this method returns '2014-03-18'
+            Expects the date format in this format as shown in the example
+            </summary>
+            <param name="inputDate"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionLibrary.SessionFactory">
+            <summary>
+            Use this class to set/get session variables names and follow the types mentioned to set/get objects/Strings accordingly.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ACCESSLIST_FOR_USER">
+            <summary>
+            This variable holds the access list dictionary details of the logged in user
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CURRENCY_LIST">
+            <summary>
+            This variable holds the currency names along with the ids in a dictionary
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.MAIN_BUSINESS_ENTITY_DEFAULT_CURRENCY">
+            <summary>
+            The defult currency of the main business entity
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.MAIN_BUSINESS_ENTITY_ID_STRING">
+            <summary>
+            main business entity id string
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.LOGGED_IN_USER_ID_STRING">
+            <summary>
+            This variable holds the logged in user id string
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.LOGGED_IN_USER_THEME">
+            <summary>
+            This variable holds the theme name of the logged in user
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.MAIN_BUSINESS_ENTITY_OBJECT">
+            <summary>
+            main business entity object
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.SUB_BUSINESS_ENTITY_ID_STRING">
+            <summary>
+            Sub business entity id string
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.SHORT_REGISTR_COMPLETE">
+            <summary>
+            Indicates that the user has completed the short registration process
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_REQR_SELECTED_PRODUCT_CAT">
+            <summary>
+            This session variable for holding the selected product category from Create Requirement screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.UPDATE_REQR_SELECTED_PRODUCT_CAT">
+            <summary>
+            This variable is used to hold the selected product category in requirement specification screen's addition section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_REQ_SELECTED_REQR_SPEC_MAP">
+            <summary>
+            This variable is to hold the Requirement specification map object's arrayList as selected in the create requirement screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.UPDATE_REQ_SELECTED_REQR_SPEC_MAP">
+            <summary>
+            holds the specification arraylist in requirement specification screen's addition section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_RFQ_SELECTED_PRODUCT_CAT">
+            <summary>
+            This session variable for holding the selected product category from Create RFQ screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_RFQ_SELECTED_RFQ_SPEC_MAP">
+            <summary>
+            This variable is to hold the rfq specification map object's arrayList as selected in the create RFQ screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_RFQ_RFQ_ID">
+            <summary>
+            This variable is to hold the rfq id which is created from the create RFQ screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_RFQ_PROD_SRV_QNTY_LIST">
+            <summary>
+            This variable is to hold the arraylist of objects of type 'RFQProdServQnty' during the process of RFQ creation
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.UPDATE_RFQ_PROD_SRV_QNTY_LIST">
+            <summary>
+            Holds the arraylist of product service quantity details in RFQ specification screens addition section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.UPDATE_REQ_PROD_SRV_QNTY_LIST">
+            <summary>
+            Holds the arraylist of product service quantity details in requirement specification screens addition section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_REQ_REQR_ID">
+            <summary>
+            This variable is to hold the requirement id which is created from the create Requirement screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_RFQ_NDA_FILE">
+            <summary>
+            This variable is to hold the uploaded NDA document while creating RFQ.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_REQ_PROD_SRV_QNTY_LIST">
+            <summary>
+            This variable is to hold the arraylist of objects of type 'RequirementProdServQnty' during the process of Requirement creation.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_LEAD_SELECTED_PRODUCT_CAT">
+            <summary>
+            This session variable for holding the selected product category from Create Lead screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_LEAD_SELECTED_RFQ_SPEC_MAP">
+            <summary>
+            This variable is to hold Tthe rfq specification map object's arrayList as selected in the create Lead screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_LEAD_RFQ_ID">
+            <summary>
+            This variable is to hold the rfq id which is created from the create Lead screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_LEAD_PROD_SRV_QNTY_LIST">
+            <summary>
+            This variable is to hold the arraylist of objects of type 'RFQProdServQnty' during the process of Lead creation
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_LEAD_NDA_FILE">
+            <summary>
+            This variable is to hold the uploaded NDA document while creating Lead.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_LEAD_QUOTE_UNIT">
+            <summary>
+            This stores the response quote unit value in the create lead page
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_LEAD_RESP_QUOTE_LIST">
+            <summary>
+            This variable stores multiple RFQResponseQuote objects while creating lead from the create lead screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_CONTACT_LOCALITY_ID">
+            <summary>
+            This variable holds the locality id of the in-site business entity which was searched
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_CONTACT_ADDRESS_LINE1">
+            <summary>
+            This variable holds the address line1 value of the in-site business entity which was searched
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_CONTACT_CONTACT_OBJ">
+            <summary>
+            This variable holds the contact object created from the create contact screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_CONTACT_DATA_GRID">
+            <summary>
+            This variable holds the datatable showing all contacts from the site in the create contact screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_REQUIREMENT_SELECTED_REQR_ID">
+            <summary>
+            This variable stores the selected requirement id in the all requirement section of the purchase screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_REQUIREMENT_LOCATION">
+            <summary>
+            This variable holds the location id of the selected' rows location in all requirement panel of the purchase screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_REQUIREMENT_REQR_SPEC">
+            <summary>
+            This variable stores the arraylist of selected requirement's requirement sepcification objects in all requirement panel of the purchase screen.
+            Each element of this arraylist of the type 'Requirement_Spec'.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_REQUIREMENT_REQR_SPEC_EDIT_INNER_GRID">
+            <summary>
+            While editing the requirement specification from purchase screen this variable holds the currently edited inner grids data
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_REQUIREMENT_REQR_PROD_SRV">
+            <summary>
+            This variable stores the arraylist of selected requirement's product service quantity objects in all requirement panel of the purchase screen.
+            Each element of this arraylist of the type 'RequirementProdServQnty'.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_REQUIREMENT_GRID_DATA">
+            <summary>
+            This variable stores the datatable to be bound to the all requiment gridview. This reduces the gridview page index change time.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_REQUIREMENT_TAGGED_RFQ_GRID">
+            <summary>
+            Stores the tagged RFQ grid for a particular selected requirement when displayed in the tag RFQ screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_REQUIREMENT_SHOW_SPEC_INNER_GRID_DATA">
+            <summary>
+            This variable hods the datasource objet for the inner grid available in the show specificiation grid
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_REQUIREMENT_SPEC_DATA_GRID">
+            <summary>
+            This variable holds the datagrid for the specification of the of the requirement
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_REQUIREMENT_SHOW_FEAT_SELECTED_PRODCAT">
+            <summary>
+            This variable holds the selected product category id in 'AllRequirement_Specification' screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_RFQ_SELECTED_RFQ_ID">
+            <summary>
+            This variable stores the selected RFQ id from the RFQ details grid of the purchase screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_RFQ_LOCATION">
+            <summary>
+            This variable holds the location id of the selected row in the all RFQ gridview in the all purchase screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_RFQ_RFQ_SPEC">
+            <summary>
+            This variable holds the arraylist containing specificaion details for a RFQ.
+            Each element of this arraylist is an object of type 'RFQProductServiceDetails'
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_RFQ_RFQ_SPEC_EDIT_INNER_GRID">
+            <summary>
+            In RFQ specification screen this variable holds the inner grid which is currently being edited
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_RFQ_PROD_QNTY">
+            <summary>
+            This variable is used to hold an arrylist.
+            Each element of this arraylist is an object of type 'RFQProdServQnty'.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_RFQ_BROADCASTLIST_SELECTED_CONTACT">
+            <summary>
+            This variable holds the contact object for the selected contact in the broadcast list
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_RFQ_SHORLISTED_FINALIZED_POTEN">
+            <summary>
+            In the allRFQShortlisted screen this variable holds the finalized potential id
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_RFQ_GRID_DATA">
+            <summary>
+            This variable is used to hold the RFQ grid data in the purchase screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_POTN_RFQ_LIST">
+            <summary>
+            Holds all the rfqlist of potential records in the sales screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_RFQ_SHOW_QUOTE_SELECTED_RESP_ENTITY_ID">
+            <summary>
+            This variable holds the response entity id of the selected row from the quote details pop up from RFQ details subsection in purchase screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_RFQ_RESP_QUOTE_GRID_DATA">
+            <summary>
+            This variable holds the datatable containing the details of a particular reponse quotes from a particular response entity id
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_RFQ_SPECIFICATION_GRID_DATA">
+            <summary>
+            This variable holds the datagrid from the all rfq speicifcation gridview
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_FINALIZE_DEAL_PO_PROD_GRID">
+            <summary>
+            This variable holds the dataTable containting the product grid details in the PO creation screen in Finalize Deal section of the purchase screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_FINALIZE_DEAL_PO_PROD_GRID_SPEC">
+            <summary>
+            This variable holds the specification details for each prod category in the purchase order grid in Finalize Deal section of the purchase screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_RFQ_SELECTED_PO">
+            <summary>
+            This variable holds the selected purchase order id in the purchase screen all_RFQ section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_INV_GRID_DATA">
+            <summary>
+            This variable holds the complete invoice data grid in all purchase screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PURCHASE_ALL_INV_SELECTED_RFQ_SPEC">
+            <summary>
+            This variable holds the arraylist containing the specificaion details of an invoice. Each element of this arraylist is an object of type 'RFQProductServiceDetails'.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_INVOICE_PAYMENT_GRID">
+            <summary>
+            This variable holds the payment grid from all invoice section from within Purchase/Sales Screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_INVOICE_PAYMENT_GRID_EXISTING_TRAN_NO">
+            <summary>
+            This variable holds the existing transaction number dictionary in the payment screen of invoice grid
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_INVOICE_MANUAL_SELECTED_SPEC_MAP">
+            <summary>
+            While creating an invoice manually this variable holds the selected product specification details
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_INVOICE_MANUAL_SELECTED_SPEC_MAP_DICT">
+            <summary>
+            This dictionary holds the 'product_Name','CREATE_INVOICE_MANUAL_SELECTED_SPEC_MAP' - arrayList
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_INVOICE_MANUAL_SELECTED_PRODUCT_CAT">
+            <summary>
+            While creating an invoice manually this variable holds the selected product/service category
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_INVOICE_MANUAL_RFQ_ID">
+            <summary>
+            While creating an invoice this variable holds the RFQ id
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_INVOICE_MANUAL_TAX_COMP_DATA_GRID">
+            <summary>
+            While creating invoice manually this variable holds the invoice specific tax component details
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_INVOICE_MANUAL_TOTAL_TAX_COMP_PERC">
+            <summary>
+            While creating invoice manually this variable holds the total tax percentage selected
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_INVOICE_MANUAL_TOTAL_TAX_COMP_GRID">
+            <summary>
+            In the manully create invoice screen this variable holds the total tax component grid of the org
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_INVOICE_MANUAL_PRODUCT_GRID">
+            <summary>
+            This variable holds the product grid details in the create invoice page while creating invoice manually
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_INVOICE_MANUAL_PRODUCT_GRID_PRODUCT_LIST">
+            <summary>
+            This variable holds the product/service list of the organization while creating invoice manually
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.UPDATE_PO_MANUAL_PRODUCT_GRID_PRODUCT_LIST">
+            <summary>
+            This variable holds the product/service list of the organization while updating PO manually
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.DISP_IMAGE_CONTEXT_FACTORY_OBJ">
+            <summary>
+            This variable stores the 'ImageContextFactory' object.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_LEAD_SELECTED_LEAD_ID">
+            <summary>
+            This variable stores the selected lead id in the all lead section of the sales screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_POTN_MUTLTIPLE_INV_DATA_FOR_RFQ">
+            <summary>
+            This variable holds a session variable containing dictionary of dictionary containing invoice details for potential where there are multiple invoices attached
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_LEAD_LOCATION">
+            <summary>
+            This variable stores the location id of the selected lead in the sales screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_LEAD_LD_SPEC">
+            <summary>
+            This variable holds the arraylist containing the lead specification objects.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_LEAD_LD_PROD_SRV">
+            <summary>
+            This variable holds the arraylist containing the lead product service details obje cts
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_LEAD_LD_PROD_SRV_DATATABLE">
+            <summary>
+            Once generated this variable holds the datatable containing the product service details of the selected lead in sales screen's specification window
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_LEAD_SELECTED_CUSTOMER_OBJ">
+            <summary>
+            This variable holds the Dictionary containing the selected the customer details object from the all lead section of the sales screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_LEAD_GRID_DATA">
+            <summary>
+            This variable holds the lead grid dataTable for the lead fram in the sales screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_LEAD_LEAD_SPEC_EDIT_INNER_GRID">
+            <summary>
+            Holds the specification inner grid from lead specification screen of the inner grid is being edited
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_LEAD_SPECIFICATION_PRODUCT_LIST">
+            <summary>
+            This variable holds the product list to be displayed in the edit mode from specification screen of a lead
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_POTENTIAL_SPECIFICATION_PRODUCT_LIST">
+            <summary>
+            This variable holds the product list to be displayed in the edit mode from specification screen of a potential
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_POTENTIAL_SELECTED_RFQ_ID">
+            <summary>
+            This variables stores the selected RFQ from the all sale page's all potential  grid's selected row
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_POTENTIAL_SELECTED_POTN_ID">
+            <summary>
+            This variable holds the selected potential id from the all potential gridview of the all sale screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_POTENTIAL_SELECTED_CUSTOMER_OBJ">
+            <summary>
+            This variable holds the Dictionary containing the customer data from the selected row of the all potential grid of the all sale screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_POTENTIAL_LOCATION">
+            <summary>
+            This variable holds the location id of the selected record in the all potential section in the all sale page
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_POTENTIAL_POTN_SPEC">
+            <summary>
+            This variable holds the arrayList containing the specification object of the selected potential from the all potential section in the all sale screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_POTENTIAL_POTN_PROD_SRV">
+            <summary>
+            This variable holds teh arrayList containing the product service details of the selected potential from the all potential section in the all sale screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_POTENTIAL_POTN_SPEC_EDIT_INNER_GRID">
+            <summary>
+            Holds the specification inner grid from potential specification screen of the inner grid is being edited
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_POTENTIAL_GRID_DATA">
+            <summary>
+            This variable holds the potential grid data in the all sale screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_POTENTIAL_POTN_PROD_SRV_DATATABLE">
+            <summary>
+            Holds the datatable containing the specification details of a selected potential from the all sale screen's potential section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_POTENTIAL_CREATE_INV_TAX_COMP_DATA_GRID">
+            <summary>
+            While creating invoice from all potential section of all sale screen, this variable holds the data grid for tax components
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_POTENTIAL_CREATE_INV_TOTAL_TAX_COMP_PERC">
+            <summary>
+            This variable holds the total % value of all tax components combined for the invoice
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_POTENTIAL_CREATE_INV_TOTAL_TAX_COMP_GRID">
+            <summary>
+            This variable holds the complete tax component grid in the invoice creation/update screen which is shown from all sales page
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_INV_GRID_DATA">
+            <summary>
+            This variable holds the complete invoice data grid in all sales screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_INV_EXISTING_INV_NO">
+            <summary>
+            Stores a dictionary containing the existing inv-no,inv-id as key value pair
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_SALE_ALL_INV_SELECTED_RFQ_SPEC">
+            <summary>
+            This variable holds the arraylist containing the specificaion details of an invoice (from Invoice details section in sales page). 
+            Each element of this arraylist is an object of type 'RFQProductServiceDetails'.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_POTENTIAL_SELECTED_PRODUCT_CAT">
+            <summary>
+            This variable holds the selected product category in create potential screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_POTENTIAL_SELECTED_POTN_SPEC_MAP">
+            <summary>
+            This variable holds the selected prod spec ArrayList as selected in the create potential specification gridview
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_POTENTIAL_PROD_SRV_QNTY_LIST">
+            <summary>
+            This variable holds the arraylist containing the 'RFQProdServQnty' objects.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_POTENTIAL_NDA_FILE">
+            <summary>
+            This variable stores the file upload control holding the NDA file while creating the potential
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_POTENTIAL_RFQ_ID">
+            <summary>
+            This variable holds the RFQ id in create potential screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_POTENTIAL_POT_ID">
+            <summary>
+            This variable holds the potential id of the newly created potential in the create potential screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_POTENTIAL_RESP_QUOTE_LIST">
+            <summary>
+            This variable holds the ArrayList containing the response quote details while creating a potential
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_POTENTIAL_POTN_AMNT">
+            <summary>
+            While manually creating a potential this variable holds the average potential amount 
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_POTENTIAL_CONF_MAT">
+            <summary>
+            This variable holds the confirmation of Material document associated with the potential
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_PRODUCT_SELECTED_PRODUCT_CAT">
+            <summary>
+            This variable holds the selected product category in the create product page
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.CREATE_PRODUCT_CHILD_PROD_SPEC_MAP">
+            <summary>
+            This variable holds the 'ShopChildProdsSpecs' objects arraylist while creating a new product from create product page
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PROD_SPECIFICATION_DATAGRID">
+            <summary>
+            This variable holds the data grid containing the specification object details of any selected product in the from all Products page.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PRODUCT_SELECTED_PRODUCT_NAME">
+            <summary>
+            This variable holds the selected product name from the all products page data grid
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PRODUCT_PROD_DATA_GRID">
+            <summary>
+            This variable holds the datatable contanining the values for the all products grid.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PRODUCT_SELECTED_PROD_CAT_FILTER">
+            <summary>
+            This variable holds the selected product cateogry to filter in the all products page.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_PRODUCT_CREATE_PRODUCT_EXISTING_NAMES">
+            <summary>
+            This variable holds a dictionary of existing product names to check for duplicates while creating new products
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ADMIN_PREF_CHAIN_MGMT_DATA_GRID">
+            <summary>
+            This variable holds the data grid generated for the chain management screen from the admin preference screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ADMIN_PREF_DOCFORMAT_MGMT_TAX_COMP_GRID">
+            <summary>
+            Holds the tax component data grid in the admin pref->doc format mgmt->invoice section.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ADMIN_PREF_USER_MGMT_BASIC_USER_DET_GRID">
+            <summary>
+            Holds the basic user details data grid in the admin pref->user mgmt
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_CONTACT_DATA_GRID">
+            <summary>
+            This variable holds the data grid in the all contacts screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_CONTACT_SELECTED_CONTACT_ID">
+            <summary>
+            Stores the contact Entity id of the selcted contact from the contact data grid
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_CONTACT_ALL_DEAL_INCOMING_INV_GRID">
+            <summary>
+            For a given contact it hods the datagrid for all incoming invoice
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_CONTACT_ALL_DEAL_INCOMING_INV_ARRAYLIST">
+            <summary>
+            Holds the arraylist of invoice objects for incoming invoices from contact's deal screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_CONTACT_ALL_DEAL_OUTGOING_INV_GRID">
+            <summary>
+            For a given contact it hods the datagrid for all outgoing invoice
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_CONTACT_ALL_DEAL_OUTGOING_INV_ARRAYLIST">
+            <summary>
+            Holds the arraylist of invoice objects for outgoing invoices from contact's deal screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_CONTACT_ALL_DEFECT_INCOMING_DEF_GRID">
+            <summary>
+             For a given contact it hods the datagrid for all incoming defects
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_CONTACT_ALL_DEFECT_INCOMING_DEF_DICTIONARY">
+            <summary>
+            Holds the dictionary of defect objects for incoming defects from contact's defect screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_CONTACT_ALL_DEFECT_OUTGOING_DEF_GRID">
+            <summary>
+             For a given contact it hods the datagrid for all outgoing defects
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_CONTACT_ALL_DEFECT_OUTGOING_DEF_DICTIONARY">
+            <summary>
+            Holds the dictionary of defect objects for outgoing defects from contact's defect screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_CONTACT_EXISTING_CONTACT_LIST">
+            <summary>
+            This variable holds the dictionary containing the existing contact details while creating new contact
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.EXISTING_CONTACT_DICTIONARY">
+            <summary>
+            Holds all existing contacts names and contact entity id
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.POP3_CLIENT_OBJECT">
+            <summary>
+            This variable holds the already connected pop3 client object
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_COMM_DOWNLOADABLE_MSG">
+            <summary>
+            This variable name is used to form the session variable name which holds a selected downloadable message in all communication screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DEFECT_SLA_LIST">
+            <summary>
+            holds the arraylist of DefectSLA objects in defect page
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DEFECT_ALL_INCOMING_DEFECT_GRID">
+            <summary>
+            In the all defects screen this variable holds the data grid containing all incoming defect details
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DEFECT_CREATE_DEFECT_RFQ_AUTOCOMPLETE_LIST">
+            <summary>
+            This variable holds the auto complete list for the RFQ No textbox while creating defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DEFECT_CREATE_DEFECT_INV_AUTOCOMPLETE_LIST">
+            <summary>
+            This variable holds the auto complete list for the Invoice No textbox while creating defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DEFECT_CREATE_DEFECT_INV_AMNT_DICT">
+            <summary>
+            This variable stores the dictionary holding the invoice id and respective amount
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DEFECT_ALL_OUTGOING_DEFECT_GRID">
+            <summary>
+            In the all defects screen this variable holds the data grid containing all outgoing defect details
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DEFECT_INCM_SELECTED_CUSTOMER_OBJ">
+            <summary>
+            This variable holds the customer object for the selected incoming defect object
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DEFECT_OUTG_SELECTED_SUPPLIER_OBJ">
+            <summary>
+            This variable holds the supplier object for the selected outgoing defect object
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_LEAD_AND_POTENTIAL_DICTIONARY">
+            <summary>
+            This variable holds a dictionary containing the 'from-date,to-date'(key) and LeadandPotential(value) generated by the method generateLeadCharts
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_LEAD_BY_VAL_SUCCESS_FAILURE">
+            <summary>
+            This variable holds the dictionary containing the latest success-failure value for the lead conv % by val chart
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_LEAD_BY_NUMBER_SUCCESS_FAILURE">
+            <summary>
+            This variable holds the dictionary containing the latest success-failure value for the lead conv % by number chart
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_POTN_BY_VAL_SUCCESS_FAILURE">
+            <summary>
+            This variable holds the dictionary containing the latest success-failure value for the potential conv % by val chart
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_POTN_BY_STAGES">
+            <summary>
+            This variable holds the dictionary containing the latest potential stage details for the potential stages chart
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_POTN_BY_CATEGORY">
+            <summary>
+            The variable holds the dictionary containing latest potential category chart details
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_POTN_BY_CATEGORY_CATG_NAMES">
+            <summary>
+            Stores the product cateogry names to be displayed on potential charts/reports.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_POTN_BY_NO_SUCCESS_FAILURE">
+            <summary>
+            This variable holds the dictionary containing the latest success-failure value for the potential no % by val chart
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_SALES_TOTAL_BUSINESS_BY_ACCNT_CONTACTS">
+            <summary>
+            This variable holds the contact dictionary for the chart 'total sales by account'
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_SALES_TOTAL_BUSINESS_BY_ACCNT_TOTAL_BUSINESS">
+            <summary>
+            This variable holds the total business dictionary for the chart 'total sales by account'
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_SALES_TOTAL_BUSINESS_BY_ACCNT_TOTAL_PENDING">
+            <summary>
+            This variable holds the total pending dictionary for the chart 'total sales by account'
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_SALES_TOTAL_BUSINESS_BY_ACCNT_TOTAL_BUSINESS_DURING_PERIOD">
+            <summary>
+            This variable holds the 'total business during period' dictionary for the chart 'total sales by account'
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_SALES_PENDINGCLEARPMNT_CONTACT">
+            <summary>
+            This variable holds the contact dicionary for 'pending clear payment' chart in transaction sales chart section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_SALES_PENDINGCLEARPMNT_TOTAL_CLEARED">
+            <summary>
+            This variable holds the total cleared dicionary for 'pending clear payment' chart in transaction sales chart section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_SALES_PENDINGCLEARPMNT_TOTAL_NOT_CLEARED">
+            <summary>
+            This variable holds the total not cleared dictionary for 'pending clear payment' chart in transaction sales chart section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_SALES_PRODUCTWISESALES_QNTY_PROD_DICT">
+            <summary>
+            This variable holds the product dictionary details for the ProductWiseSalesQnty chart in transaction sales chart section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_SALES_PRODUCTWISESALES_QNTY_SALES_QNTY">
+            <summary>
+            This variable holds the sales quantity dictionary details for the ProductWiseSalesQnty chart in transaction sales chart section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_SALES_PRODUCTWISESALES_AMNT_PROD_DICT">
+            <summary>
+            This variable holds the product dictionary details for the ProductWiseSalesAmnt chart in transaction sales chart section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_SALES_PRODUCTWISESALES_AMNT_SALES_AMNT">
+            <summary>
+            This variable holds the sales amount dictionary details for the ProductWiseSalesAmount chart in transaction sales chart section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_PURCHASE_TOTAL_BUSINESS_BY_ACCNT_CONTACTS">
+            <summary>
+            This variable holds the contact dictionary for the chart 'total PURCHASE by account'
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_PURCHASE_TOTAL_BUSINESS_BY_ACCNT_TOTAL_BUSINESS">
+            <summary>
+            This variable holds the total business dictionary for the chart 'total PURCHASE by account'
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_PURCHASE_TOTAL_BUSINESS_BY_ACCNT_TOTAL_PENDING">
+            <summary>
+            This variable holds the total pending dictionary for the chart 'total PURCHASE by account'
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_PURCHASE_TOTAL_BUSINESS_BY_ACCNT_TOTAL_BUSINESS_DURING_PERIOD">
+            <summary>
+            This variable holds the 'total business during period' dictionary for the chart 'total PURCHASE by account'
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_PURCHASE_PENDINGCLEARPMNT_CONTACT">
+            <summary>
+            This variable holds the contact dicionary for 'pending clear payment' chart in transaction PURCHASE chart section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_PURCHASE_PENDINGCLEARPMNT_TOTAL_CLEARED">
+            <summary>
+            This variable holds the total cleared dicionary for 'pending clear payment' chart in transaction PURCHASE chart section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_PURCHASE_PENDINGCLEARPMNT_TOTAL_NOT_CLEARED">
+            <summary>
+            This variable holds the total not cleared dictionary for 'pending clear payment' chart in transaction PURCHASE chart section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_PURCHASE_PRODUCTWISEPURCHASE_QNTY_PROD_DICT">
+            <summary>
+            This variable holds the product dictionary details for the ProductWisePURCHASEQnty chart in transaction PURCHASE chart section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_PURCHASE_PRODUCTWISEPURCHASE_QNTY_PURCHASE_QNTY">
+            <summary>
+            This variable holds the PURCHASE quantity dictionary details for the ProductWisePURCHASEQnty chart in transaction PURCHASE chart section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_PURCHASE_PRODUCTWISEPURCHASE_AMNT_PROD_DICT">
+            <summary>
+            This variable holds the product dictionary details for the ProductWisePURCHASEAmnt chart in transaction PURCHASE chart section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_TRAN_PURCHASE_PRODUCTWISEPURCHASE_AMNT_PURCHASE_AMNT">
+            <summary>
+            This variable holds the PURCHASE amount dictionary details for the ProductWisePURCHASEAmount chart in transaction PURCHASE chart section
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_DEFECT_DEFECTVALBYACCNT_CONTACT_DICT">
+            <summary>
+            This variable holds the contact dictionary for 'defect value by accnt' chart in incoming defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_DEFECT_DEFECTVALBYACCNT_DEFECT_AMNT">
+            <summary>
+            This variable holds the defect amount dictionary for 'defect value by accnt' chart in incoming defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_DEFECT_DEFECTNOBYACCNT_CONTACT_DICT">
+            <summary>
+            This variable holds the contact dictionary for 'defect no by accnt' chart in incoming defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_DEFECT_DEFECTNOBYACCNT_LAST_DEFECT_TYPE">
+            <summary>
+            This variable holds the last selected defect type for 'defect no by accnt' chart in incoming defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_DEFECT_DEFECTNOBYACCNT_TOTAL_DEFECT">
+            <summary>
+            This variable holds the total defects dictionary for 'defect no by accnt' chart in incoming defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_DEFECT_DEFECTNOBYACCNT_HIGH_DEFECT">
+            <summary>
+            This variable holds the high sev defect dictionary for 'defect no by accnt' chart in incoming defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_DEFECT_DEFECTNOBYACCNT_MEDM_DEFECT">
+            <summary>
+            This variable holds the medium sev dictionary for 'defect no by accnt' chart in incoming defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_DEFECT_DEFECTNOBYACCNT_LOW_DEFECT">
+            <summary>
+            This variable holds the low sev dictionary for 'defect no by accnt' chart in incoming defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_DEFECT_DEFECTVALBYACCNT_CONTACT_DICT">
+            <summary>
+            This variable holds the contact dictionary for 'defect value by accnt' chart in outgoing defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_DEFECT_DEFECTVALBYACCNT_DEFECT_AMNT">
+            <summary>
+            This variable holds the defect amount dictionary for 'defect value by accnt' chart in outgoing defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_DEFECT_DEFECTNOBYACCNT_CONTACT_DICT">
+            <summary>
+            This variable holds the contact dictionary for 'defect no by accnt' chart in outgoing defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_DEFECT_DEFECTNOBYACCNT_TOTAL_DEFECT">
+            <summary>
+            This variable holds the total defects dictionary for 'defect no by accnt' chart in outgoing defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_DEFECT_DEFECTNOBYACCNT_HIGH_DEFECT">
+            <summary>
+            This variable holds the high sev defect dictionary for 'defect no by accnt' chart in outgoing defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_DEFECT_DEFECTNOBYACCNT_MEDM_DEFECT">
+            <summary>
+            This variable holds the medium sev dictionary for 'defect no by accnt' chart in outgoing defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_DEFECT_DEFECTNOBYACCNT_LOW_DEFECT">
+            <summary>
+            This variable holds the low sev dictionary for 'defect no by accnt' chart in outgoing defect
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_DEFECT_ARRVLCLOS_DATE_RANGE">
+            <summary>
+            In the 'arrival-closure' chart for incoming dictionary it stores the last created date range dict
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_DEFECT_ARRVLCLOS_LAST_FREQ">
+            <summary>
+            In the 'arrival-closure' chart for incoming dictionary it stores the last created frequency
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_DEFECT_ARRVLCLOS_GENERATED_DICTS">
+            <summary>
+            In the 'arrival-closure' chart for incoming dictionary it stores the last created all dictionaries
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_DEFECT_AVERAGECLOSTIME_DATE_RANGE">
+            <summary>
+            In the 'arrival-closure' chart for incoming dictionary it stores the last created date range dict
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_DEFECT_AVERAGECLOSTIME_LAST_FREQ">
+            <summary>
+            In the 'average-closure time' chart for incoming dictionary it stores the last created frequency
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_DEFECT_AVERAGECLOSTIME_LAST_SELECTED_AGENT">
+            <summary>
+             In the 'average-closure time' chart for incoming dictionary it stores the last selected agent
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_DEFECT_AVERAGECLOSTIME_GENERATED_DICTS">
+            <summary>
+            In the 'average-closure time' chart for incoming dictionary it stores the last created all dictionaries
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_SR_SRVALBYACCNT_CONTACT_DICT">
+            <summary>
+            This variable holds the contact dictionary for 'SR value by accnt' chart in incoming SR
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_SR_SRVALBYACCNT_SR_AMNT">
+            <summary>
+            This variable holds the SR amount dictionary for 'SR value by accnt' chart in incoming SR
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_SR_SRNOBYACCNT_CONTACT_DICT">
+            <summary>
+            This variable holds the contact dictionary for 'SR no by accnt' chart in incoming SR
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_SR_SRNOBYACCNT_LAST_SR_TYPE">
+            <summary>
+            This variable holds the last selected SR type for 'SR no by accnt' chart in incoming SR
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_SR_SRNOBYACCNT_TOTAL_SR">
+            <summary>
+            This variable holds the total SRs dictionary for 'SR no by accnt' chart in incoming SR
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_SR_SRNOBYACCNT_HIGH_SR">
+            <summary>
+            This variable holds the high sev SR dictionary for 'SR no by accnt' chart in incoming SR
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_SR_SRNOBYACCNT_MEDM_SR">
+            <summary>
+            This variable holds the medium sev dictionary for 'SR no by accnt' chart in incoming SR
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_SR_SRNOBYACCNT_LOW_SR">
+            <summary>
+            This variable holds the low sev dictionary for 'SR no by accnt' chart in incoming SR
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_SR_SRVALBYACCNT_CONTACT_DICT">
+            <summary>
+            This variable holds the contact dictionary for 'SR value by accnt' chart in outgoing SR
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_SR_SRVALBYACCNT_SR_AMNT">
+            <summary>
+            This variable holds the SR amount dictionary for 'SR value by accnt' chart in outgoing SR
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_SR_SRNOBYACCNT_CONTACT_DICT">
+            <summary>
+            This variable holds the contact dictionary for 'SR no by accnt' chart in outgoing SR
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_SR_SRNOBYACCNT_TOTAL_SR">
+            <summary>
+            This variable holds the total SRs dictionary for 'SR no by accnt' chart in outgoing SR
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_SR_SRNOBYACCNT_HIGH_SR">
+            <summary>
+            This variable holds the high sev SR dictionary for 'SR no by accnt' chart in outgoing SR
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_SR_SRNOBYACCNT_MEDM_SR">
+            <summary>
+            This variable holds the medium sev dictionary for 'SR no by accnt' chart in outgoing SR
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_SR_SRNOBYACCNT_LOW_SR">
+            <summary>
+            This variable holds the low sev dictionary for 'SR no by accnt' chart in outgoing SR
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_SR_ARRVLCLOS_DATE_RANGE">
+            <summary>
+            In the 'arrival-closure' chart for incoming dictionary it stores the last created date range dict
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_SR_ARRVLCLOS_LAST_FREQ">
+            <summary>
+            In the 'arrival-closure' chart for incoming dictionary it stores the last created frequency
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_SR_ARRVLCLOS_DATE_RANGE">
+            <summary>
+            In the 'arrival-closure' chart for outgoing dictionary it stores the last created date range dict
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_SR_ARRVLCLOS_LAST_FREQ">
+            <summary>
+            In the 'arrival-closure' chart for outgoing dictionary it stores the last created frequency
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_SR_AVERAGECLOSTIME_DATE_RANGE">
+            <summary>
+            In the 'arrival-closure' chart for outgoing dictionary it stores the last created date range dict
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_SR_AVERAGECLOSTIME_LAST_FREQ">
+            <summary>
+            In the 'average-closure time' chart for outgoing dictionary it stores the last created frequency
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_SR_ARRVLCLOS_GENERATED_DICTS">
+            <summary>
+            In the 'arrival-closure' chart for incoming dictionary it stores the last created all dictionaries
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_SR_AVERAGECLOSTIME_DATE_RANGE">
+            <summary>
+            In the 'arrival-closure' chart for incoming dictionary it stores the last created date range dict
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_SR_AVERAGECLOSTIME_LAST_FREQ">
+            <summary>
+            In the 'average-closure time' chart for incoming dictionary it stores the last created frequency
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_SR_AVERAGECLOSTIME_LAST_SELECTED_AGENT">
+            <summary>
+             In the 'average-closure time' chart for incoming dictionary it stores the last selected agent
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_INCM_SR_AVERAGECLOSTIME_GENERATED_DICTS">
+            <summary>
+            In the 'average-closure time' chart for incoming dictionary it stores the last created all dictionaries
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_REPORTS_SESSION_DICTIONARY_OF_DATATABLES">
+            <summary>
+            Holds all the data table of dictionaries currently generated for reports. The key of each of these items identify the unique name of the 
+            report whose value is stored alongside. The key is passed to the report generator module which extracts the datatable from the session
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_DEFECT_ARRVLCLOS_DATE_RANGE">
+            <summary>
+            In the 'arrival-closure' chart for outgoing dictionary it stores the last created date range dict
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_DEFECT_ARRVLCLOS_LAST_FREQ">
+            <summary>
+            In the 'arrival-closure' chart for outgoing dictionary it stores the last created frequency
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_DEFECT_ARRVLCLOS_GENERATED_DICTS">
+            <summary>
+            In the 'arrival-closure' chart for outgoing dictionary it stores the last created all dictionaries
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_DEFECT_AVERAGECLOSTIME_DATE_RANGE">
+            <summary>
+            In the 'arrival-closure' chart for outgoing dictionary it stores the last created date range dict
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_DEFECT_AVERAGECLOSTIME_LAST_FREQ">
+            <summary>
+            In the 'average-closure time' chart for outgoing dictionary it stores the last created frequency
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_DEFECT_AVERAGECLOSTIME_LAST_SELECTED_AGENT">
+            <summary>
+             In the 'average-closure time' chart for outgoing dictionary it stores the last selected vendor
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_DASHBOARD_OUTG_DEFECT_AVERAGECLOSTIME_GENERATED_DICTS">
+            <summary>
+            In the 'average-closure time' chart for outgoing dictionary it stores the last created all dictionaries
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_NOTES_DATAGRID">
+            <summary>
+            This variable contains a dictionary of DataTable where the key is the respective context id for the notes.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ALL_MSGS_DATAGRID">
+            <summary>
+            This variable contains a dictionary of DataTable where the key is the respective context id for the messages.
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.ADMIN_PREF_DEPT_MGMT_DEPT_GRID">
+            <summary>
+            Stores the data grid for the department data grid from admin pref-org mgmt screen
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.HOME_PAGE_RFQ_DATAGRID">
+            <summary>
+            This variable holds the RFQ datagrid for the list of RFQs which needs the user's approval
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.HOME_PAGE_INV_DATAGRID">
+            <summary>
+            This variable holds the Invoice datagrid for the list of Invoices which needs the user's approval
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.HOME_PAGE_ASSGND_LEAD_DATAGRID">
+            <summary>
+            This variable holds the Lead datagrid for the list of Lead which are assigned to the user and are active
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.HOME_PAGE_ASSGND_POTN_DATAGRID">
+            <summary>
+            This variable holds the Potential datagrid for the list of Potential which are assigned to the user and are active
+            </summary>
+        </member>
+        <member name="F:ActionLibrary.SessionFactory.HOME_PAGE_ASSGND_OPEN_DEFECTS_DATAGRID">
+            <summary>
+            This variable holds the Defects datagrid for the list of Defects which are assigned to the user and are not resolved
+            </summary>
+        </member>
+    </members>
+</doc>

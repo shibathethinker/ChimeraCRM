@@ -13,4 +13,5 @@ In an Offline mode, the CRM is used by other standard CRMs where one organizatio
  Backendobject is the database interaction layer whose only job is to to talk to the underlying database. Actionlibrary implments some custom classes/functions to be used across the entire project. Customexception is what its name signifies, custome exception classes.
  To create the database model, use the database snapshot I have created in the DBBackups folder. This snaphost can be directly restored into a SQL server instance. While restoring use the database name as 'BEOBJ'. You can ofcourse, change the database connection settings in the Web.Config file present in the Online solution.
 
+If you have successfully configured everything and restored the database which I have provided, then you can launch the Online solution from Visual studio. Upon launch this will take you to the login page, here you can login using the userid: 
 

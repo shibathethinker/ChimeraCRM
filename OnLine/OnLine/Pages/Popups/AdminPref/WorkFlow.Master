@@ -1,0 +1,102 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="WorkFlow.master.cs" Inherits="OnLine.Pages.Popups.AdminPref.WorkFlow" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<link type="text/css" rel="stylesheet" href="~/Styles/Menu.css" />
+<link type="text/css" rel="stylesheet" href="~/Styles/GridViewStyle.css" />
+<link type="text/css" rel="stylesheet" href="~/Styles/Panel_Backgroud.css" />
+          <link type="text/css" rel="stylesheet" href="~/css/bootstrap.css" /> 
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style type="text/css">
+* {
+    padding: 0; 
+    font-size: small;
+    font-family: Andalus;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+.Menu ul
+{  
+    background:#7795BD;
+    font-size:"medium";
+    /*background:#424242;*/
+}
+
+.Menu ul li
+{
+    /*background:#424242 url('/Images/grd_head.png') repeat-x;*/
+    background:#7795BD url('/Images/menu_bg.gif') repeat-x;
+    text-align:center;
+    font-size:"medium";
+    /* set width if needed.*/
+    
+}
+
+
+
+.Menu ul li a.selected
+{
+    /*background:#424242 url('/Images/grd_head.png') repeat-x;*/
+    background:#7795BD url('/Images/SelectedMenu3DGold.png') repeat-x;
+    text-align:center;
+    
+    /* set width if needed.*/
+    
+}
+
+.Menu ul li a
+{
+    color: Black;
+}
+
+
+
+.Menu ul li a
+{
+    color: black;
+    padding: 4px 2px 4px;
+    padding-left:8px !important;
+    border:1px solid #648ABD;
+    font-size:"medium";
+    border-bottom: 0;
+}
+
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+                        <asp:Menu ID="Menu_WorkFlow_Master" 
+                        cssClass="Menu"
+                                       Runat="server" 
+                             Orientation="Horizontal"  RenderingMode="List"  >
+
+                        <Items>
+                            <asp:MenuItem NavigateUrl="~/Pages/Popups/AdminPref/WorkflowDefect.aspx" Text="Defect Rules" 
+                                ToolTip="Generate and view reports/charts related to your business" 
+                                Value="Dashboard" Selected="True">
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Pages/Popups/AdminPref/WorkflowRFQ.aspx" Text="RFQ Rules" 
+                                Value="Contacts">
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Pages/Popups/AdminPref/WorkflowInv.aspx" Text="Invoice Rules" 
+                                Value="User Preferences"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Pages/Popups/AdminPref/WorkflowSR.aspx" 
+                                Text="Service Request Rules" Value="Service Request Rules"></asp:MenuItem>
+                        </Items>
+                    </asp:Menu>
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolderBody" runat="server">
+                        <p>
+                            <br />
+                        </p>
+                    </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,990 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6BE7E7B8-8BFF-4B09-81DF-55D8CB924246}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OnLine</RootNamespace>
+    <AssemblyName>OnLine</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ActionLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ActionClasses\ActionLibrary\bin\Debug\ActionLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="AdvancedIntellect.Ssl">
+      <HintPath>E:\Softwares\EmailAsp.net\aspNetPOP3\AdvancedIntellectSsl\NETFramework2+\AdvancedIntellect.Ssl.dll</HintPath>
+    </Reference>
+    <Reference Include="AjaxControlToolkit, Version=4.1.40412.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\Softwares\ajax_control_kit_4\AjaxControlToolkit.Binary.NET4\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="aspNetMime, Version=2.8.0.0, Culture=neutral, PublicKeyToken=bc571e8da1c1f543">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\Softwares\EmailAsp.net\bin\aspNetMime.DLL</HintPath>
+    </Reference>
+    <Reference Include="aspNetPOP3, Version=2.8.0.0, Culture=neutral, PublicKeyToken=bc571e8da1c1f543">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\Softwares\EmailAsp.net\bin\aspNetPOP3.dll</HintPath>
+    </Reference>
+    <Reference Include="BackEndObjects, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ActionClasses\ActionLibrary\bin\Debug\BackEndObjects.dll</HintPath>
+    </Reference>
+    <Reference Include="CustomExceptions">
+      <HintPath>..\..\..\ActionClasses\ActionLibrary\bin\Debug\CustomExceptions.dll</HintPath>
+    </Reference>
+    <Reference Include="DBConn, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ActionClasses\ActionLibrary\bin\Debug\DBConn.dll</HintPath>
+    </Reference>
+    <Reference Include="EO.Pdf, Version=4.0.60.2, Culture=neutral, PublicKeyToken=e92353a6bf73fffc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\Softwares\htmltoPDF\Install_EOWeb\EO.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="EO.Web, Version=10.0.54.2, Culture=neutral, PublicKeyToken=e92353a6bf73fffc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\Softwares\htmltoPDF\Install_EOWeb\EO.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>E:\Softwares\ExcelGenerator\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.DataVisualization" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\ChangePassword.aspx" />
+    <Content Include="Account\ChangePasswordSuccess.aspx" />
+    <Content Include="App_GlobalResources\Themes.xml" />
+    <Content Include="App_Themes\ThemeBlack\blueslate_backgroundOVER.png" />
+    <Content Include="App_Themes\ThemeBlack\GridViewStyle.css" />
+    <Content Include="App_Themes\ThemeBlack\Menu.css" />
+    <Content Include="App_Themes\ThemeBlack\Panel_Backgroud.css" />
+    <Content Include="App_Themes\ThemeRed\blueslate_backgroundOVER.png" />
+    <Content Include="App_Themes\ThemeRed\GridViewStyle.css" />
+    <Content Include="App_Themes\ThemeRed\Menu.css" />
+    <Content Include="App_Themes\ThemeRed\Panel_Backgroud.css" />
+    <Content Include="css\bootstrap-theme.css" />
+    <Content Include="css\bootstrap-theme.min.css" />
+    <Content Include="css\bootstrap.css" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\bootswatch_flaty.css" />
+    <Content Include="css\Custom.css" />
+    <Content Include="css\signin.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Images\ArrowTip_Down.png" />
+    <Content Include="Images\ArrowTip_Parallel.png" />
+    <Content Include="Images\attention.jpg" />
+    <Content Include="Images\Calendar.png" />
+    <Content Include="Images\Collapse_bg.png" />
+    <Content Include="Images\grd_alt.png" />
+    <Content Include="Images\grd_head.png" />
+    <Content Include="Images\grd_pgr.png" />
+    <Content Include="Images\loading.gif" />
+    <Content Include="Images\loadingAnimation.jpg" />
+    <Content Include="Images\loadingAnimation_1.jpg" />
+    <Content Include="Images\log.jpg" />
+    <Content Include="Images\menu_bg.gif" />
+    <Content Include="Images\menu_bg_red.png" />
+    <Content Include="Images\Panel_Back_White_Grad.png" />
+    <Content Include="Images\SelectedMenu3DGold.png" />
+    <Content Include="Images\selectedRow_Green.png" />
+    <Content Include="Images\sort_asc.gif" />
+    <Content Include="Images\sort_desc.gif" />
+    <Content Include="Images\tick_green.jpg" />
+    <Content Include="js\bootstrap.js" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\jquery-2.2.3.min.js" />
+    <Content Include="js\jquery-ui.min.js" />
+    <Content Include="Pages\AdminPref.aspx" />
+    <Content Include="Pages\AllContacts.aspx" />
+    <Content Include="Account\ChainRegistration.aspx" />
+    <Content Include="Pages\createClone.aspx" />
+    <Content Include="Pages\createContact.aspx" />
+    <Content Include="Pages\CreateDefect.aspx" />
+    <Content Include="Pages\createInvoice.aspx" />
+    <Content Include="Pages\createLead.aspx" />
+    <Content Include="Pages\CreatePO.aspx" />
+    <Content Include="Pages\createPotential.aspx" />
+    <Content Include="Pages\createProduct.aspx" />
+    <Content Include="Pages\CreateReq.aspx" />
+    <Content Include="Pages\CreateRFQ.aspx" />
+    <Content Include="Pages\CreateSR.aspx" />
+    <Content Include="Pages\DashBoard.aspx" />
+    <Content Include="Pages\Defects.aspx" />
+    <Content Include="Pages\DispAudit.aspx" />
+    <Content Include="Pages\DispComm.aspx" />
+    <Content Include="Pages\DispComm_Depcr.aspx" />
+    <Content Include="Pages\DispEntityDetails.aspx" />
+    <Content Include="Pages\DispImage.aspx" />
+    <Content Include="Pages\DispImage_Deprecated.aspx" />
+    <Content Include="Pages\DispUserDetails.aspx" />
+    <Content Include="Pages\EmailReader.aspx" />
+    <Content Include="Pages\HomePage.aspx" />
+    <Content Include="Pages\Login.aspx" />
+    <Content Include="Pages\NoteDetails.aspx" />
+    <Content Include="Pages\Popups\AdminPref\AccessMgmt.aspx" />
+    <Content Include="Pages\Popups\AdminPref\ChainMgmt.aspx" />
+    <Content Include="Pages\Popups\AdminPref\DeptDetails.aspx" />
+    <Content Include="Pages\Popups\AdminPref\DocFormatManagement.aspx" />
+    <Content Include="Pages\Popups\AdminPref\ExistingGroupAccess.aspx" />
+    <Content Include="Pages\Popups\AdminPref\mainEntityManagement.aspx" />
+    <Content Include="Pages\Popups\AdminPref\ReportingStructure.aspx" />
+    <Content Include="Pages\Popups\AdminPref\userMgmt.aspx" />
+    <Content Include="Pages\Popups\AdminPref\WebForm1.aspx" />
+    <Content Include="Pages\Popups\AdminPref\WorkflowDefect.aspx" />
+    <Content Include="Pages\Popups\AdminPref\WorkflowInv.aspx" />
+    <Content Include="Pages\Popups\AdminPref\WorkflowRFQ.aspx" />
+    <Content Include="Pages\Popups\AdminPref\WorkflowSR.aspx" />
+    <Content Include="Pages\Popups\Contacts\AllContacts_Location.aspx" />
+    <Content Include="Pages\Popups\Contacts\AllContacts_ProdSrv.aspx" />
+    <Content Include="Pages\Popups\Contacts\AllDealsWithContact.aspx" />
+    <Content Include="Pages\Popups\Contacts\AllDefectsWithContact.aspx" />
+    <Content Include="Pages\Popups\Dashboard\ReportGen.aspx" />
+    <Content Include="Pages\Popups\Defects\AllDefectsContacts.aspx" />
+    <Content Include="Pages\Popups\Defects\AllDocs_Defect.aspx" />
+    <Content Include="Pages\Popups\Defects\DefectPopup.aspx" />
+    <Content Include="Pages\Popups\Product\AllProd_SO.aspx" />
+    <Content Include="Pages\Popups\Product\AllProd_Specification.aspx" />
+    <Content Include="Pages\Popups\Purchase\AllDefectsForInvoice.aspx" />
+    <Content Include="Pages\Popups\Purchase\AllRequirement_Location.aspx" />
+    <Content Include="Pages\Popups\Purchase\AllRequirement_Specification.aspx" />
+    <Content Include="Pages\Popups\Purchase\AllRequirement_Specification_Show_Feat.aspx" />
+    <Content Include="Pages\Popups\Purchase\AllRFQ_Broadcast.aspx" />
+    <Content Include="Pages\Popups\Purchase\AllRFQ_Broadcast_customer_Details.aspx" />
+    <Content Include="Pages\Popups\Purchase\AllRFQ_Location.aspx" />
+    <Content Include="Pages\Popups\Purchase\AllRFQ_NDA.aspx" />
+    <Content Include="Pages\Popups\Purchase\AllRFQ_Quotes.aspx" />
+    <Content Include="Pages\Popups\Purchase\AllRFQ_Quotes_Indv_Resp_Det.aspx" />
+    <Content Include="Pages\Popups\Purchase\AllRFQ_Shortlisted.aspx" />
+    <Content Include="Pages\Popups\Purchase\AllRFQ_Specification.aspx" />
+    <Content Include="Pages\Popups\Purchase\AllRFQ_TnC.aspx" />
+    <Content Include="Pages\Popups\Purchase\FinalizeDeal.aspx" />
+    <Content Include="Pages\Popups\Purchase\Inv_Payment_Details.aspx" />
+    <Content Include="Pages\Popups\Purchase\PO_Details.aspx" />
+    <Content Include="Pages\Popups\Purchase\TaggedRFQs.aspx" />
+    <Content Include="Pages\Popups\Purchase\TagRFQtoReq.aspx" />
+    <Content Include="Pages\Popups\Sale\AllLead_Customer.aspx" />
+    <Content Include="Pages\Popups\Sale\AllLead_Location.aspx" />
+    <Content Include="Pages\Popups\Sale\AllLead_NDA.aspx" />
+    <Content Include="Pages\Popups\Sale\AllLead_Specification.aspx" />
+    <Content Include="Pages\Popups\Sale\AllLead_Specification_Show_Feat.aspx" />
+    <Content Include="Pages\Popups\Sale\AllLead_TnC.aspx" />
+    <Content Include="Pages\Popups\Sale\AllPotential_Customer.aspx" />
+    <Content Include="Pages\Popups\Sale\AllPotential_Location.aspx" />
+    <Content Include="Pages\Popups\Sale\AllPotn_NDA.aspx" />
+    <Content Include="Pages\Popups\Sale\AllPotn_TnC.aspx" />
+    <Content Include="Pages\Popups\Sale\AllPot_Specification.aspx" />
+    <Content Include="Pages\Popups\Sale\createInvoiceSelectRFQ.aspx" />
+    <Content Include="Pages\Popups\Sale\Inv_Details.aspx" />
+    <Content Include="Pages\Popups\Sale\MultipleInvoiceForRFQ.aspx" />
+    <Content Include="Pages\Popups\Sale\Notification_Sales.aspx" />
+    <Content Include="Pages\ServiceReq.aspx" />
+    <Content Include="Pages\Products.aspx" />
+    <Content Include="Pages\Purchase.aspx" />
+    <Content Include="Account\Register.aspx" />
+    <Content Include="Pages\Sales.aspx" />
+    <Content Include="Pages\SiteAdmin\Features.aspx" />
+    <Content Include="Pages\SiteAdmin\ProdCatHier.aspx" />
+    <Content Include="Pages\ThemePageBase.aspx" />
+    <Content Include="Pages\UserPref.aspx" />
+    <Content Include="Pages\Workflow_Tree.aspx" />
+    <Content Include="App_Themes\ThemeBlue\blueslate_backgroundOVER.png" />
+    <Content Include="App_Themes\ThemeBlue\GridViewStyle.css" />
+    <Content Include="App_Themes\ThemeBlue\Menu.css" />
+    <Content Include="App_Themes\ThemeBlue\Panel_Backgroud.css" />
+    <Content Include="Scripts\jquery.magnifier.js" />
+    <Content Include="Scripts\magnify.cur" />
+    <Content Include="Styles\blueslate_backgroundOVER.png" />
+    <Content Include="Styles\GridViewStyle.css" />
+    <Content Include="Styles\Menu.css" />
+    <Content Include="Styles\Panel_Backgroud.css" />
+    <Content Include="Styles\Site.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.1.js" />
+    <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account\ChangePassword.aspx.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\ChangePassword.aspx.designer.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\ChangePasswordSuccess.aspx.cs">
+      <DependentUpon>ChangePasswordSuccess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\ChangePasswordSuccess.aspx.designer.cs">
+      <DependentUpon>ChangePasswordSuccess.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdminPref.aspx.cs">
+      <DependentUpon>AdminPref.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPref.aspx.designer.cs">
+      <DependentUpon>AdminPref.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AllContacts.aspx.cs">
+      <DependentUpon>AllContacts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AllContacts.aspx.designer.cs">
+      <DependentUpon>AllContacts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\ChainRegistration.aspx.cs">
+      <DependentUpon>ChainRegistration.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\ChainRegistration.aspx.designer.cs">
+      <DependentUpon>ChainRegistration.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\createClone.aspx.cs">
+      <DependentUpon>createClone.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\createClone.aspx.designer.cs">
+      <DependentUpon>createClone.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\createContact.aspx.cs">
+      <DependentUpon>createContact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\createContact.aspx.designer.cs">
+      <DependentUpon>createContact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreateDefect.aspx.cs">
+      <DependentUpon>CreateDefect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\CreateDefect.aspx.designer.cs">
+      <DependentUpon>CreateDefect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\createInvoice.aspx.cs">
+      <DependentUpon>createInvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\createInvoice.aspx.designer.cs">
+      <DependentUpon>createInvoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\createLead.aspx.cs">
+      <DependentUpon>createLead.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\createLead.aspx.designer.cs">
+      <DependentUpon>createLead.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreatePO.aspx.cs">
+      <DependentUpon>CreatePO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\CreatePO.aspx.designer.cs">
+      <DependentUpon>CreatePO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\createPotential.aspx.cs">
+      <DependentUpon>createPotential.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\createPotential.aspx.designer.cs">
+      <DependentUpon>createPotential.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\createProduct.aspx.cs">
+      <DependentUpon>createProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\createProduct.aspx.designer.cs">
+      <DependentUpon>createProduct.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreateReq.aspx.cs">
+      <DependentUpon>CreateReq.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\CreateReq.aspx.designer.cs">
+      <DependentUpon>CreateReq.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreateRFQ.aspx.cs">
+      <DependentUpon>CreateRFQ.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\CreateRFQ.aspx.designer.cs">
+      <DependentUpon>CreateRFQ.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreateSR.aspx.cs">
+      <DependentUpon>CreateSR.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\CreateSR.aspx.designer.cs">
+      <DependentUpon>CreateSR.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DashBoard.aspx.cs">
+      <DependentUpon>DashBoard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\DashBoard.aspx.designer.cs">
+      <DependentUpon>DashBoard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Defects.aspx.cs">
+      <DependentUpon>Defects.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Defects.aspx.designer.cs">
+      <DependentUpon>Defects.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DispAudit.aspx.cs">
+      <DependentUpon>DispAudit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\DispAudit.aspx.designer.cs">
+      <DependentUpon>DispAudit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DispComm.aspx.cs">
+      <DependentUpon>DispComm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\DispComm.aspx.designer.cs">
+      <DependentUpon>DispComm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DispComm_Depcr.aspx.cs">
+      <DependentUpon>DispComm_Depcr.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\DispComm_Depcr.aspx.designer.cs">
+      <DependentUpon>DispComm_Depcr.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DispEntityDetails.aspx.cs">
+      <DependentUpon>DispEntityDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\DispEntityDetails.aspx.designer.cs">
+      <DependentUpon>DispEntityDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DispImage.aspx.cs">
+      <DependentUpon>DispImage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\DispImage.aspx.designer.cs">
+      <DependentUpon>DispImage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DispImage_Deprecated.aspx.cs">
+      <DependentUpon>DispImage_Deprecated.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\DispImage_Deprecated.aspx.designer.cs">
+      <DependentUpon>DispImage_Deprecated.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DispUserDetails.aspx.cs">
+      <DependentUpon>DispUserDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\DispUserDetails.aspx.designer.cs">
+      <DependentUpon>DispUserDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EmailReader.aspx.cs">
+      <DependentUpon>EmailReader.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\EmailReader.aspx.designer.cs">
+      <DependentUpon>EmailReader.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\HomePage.aspx.cs">
+      <DependentUpon>HomePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\HomePage.aspx.designer.cs">
+      <DependentUpon>HomePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\NoteDetails.aspx.cs">
+      <DependentUpon>NoteDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\NoteDetails.aspx.designer.cs">
+      <DependentUpon>NoteDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\AccessMgmt.aspx.cs">
+      <DependentUpon>AccessMgmt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\AccessMgmt.aspx.designer.cs">
+      <DependentUpon>AccessMgmt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\ChainMgmt.aspx.cs">
+      <DependentUpon>ChainMgmt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\ChainMgmt.aspx.designer.cs">
+      <DependentUpon>ChainMgmt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\DeptDetails.aspx.cs">
+      <DependentUpon>DeptDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\DeptDetails.aspx.designer.cs">
+      <DependentUpon>DeptDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\DocFormatManagement.aspx.cs">
+      <DependentUpon>DocFormatManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\DocFormatManagement.aspx.designer.cs">
+      <DependentUpon>DocFormatManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\ExistingGroupAccess.aspx.cs">
+      <DependentUpon>ExistingGroupAccess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\ExistingGroupAccess.aspx.designer.cs">
+      <DependentUpon>ExistingGroupAccess.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\mainEntityManagement.aspx.cs">
+      <DependentUpon>mainEntityManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\mainEntityManagement.aspx.designer.cs">
+      <DependentUpon>mainEntityManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\ReportingStructure.aspx.cs">
+      <DependentUpon>ReportingStructure.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\ReportingStructure.aspx.designer.cs">
+      <DependentUpon>ReportingStructure.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\userMgmt.aspx.cs">
+      <DependentUpon>userMgmt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\userMgmt.aspx.designer.cs">
+      <DependentUpon>userMgmt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\WorkFlow.Master.cs">
+      <DependentUpon>WorkFlow.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\WorkFlow.Master.designer.cs">
+      <DependentUpon>WorkFlow.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\WorkflowDefect.aspx.cs">
+      <DependentUpon>WorkflowDefect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\WorkflowDefect.aspx.designer.cs">
+      <DependentUpon>WorkflowDefect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\WorkflowInv.aspx.cs">
+      <DependentUpon>WorkflowInv.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\WorkflowInv.aspx.designer.cs">
+      <DependentUpon>WorkflowInv.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\WorkflowRFQ.aspx.cs">
+      <DependentUpon>WorkflowRFQ.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\WorkflowRFQ.aspx.designer.cs">
+      <DependentUpon>WorkflowRFQ.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\WorkflowSR.aspx.cs">
+      <DependentUpon>WorkflowSR.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\AdminPref\WorkflowSR.aspx.designer.cs">
+      <DependentUpon>WorkflowSR.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Contacts\AllContacts_Location.aspx.cs">
+      <DependentUpon>AllContacts_Location.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Contacts\AllContacts_Location.aspx.designer.cs">
+      <DependentUpon>AllContacts_Location.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Contacts\AllContacts_ProdSrv.aspx.cs">
+      <DependentUpon>AllContacts_ProdSrv.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Contacts\AllContacts_ProdSrv.aspx.designer.cs">
+      <DependentUpon>AllContacts_ProdSrv.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Contacts\AllDealsWithContact.aspx.cs">
+      <DependentUpon>AllDealsWithContact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Contacts\AllDealsWithContact.aspx.designer.cs">
+      <DependentUpon>AllDealsWithContact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Contacts\AllDefectsWithContact.aspx.cs">
+      <DependentUpon>AllDefectsWithContact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Contacts\AllDefectsWithContact.aspx.designer.cs">
+      <DependentUpon>AllDefectsWithContact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Dashboard\ReportGen.aspx.cs">
+      <DependentUpon>ReportGen.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Dashboard\ReportGen.aspx.designer.cs">
+      <DependentUpon>ReportGen.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Defects\AllDefectsContacts.aspx.cs">
+      <DependentUpon>AllDefectsContacts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Defects\AllDefectsContacts.aspx.designer.cs">
+      <DependentUpon>AllDefectsContacts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Defects\AllDocs_Defect.aspx.cs">
+      <DependentUpon>AllDocs_Defect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Defects\AllDocs_Defect.aspx.designer.cs">
+      <DependentUpon>AllDocs_Defect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Defects\DefectPopup.aspx.cs">
+      <DependentUpon>DefectPopup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Defects\DefectPopup.aspx.designer.cs">
+      <DependentUpon>DefectPopup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Product\AllProd_SO.aspx.cs">
+      <DependentUpon>AllProd_SO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Product\AllProd_SO.aspx.designer.cs">
+      <DependentUpon>AllProd_SO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Product\AllProd_Specification.aspx.cs">
+      <DependentUpon>AllProd_Specification.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Product\AllProd_Specification.aspx.designer.cs">
+      <DependentUpon>AllProd_Specification.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllDefectsForInvoice.aspx.cs">
+      <DependentUpon>AllDefectsForInvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllDefectsForInvoice.aspx.designer.cs">
+      <DependentUpon>AllDefectsForInvoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRequirement_Location.aspx.cs">
+      <DependentUpon>AllRequirement_Location.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRequirement_Location.aspx.designer.cs">
+      <DependentUpon>AllRequirement_Location.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRequirement_Specification.aspx.cs">
+      <DependentUpon>AllRequirement_Specification.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRequirement_Specification.aspx.designer.cs">
+      <DependentUpon>AllRequirement_Specification.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRequirement_Specification_Show_Feat.aspx.cs">
+      <DependentUpon>AllRequirement_Specification_Show_Feat.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRequirement_Specification_Show_Feat.aspx.designer.cs">
+      <DependentUpon>AllRequirement_Specification_Show_Feat.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_Broadcast.aspx.cs">
+      <DependentUpon>AllRFQ_Broadcast.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_Broadcast.aspx.designer.cs">
+      <DependentUpon>AllRFQ_Broadcast.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_Broadcast_customer_Details.aspx.cs">
+      <DependentUpon>AllRFQ_Broadcast_customer_Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_Broadcast_customer_Details.aspx.designer.cs">
+      <DependentUpon>AllRFQ_Broadcast_customer_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_Location.aspx.cs">
+      <DependentUpon>AllRFQ_Location.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_Location.aspx.designer.cs">
+      <DependentUpon>AllRFQ_Location.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_NDA.aspx.cs">
+      <DependentUpon>AllRFQ_NDA.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_NDA.aspx.designer.cs">
+      <DependentUpon>AllRFQ_NDA.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_Quotes.aspx.cs">
+      <DependentUpon>AllRFQ_Quotes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_Quotes.aspx.designer.cs">
+      <DependentUpon>AllRFQ_Quotes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_Quotes_Indv_Resp_Det.aspx.cs">
+      <DependentUpon>AllRFQ_Quotes_Indv_Resp_Det.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_Quotes_Indv_Resp_Det.aspx.designer.cs">
+      <DependentUpon>AllRFQ_Quotes_Indv_Resp_Det.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_Shortlisted.aspx.cs">
+      <DependentUpon>AllRFQ_Shortlisted.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_Shortlisted.aspx.designer.cs">
+      <DependentUpon>AllRFQ_Shortlisted.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_Specification.aspx.cs">
+      <DependentUpon>AllRFQ_Specification.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_Specification.aspx.designer.cs">
+      <DependentUpon>AllRFQ_Specification.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_TnC.aspx.cs">
+      <DependentUpon>AllRFQ_TnC.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\AllRFQ_TnC.aspx.designer.cs">
+      <DependentUpon>AllRFQ_TnC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\FinalizeDeal.aspx.cs">
+      <DependentUpon>FinalizeDeal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\FinalizeDeal.aspx.designer.cs">
+      <DependentUpon>FinalizeDeal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\Inv_Payment_Details.aspx.cs">
+      <DependentUpon>Inv_Payment_Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\Inv_Payment_Details.aspx.designer.cs">
+      <DependentUpon>Inv_Payment_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\PO_Details.aspx.cs">
+      <DependentUpon>PO_Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\PO_Details.aspx.designer.cs">
+      <DependentUpon>PO_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\TaggedRFQs.aspx.cs">
+      <DependentUpon>TaggedRFQs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\TaggedRFQs.aspx.designer.cs">
+      <DependentUpon>TaggedRFQs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\TagRFQtoReq.aspx.cs">
+      <DependentUpon>TagRFQtoReq.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Purchase\TagRFQtoReq.aspx.designer.cs">
+      <DependentUpon>TagRFQtoReq.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllLead_Customer.aspx.cs">
+      <DependentUpon>AllLead_Customer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllLead_Customer.aspx.designer.cs">
+      <DependentUpon>AllLead_Customer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllLead_Location.aspx.cs">
+      <DependentUpon>AllLead_Location.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllLead_Location.aspx.designer.cs">
+      <DependentUpon>AllLead_Location.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllLead_NDA.aspx.cs">
+      <DependentUpon>AllLead_NDA.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllLead_NDA.aspx.designer.cs">
+      <DependentUpon>AllLead_NDA.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllLead_Specification.aspx.cs">
+      <DependentUpon>AllLead_Specification.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllLead_Specification.aspx.designer.cs">
+      <DependentUpon>AllLead_Specification.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllLead_Specification_Show_Feat.aspx.cs">
+      <DependentUpon>AllLead_Specification_Show_Feat.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllLead_Specification_Show_Feat.aspx.designer.cs">
+      <DependentUpon>AllLead_Specification_Show_Feat.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllLead_TnC.aspx.cs">
+      <DependentUpon>AllLead_TnC.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllLead_TnC.aspx.designer.cs">
+      <DependentUpon>AllLead_TnC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllPotential_Customer.aspx.cs">
+      <DependentUpon>AllPotential_Customer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllPotential_Customer.aspx.designer.cs">
+      <DependentUpon>AllPotential_Customer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllPotential_Location.aspx.cs">
+      <DependentUpon>AllPotential_Location.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllPotential_Location.aspx.designer.cs">
+      <DependentUpon>AllPotential_Location.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllPotn_NDA.aspx.cs">
+      <DependentUpon>AllPotn_NDA.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllPotn_NDA.aspx.designer.cs">
+      <DependentUpon>AllPotn_NDA.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllPotn_TnC.aspx.cs">
+      <DependentUpon>AllPotn_TnC.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllPotn_TnC.aspx.designer.cs">
+      <DependentUpon>AllPotn_TnC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllPot_Specification.aspx.cs">
+      <DependentUpon>AllPot_Specification.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\AllPot_Specification.aspx.designer.cs">
+      <DependentUpon>AllPot_Specification.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\createInvoiceSelectRFQ.aspx.cs">
+      <DependentUpon>createInvoiceSelectRFQ.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\createInvoiceSelectRFQ.aspx.designer.cs">
+      <DependentUpon>createInvoiceSelectRFQ.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\Inv_Details.aspx.cs">
+      <DependentUpon>Inv_Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\Inv_Details.aspx.designer.cs">
+      <DependentUpon>Inv_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\MultipleInvoiceForRFQ.aspx.cs">
+      <DependentUpon>MultipleInvoiceForRFQ.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\MultipleInvoiceForRFQ.aspx.designer.cs">
+      <DependentUpon>MultipleInvoiceForRFQ.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\Notification_Sales.aspx.cs">
+      <DependentUpon>Notification_Sales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Popups\Sale\Notification_Sales.aspx.designer.cs">
+      <DependentUpon>Notification_Sales.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ServiceReq.aspx.cs">
+      <DependentUpon>ServiceReq.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ServiceReq.aspx.designer.cs">
+      <DependentUpon>ServiceReq.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Products.aspx.cs">
+      <DependentUpon>Products.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Products.aspx.designer.cs">
+      <DependentUpon>Products.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Purchase.aspx.cs">
+      <DependentUpon>Purchase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Purchase.aspx.designer.cs">
+      <DependentUpon>Purchase.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Register.aspx.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\Register.aspx.designer.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Sales.aspx.cs">
+      <DependentUpon>Sales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Sales.aspx.designer.cs">
+      <DependentUpon>Sales.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Site1.Master.cs">
+      <DependentUpon>Site1.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Site1.Master.designer.cs">
+      <DependentUpon>Site1.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SiteAdmin\Features.aspx.cs">
+      <DependentUpon>Features.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\SiteAdmin\Features.aspx.designer.cs">
+      <DependentUpon>Features.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SiteAdmin\ProdCatHier.aspx.cs">
+      <DependentUpon>ProdCatHier.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\SiteAdmin\ProdCatHier.aspx.designer.cs">
+      <DependentUpon>ProdCatHier.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ThemePageBase.aspx.cs">
+      <DependentUpon>ThemePageBase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ThemePageBase.aspx.designer.cs">
+      <DependentUpon>ThemePageBase.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\UserPref.aspx.cs">
+      <DependentUpon>UserPref.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\UserPref.aspx.designer.cs">
+      <DependentUpon>UserPref.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Workflow_Tree.aspx.cs">
+      <DependentUpon>Workflow_Tree.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Workflow_Tree.aspx.designer.cs">
+      <DependentUpon>Workflow_Tree.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Images\SessionImages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pages\Site1.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pages\Popups\AdminPref\WorkFlow.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="css\bootstrap-theme.css.map" />
+    <None Include="css\bootstrap.css.map" />
+    <None Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="fonts\glyphicons-halflings-regular.woff" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3059</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

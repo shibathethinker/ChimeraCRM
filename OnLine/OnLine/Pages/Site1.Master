@@ -1,0 +1,190 @@
+﻿<%@ Master Language="C#"  AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="OnLine.Pages.Site1" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+<%--        <link type="text/css" rel="stylesheet" href="~/css/bootstrap.css" /> --%>
+    <link href="../css/bootswatch_flaty.css" rel="stylesheet" type="text/css" />
+    <%--<link href="../css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" /> --%>
+    <link href="../css/Custom.css?version=5" rel="stylesheet" type="text/css" />
+    <script src="../js/jquery-2.2.3.min.js" type="text/javascript"></script>
+    <script src="../js/jquery-ui.min.js" type="text/javascript"></script>
+    <%--<script src="../js/bootstrap.min.js" type="text/javascript"></script>--%>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>     
+    <style type="text/css">
+        .style1
+        {
+            width: 100%; 
+            border-collapse: collapse;
+            border-bottom-color:"#0066CC";
+            border-width:thin;
+        }
+        .style3
+        {
+            border-bottom-color:"#0066CC";
+            border-width:thick;
+        }
+        .style5
+        {
+            width: 20px;
+             border-bottom-color:"#0066CC";
+             border-collapse:collapse;
+             border-width:thick;
+        }
+        .pageBackColor
+        {   
+    background-color:#F3F3F3;
+        }
+    </style>
+    <style type="text/css">
+        .staticMenuItem
+        {
+            color:White;
+ 
+            border:solid 1px black;
+             background-image:url('~/Images/grd_head.png');                   
+            padding:2px 4px;
+        }
+        .menuHover
+        {
+            color:#ffcc00;
+            background-color:blue;
+        }
+        .dmenuHover
+        {
+            color:blue;
+            background-color:#ff9900;
+        }
+        .dynamicMenuItem
+        {
+            color:black;
+            background-color:#FF6600;
+             background-image:url('~/Images/grd_head.png');                   
+            padding:2px 4px;       
+        }
+        .dynamicMenu
+        {
+            background-color: #ffcc00;     
+            background-image:url('~/Images/grd_head.png');                   
+            border:Solid 1px black;
+            filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=5, OffY=5, Color='gray', Positive='true')" ;
+        }
+    </style>
+        
+        <script type="text/javascript">
+            function pageLoad(sender, args) {
+                $('.datepicker-textbox').datepicker({
+                    dateFormat: "yy-mm-dd"
+                });
+            }
+
+//            $(document).ready(function () {
+
+//                $('#ContentPlaceHolderBody_TextBox_From_Date').datepicker({
+//                    dateFormat: "dd-MM-yy" 
+//                });
+//            });
+     </script>
+</head>
+<body id="MasterBody" runat="server" class="pageBackColor">
+    <form id="form1" runat="server">
+    <div>
+        <table class="style1" >
+            <tr>
+                <td  colspan=2 style="font-family: Andalus;">
+                <div align="center">
+                    <asp:Label ID="Label1" runat="server" 
+                        style="text-align: center; font-family: Andalus; font-size: large; color: #990000; font-weight: 700;" 
+                        Text="Chimera CRM" class="btn btn-success"></asp:Label></div>
+                    <br />
+&nbsp;
+                    <asp:LoginView ID="LoginView1" runat="server">
+                        <AnonymousTemplate>
+                            You're not logged in&nbsp;<asp:LoginStatus ID="LoginStatus1" runat="server" 
+                                style="font-family: Andalus" />
+                            &nbsp;
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                            Welcome 
+                            <asp:LoginName ID="LoginName1" runat="server" />
+                        </LoggedInTemplate>
+                    </asp:LoginView>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <asp:Image ID="Image_Logo" runat="server"  ImageAlign="Middle" Height="89px" 
+                        Width="93px" ViewStateMode="Enabled" />
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolderHeader" runat="server">
+                    </asp:ContentPlaceHolder>
+                    <div align="right">
+                    <asp:LoginStatus ID="LoginStatus2" runat="server" 
+                            LogoutAction="RedirectToLoginPage" style="font-size: small" />
+                    </div>                    
+                <div class="navbar navbar-inverse">
+        <div class="container">
+                  <div class="navbar-collapse collapse">      
+                  <ul id="Ul1" runat="server" class="nav navbar-nav" style="font-family:Andalus; font-size:large">
+              <li id="Home" runat="server"><a href="HomePage.aspx">Home</a></li>
+              <li id="Purchase" runat="server"><a href="Purchase.aspx">Purchase</a></li>
+              <li id="Sales"  runat="server"><a href="Sales.aspx">Sales</a></li>
+              <li id="Products"  runat="server"><a href="Products.aspx">My Products</a></li>
+              <li id="Defects"  runat="server"><a href="Defects.aspx">Defects</a></li>
+              <li id="ServiceReq"  runat="server"><a href="ServiceReq.aspx">Service Requests</a></li>
+              <li id="Dashboard"  runat="server"><a href="DashBoard.aspx">Dashboard</a></li>
+              <li id="Accounts"  runat="server"><a href="AllContacts.aspx">Accounts</a></li>
+              <li id="UserPref"  runat="server"><a href="UserPref.aspx">User Preferences</a></li>
+              <li id="AdminPref"  runat="server"><a href="AdminPref.aspx">Administration</a></li>
+              </ul>      
+                                     
+                    </div>
+           </div>
+          </div>  
+                      </td>
+            </tr>
+            <tr>
+                <td id="left-side" <a href="#a" 
+                    colspan="2"> 
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolderBody" runat="server">                    
+                        <p>                            
+                        </p>
+                    </asp:ContentPlaceHolder>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td class="style5">
+                    &nbsp;</td>
+                <td class="style3">
+                    &nbsp;</td>
+            </tr>
+        </table>
+    </div>
+    </form>
+<%--    <script type="text/javascript" src='<%= ResolveUrl ("~/Js/jquery-1.2.3.min.js") %>'></script>--%>
+
+</body>
+</html>

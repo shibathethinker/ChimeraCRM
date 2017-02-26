@@ -1,0 +1,58 @@
+﻿.Menu
+{  
+ 
+}
+
+.Menu ul
+{  
+    background:#7795BD;
+    font-size:"medium";
+    /*background:#424242;*/
+}
+
+.Menu ul li
+{
+    /*background:#424242 url('/Images/grd_head.png') repeat-x;*/
+    background:#7795BD url('/Images/menu_bg.gif') repeat-x;
+    text-align:center;
+    font-size:"medium";
+    /* set width if needed.*/
+    
+}
+
+
+
+.Menu ul li a
+{
+    color: black;
+    padding: 4px 2px 4px;
+    padding-left:8px !important;
+    border:1px solid #648ABD;
+    font-size:"medium";
+    border-bottom: 0;
+}
+
+.Menu ul li a:hover
+{
+    background-image: none;
+}
+
+.Menu ul li a:hover
+{
+    color: White;
+}
+
+.Menu ul li a
+{
+    color: Black;
+}
+
+.Menu ul li a.selected
+{
+    /*background:#424242 url('/Images/grd_head.png') repeat-x;*/
+    background:#7795BD url('/Images/SelectedMenu3DGold.png') repeat-x;
+    text-align:center;
+    
+    /* set width if needed.*/
+    
+}

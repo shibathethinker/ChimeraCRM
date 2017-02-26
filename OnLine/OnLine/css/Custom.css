@@ -1,0 +1,206 @@
+﻿body
+{
+    font-family:Andalus !important;
+}
+
+select[class="form-control"]
+{
+    width:25% !important;
+}
+
+.panel-title
+{
+  font-family:andalus !important; 
+   color: White !important;
+}
+
+.table-bordered
+{
+    border-radius:10px;
+    box-shadow:0px 2px 6px 0px black;-moz-box-shadow:0px 2px 6px 0px black;-webkit-box-shadow:0px 2px 6px 0px black;border-collapse:separate;
+}
+
+.form-control, input[type="text"]
+{
+    display:inline-block !important;
+    width: 20% !important;
+}
+
+.form-control-dropdown 
+{    
+    width: 25% !important;
+    display:inline-block !important;
+}
+
+.feature-select-dropdown
+{    
+    width: 90% !important;
+    display:inline-block !important;
+}
+   
+     /*#region datepicker*/
+  
+            div.ui-datepicker {
+        	border:1px solid #efefef;
+        	box-shadow: #a0a0a0 5px 2px 2px;
+        	background:white;
+        	font-size:12pt;
+        	font-family:Garamond;
+        }
+        div.ui-datepicker .ui-datepicker-header{
+        	text-align: center;
+        }
+        div.ui-datepicker .ui-datepicker-next{
+        	float:right;
+        	margin-right:2px;
+        	font-size:16pt;
+        	z-index:1122334;
+        }
+        div.ui-datepicker .ui-datepicker-next span,div.ui-datepicker .ui-datepicker-prev span{visibility: hidden;}
+        div.ui-datepicker .ui-datepicker-next:after{content:"\00BB";}
+        div.ui-datepicker .ui-datepicker-prev:before{content:"\00aB";}
+        div.ui-datepicker .ui-datepicker-prev{
+        	float:left;
+        	margin-left:4px;
+        	font-size:16pt;
+        	
+        }
+        table.ui-datepicker-calendar td,table.ui-datepicker-calendar th{
+        	padding:5px;
+        	text-align: center;
+        }
+        table.ui-datepicker-calendar td a{color:blue;}
+        table.ui-datepicker-calendar td.ui-datepicker-unselectable {color:#cdcdcd;}
+        td.ui-datepicker-today{background:linear-gradient(to bottom, #0088cc, #0044cc); }
+        table.ui-datepicker-calendar td.ui-datepicker-today a{color:Black;}
+        
+        /*endregion datepicker */
+   
+   
+        
+          #dialogSettings div.input-group{margin:1px auto;width:220px;}
+      .bgCover {  position:absolute; left:0; top:0; display:none; overflow:hidden }
+      
+        .highlight { 
+    background-image:linear-gradient(to bottom, #dff0d8 0%, #c6e9e5 100%);
+    background-repeat:repeat-x;
+               }
+               
+     .hiddencol
+  {
+    display: none;
+  }
+.image-icon
+{
+    height:40px;
+    margin-top:5px;    
+}
+.ui-dialog
+{
+    background:#fff;
+    font-family:Garamond;
+    font-size:medium;
+     
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl
+{
+    border-bottom-left-radius:15px;
+    
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr
+{
+    border-top-right-radius:15px;
+}
+
+.ui-dialog, .ui-widget
+{
+    left:25%;
+}
+
+.ui-widget-overlay
+{
+  opacity: .50 !important; /* Make sure to change both of these, as IE only sees the second one */
+  filter: Alpha(Opacity=50) !important;
+
+  background-color: rgb(50, 50, 50) !important; /* This will make it darker */
+}
+
+button.ui-dialog-titlebar-close{float:right; }
+button.ui-dialog-titlebar-close::before {content: "X";}
+
+
+        
+        .header_image
+        {
+             align-self:center;
+            margin-left:10%;
+            width:80%;
+            font-family:Garamond;
+        }
+
+
+                .panel{
+                    font-family:Garamond;
+                    font-size: medium;
+                }
+                
+                .datepicker
+                {
+                    z-index:5000;
+                     font-family:Garamond;
+                }
+                
+                div.alert div.move-right{margin-left:55px;}
+                
+.table table  tbody  tr  td a ,
+.table table  tbody  tr  td  span {
+position: relative;
+float: left;
+padding: 6px 12px;
+margin-left: -1px;
+line-height: 1.42857143;
+color: #337ab7;
+text-decoration: none;
+background-color: #fff;
+border: 1px solid #ddd;
+}
+
+.table table > tbody > tr > td > span {
+z-index: 3;
+color: #fff;
+cursor: default;
+background-color: #337ab7;
+border-color: #337ab7;
+}
+
+.table table > tbody > tr > td:first-child > a,
+.table table > tbody > tr > td:first-child > span {
+margin-left: 0;
+border-top-left-radius: 4px;
+border-bottom-left-radius: 4px;
+}
+
+.table table > tbody > tr > td:last-child > a,
+.table table > tbody > tr > td:last-child > span {
+border-top-right-radius: 4px;
+border-bottom-right-radius: 4px;
+}
+
+.table table > tbody > tr > td > a:hover,
+.table   table > tbody > tr > td > span:hover,
+.table table > tbody > tr > td > a:focus,
+.table table > tbody > tr > td > span:focus {
+z-index: 2;
+color: #23527c;
+background-color: #eee;
+border-color: #ddd;
+}
+/*end gridview */
+
+        .tableShadow
+        {
+            border-radius: 10px;
+            box-shadow: 3px 6px 5px 0px black; -moz-box-shadow: 3px 6px 5px 0px black; -webkit-box-shadow: 3px 6px 5px 0px black;
+            border-collapse: separate;
+        }
+    

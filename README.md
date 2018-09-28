@@ -11,7 +11,7 @@ In an Offline mode, the CRM is used by other standard CRMs where one organizatio
  
  To start using this project, replicate the project on your desktop. 
  If you find issue replcating this project, try to download the source and open using Visual studio.
- This code was created in VS 2010,so there might be some issue opening it in higer version of VS.
+ This code was created in VS 2010,so there might be some issue opening it in higer version of VS. I have tested this in VS 2010 and VS 2015 (community edition).
  
  The main user -interface related components of the project is in the Online Folder. This folder has a C# solution file which should open in Visual studio. In this solution (Online), there are references to other components used in this project - BackendObjects, ActionLibrary and CustomExceptions.
  Backendobject is the database interaction layer whose only job is to to talk to the underlying database. Actionlibrary implments some custom classes/functions to be used across the entire project. Customexception is what its name signifies, custome exception classes.
